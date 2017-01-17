@@ -25,6 +25,7 @@ PostMessageStream.prototype._onMessage = function (event) {
 
   // validate message
   if (this._origin !== '*' && event.origin !== this._origin) return
+  if (event.source !== this._targetWindow) return
   if (typeof msg !== 'object') return
   if (msg.target !== this._name) return
   if (!msg.data) return
