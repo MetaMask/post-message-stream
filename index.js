@@ -12,7 +12,8 @@ function PostMessageStream (opts) {
 
   this._name = opts.name
   this._target = opts.target
- 
+  this._targetWindow = opts.targetWindow
+
   window.addEventListener('message', this._onMessage.bind(this), false)
 }
 
@@ -20,13 +21,13 @@ function PostMessageStream (opts) {
 
 PostMessageStream.prototype._onMessage = function (event) {
   var msg = event.data
- 
+
   // validate message
-  if (event.origin !== location.origin) return
+  if (!this._targetWindow && event.origin !== location.origin) return
   if (typeof msg !== 'object') return
   if (msg.target !== this._name) return
   if (!msg.data) return
- 
+
   // forward message
   try {
     this.push(msg.data)
@@ -40,12 +41,14 @@ PostMessageStream.prototype._onMessage = function (event) {
 PostMessageStream.prototype._read = noop
 
 PostMessageStream.prototype._write = function (data, encoding, cb) {
- 
+
   var message = {
     target: this._target,
     data: data,
   }
-  window.postMessage(message, location.origin)
+  var origin = (this._targetWindow) ? '*' : location.origin
+  var targetWindow = this._targetWindow || window
+  targetWindow.postMessage(message, origin)
   cb()
 }
 
