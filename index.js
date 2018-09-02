@@ -34,7 +34,10 @@ PostMessageStream.prototype._onMessage = function (event) {
   if (event.source !== this._targetWindow) return
   if (typeof msg !== 'object') return
   if (msg.target !== this._name) return
-  if (!msg.data) return
+  if (!msg.data) {
+    this.push(null)
+    return
+  }
 
   if (!this._init) {
     // listen for handshake
@@ -68,6 +71,20 @@ PostMessageStream.prototype._write = function (data, encoding, cb) {
   }
   this._targetWindow.postMessage(message, this._origin)
   cb()
+}
+
+// when a stream is destroyed, send a null message so the other end can end the stream
+PostMessageStream.prototype._destroy = function (err, callback) {
+  if (err) {
+    this.emit('error', err)
+  }
+  var message = {
+    target: this._target,
+    data: null
+  }
+  this._targetWindow.postMessage(message, this._origin)
+
+  callback()
 }
 
 // util
