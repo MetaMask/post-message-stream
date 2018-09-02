@@ -7,13 +7,13 @@ inherits(PostMessageStream, DuplexStream)
 
 function PostMessageStream (opts) {
   DuplexStream.call(this, {
-    objectMode: true,
+    objectMode: true
   })
 
   this._name = opts.name
   this._target = opts.target
   this._targetWindow = opts.targetWindow || window
-  this._origin = (opts.targetWindow ? '*' : location.origin)
+  this._origin = (opts.targetWindow ? '*' : window.location.origin)
 
   // initialization flags
   this._init = false
@@ -67,7 +67,7 @@ PostMessageStream.prototype._read = noop
 PostMessageStream.prototype._write = function (data, encoding, cb) {
   var message = {
     target: this._target,
-    data: data,
+    data: data
   }
   this._targetWindow.postMessage(message, this._origin)
   cb()
