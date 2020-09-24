@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "moduleResolution": "Node",
+    "declaration": true,
+    "sourceMap": true,
+    "strict": true,
+    "target": "es5",
+    "lib": [
+      "DOM",
+      "ES2016"
+    ],
+    "outDir": "./dist"
+  },
+  "include": [
+    "./src/**/*.ts"
+  ]
+}

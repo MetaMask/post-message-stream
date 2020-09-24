@@ -1,15 +1,31 @@
 {
-  "name": "post-message-stream",
+  "name": "@metamask/post-message-stream",
   "version": "4.0.0",
   "description": "Sets up a duplex object stream over window.postMessage",
-  "main": "index.js",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/"
+  ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "yarn build && yarn testOnly",
+    "testOnly": "jest --runInBand",
+    "test:watch": "jest --watch",
+    "prepublishOnly": "npm run build",
+    "lint": "eslint --ext .ts,.js ./src",
+    "build": "yarn run build:clean && yarn run build:compile && yarn run build:bundle",
+    "build:clean": "rm -rf ./dist && mkdir -p ./dist/esm && mkdir -p ./dist/cjs",
+    "build:compile": "yarn build:compile:esm && yarn build:compile:cjs",
+    "build:compile:esm": "tsc --module ES6 --outDir ./dist/esm",
+    "build:compile:cjs": "tsc --module UMD --outDir ./dist/cjs",
+    "build:bundle": "browserify --standalone PostMessageStream ./dist/cjs/index.js > ./dist/bundle.js"
   },
-  "license": "ISC",
-  "dependencies": {
-    "readable-stream": "2.3.3"
-  },
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/MetaMask/post-message-stream.git"
@@ -17,5 +33,21 @@
   "bugs": {
     "url": "https://github.com/MetaMask/post-message-stream/issues"
   },
-  "homepage": "https://github.com/MetaMask/post-message-stream#readme"
+  "homepage": "https://github.com/MetaMask/post-message-stream#readme",
+  "dependencies": {
+    "@types/readable-stream": "^2.3.9",
+    "readable-stream": "^3.0.0"
+  },
+  "devDependencies": {
+    "@jest-runner/electron": "^3.0.0",
+    "@metamask/eslint-config": "^3.2.0",
+    "@types/node": "^14.11.2",
+    "browserify": "^16.5.2",
+    "electron": "^10.1.2",
+    "eslint": "^7.9.0",
+    "eslint-plugin-import": "^2.22.0",
+    "jest": "^26.4.2",
+    "ts-jest": "^26.3.0",
+    "typescript": "^4.0.2"
+  }
 }
