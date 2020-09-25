@@ -25,6 +25,10 @@
     "build:compile:cjs": "tsc --module UMD --outDir ./dist/cjs",
     "build:bundle": "browserify --standalone PostMessageStream ./dist/cjs/index.js > ./dist/bundle.js"
   },
+  "allowScripts": {
+    "core-js": false,
+    "electron": true
+  },
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -44,6 +48,7 @@
     "@types/node": "^14.11.2",
     "@typescript-eslint/eslint-plugin": "^4.2.0",
     "@typescript-eslint/parser": "^4.2.0",
+    "allow-scripts": "^1.5.3",
     "babel-eslint": "^10.1.0",
     "browserify": "^16.5.2",
     "electron": "^10.1.2",
