@@ -2,14 +2,16 @@
   "compilerOptions": {
     "declaration": true,
     "esModuleInterop": true,
-    "lib": ["DOM"],
-    "module": "CommonJS",
-    "moduleResolution": "node",
+    "inlineSources": true,
+    "lib": ["DOM", "ES2020"],
+    "module": "ES6",
+    "moduleResolution": "Node",
     "outDir": "dist",
+    "rootDir": "src",
     "sourceMap": true,
     "strict": true,
-    "target": "ES2017",
-    "typeRoots": ["./node_modules/@types"]
+    "target": "ES2017"
   },
-  "include": ["./src/*.ts"]
+  "exclude": ["./src/**/*.test.ts"],
+  "include": ["./src/**/*.ts"]
 }
