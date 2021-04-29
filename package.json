@@ -7,13 +7,44 @@
   "files": [
     "dist/"
   ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
   "scripts": {
-    "build": "tsc --project .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "prepublishOnly": "yarn build && yarn lint && yarn test",
+    "lint:eslint": "eslint . --cache --ext js,ts",
+    "lint:misc": "prettier '**/*.json' '**/*.md' '**/*.yml' --single-quote --ignore-path .gitignore",
+    "lint": "yarn lint:eslint && yarn lint:misc --check",
+    "lint:fix": "yarn lint:eslint --fix && yarn lint:misc --write",
+    "build": "tsc --project ."
   },
   "license": "ISC",
   "dependencies": {
     "readable-stream": "2.3.3"
+  },
+  "devDependencies": {
+    "@metamask/eslint-config": "^6.0.0",
+    "@metamask/eslint-config-jest": "^6.0.0",
+    "@metamask/eslint-config-nodejs": "^6.0.0",
+    "@metamask/eslint-config-typescript": "^6.0.0",
+    "@types/jest": "^26.0.13",
+    "@types/readable-stream": "^2.3.9",
+    "@typescript-eslint/eslint-plugin": "^4.21.0",
+    "@typescript-eslint/parser": "^4.21.0",
+    "eslint": "^7.23.0",
+    "eslint-config-prettier": "^8.1.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jest": "^24.3.4",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^3.3.1",
+    "jest": "^26.6.3",
+    "prettier": "^2.2.1",
+    "ts-jest": "^26.3.0",
+    "ts-node": "^9.0.0",
+    "typescript": "^4.2.4"
   },
   "repository": {
     "type": "git",
@@ -22,9 +53,5 @@
   "bugs": {
     "url": "https://github.com/MetaMask/post-message-stream/issues"
   },
-  "homepage": "https://github.com/MetaMask/post-message-stream#readme",
-  "devDependencies": {
-    "@types/readable-stream": "^2.3.9",
-    "typescript": "^4.2.4"
-  }
+  "homepage": "https://github.com/MetaMask/post-message-stream#readme"
 }
