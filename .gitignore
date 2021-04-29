@@ -26,9 +26,6 @@ coverage
 # nyc test coverage
 .nyc_output
 
-# node-waf configuration
-.lock-wscript
-
 # Compiled binary addons (https://nodejs.org/api/addons.html)
 build/Release
 
@@ -43,12 +40,6 @@ node_modules/
 
 # Optional eslint cache
 .eslintcache
-
-# Microbundle cache
-.rpt2_cache/
-.rts2_cache_cjs/
-.rts2_cache_es/
-.rts2_cache_umd/
 
 # Optional REPL history
 .node_repl_history
