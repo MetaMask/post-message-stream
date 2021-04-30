@@ -18,10 +18,17 @@ module.exports = {
     },
 
     {
+      files: ['rollup.config.js'],
+      parserOptions: {
+        sourceType: 'module',
+      },
+    },
+
+    {
       files: ['*.test.ts', '*.test.js'],
       extends: ['@metamask/eslint-config-jest'],
     },
   ],
 
-  ignorePatterns: ['!.eslintrc.js', 'dist/'],
+  ignorePatterns: ['!.eslintrc.js', 'dist/', 'dist-test/'],
 };

@@ -26,11 +26,7 @@ export class WindowPostMessageStream extends BasePostMessageStream {
     name,
     target,
     targetWindow,
-  }: Partial<WindowPostMessageStreamArgs> = {}) {
-    if (!name || !target || !targetWindow) {
-      throw new Error('Invalid input.');
-    }
-
+  }: WindowPostMessageStreamArgs) {
     super();
 
     this._name = name;

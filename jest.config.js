@@ -1,7 +1,6 @@
 module.exports = {
   // TODO: Fix test coverage
-  // collectCoverage: true,
-  // coverageReporters: ['text', 'html'],
+  coverageReporters: ['text', 'html'],
   // coverageThreshold: {
   //   global: {
   //     branches: 100,
@@ -19,7 +18,9 @@ module.exports = {
   // original implementations, between each test. It does not affect mocked
   // modules.
   restoreMocks: true,
-  testEnvironment: 'node',
+  runner: '@jest-runner/electron',
+  testEnvironment: '@jest-runner/electron/environment',
   testRegex: ['\\.test\\.(ts|js)$'],
-  testTimeout: 2500,
+  // testTimeout: 2500,
+  testTimeout: 250000,
 };
