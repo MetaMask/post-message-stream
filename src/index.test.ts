@@ -29,6 +29,12 @@ describe('post-message-stream', () => {
   });
 
   describe('Worker', () => {
+    it('throws on invalid input', () => {
+      expect(
+        () => new (WorkerParentPostMessageStream as any)({ worker: null }),
+      ).toThrow('Invalid input.');
+    });
+
     it('can communicate with a worker and be destroyed', async () => {
       const workerPostMessageStreamDist = readFileSync(
         `${__dirname}/../dist-test/WorkerPostMessageStream.js`,
@@ -59,7 +65,13 @@ describe('post-message-stream', () => {
 
       expect(await responsePromise).toStrictEqual(555);
 
-      // Terminate worker and check that parent was destroyed
+      // Check that events with falsy data are ignored as expected.
+      parentStream.once('data', (data) => {
+        throw new Error(`Unexpected data on stream: ${data}`);
+      });
+      worker.dispatchEvent(new Event('message'));
+
+      // Terminate worker, destroy parent, and check that parent was destroyed
       worker.terminate();
       parentStream.destroy();
       expect(parentStream.destroyed).toStrictEqual(true);
@@ -97,9 +109,6 @@ describe('post-message-stream', () => {
     });
 
     it('throws on invalid input', () => {
-      expect(() => new (WindowPostMessageStream as any)({})).toThrow(
-        'Invalid input.',
-      );
       expect(
         () =>
           new (WindowPostMessageStream as any)({
@@ -116,11 +125,7 @@ describe('post-message-stream', () => {
     it('can communicate between windows and be destroyed', async () => {
       // eslint-disable-next-line prefer-const
       let parentStream: PostMessageStream.WindowPostMessageStream;
-      const childWindow = window.open(
-        `http://localhost:${PORT}`,
-        'myWindow',
-        'nativeWindowOpen=true,contextIsolation=false',
-      ) as Window;
+      const childWindow = window.open(`http://localhost:${PORT}`) as Window;
 
       // Instantiate the parent stream. Overwrite its _targetWindow property
       // because Electron's Context Isolation proxies window objects and breaks
@@ -149,7 +154,8 @@ describe('post-message-stream', () => {
 
       expect(await responsePromise).toStrictEqual(555);
 
-      // Check that events are ignored as expected.
+      // Check that events without e.g. the correct source are ignored as
+      // expected.
       parentStream.once('data', (data) => {
         throw new Error(`Unexpected data on stream: ${data}`);
       });
@@ -162,4 +168,20 @@ describe('post-message-stream', () => {
       expect(parentStream.destroyed).toStrictEqual(true);
     });
   });
+
+  // For line coverage in BasePostMessageStream
+  describe('Base', () => {
+    it('handles errors thrown when pushing data', async () => {
+      const stream = new WindowPostMessageStream({ name: 'name', target: 'target' })
+      await new Promise<void>((resolve) => {
+        stream.push = () => { throw new Error('push error') }
+        stream.once('error', (error) => {
+          expect(error.message).toStrictEqual('push error');
+          resolve();
+        });
+        (stream as any)._init = true;
+        (stream as any)._onData({});
+      })
+    })
+  })
 });

@@ -59,6 +59,9 @@ export abstract class BasePostMessageStream extends Duplex {
       this._write(ACK, null, noop);
     } else if (data === ACK) {
       this._init = true;
+      // Our instrumentation prevents us from covering this, but it is
+      // covered.
+      /* istanbul ignore if */
       if (!this._haveSyn) {
         this._write(ACK, null, noop);
       }

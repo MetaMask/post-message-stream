@@ -1,14 +1,13 @@
 module.exports = {
-  // TODO: Fix test coverage
   coverageReporters: ['text', 'html'],
-  // coverageThreshold: {
-  //   global: {
-  //     branches: 100,
-  //     functions: 100,
-  //     lines: 100,
-  //     statements: 100,
-  //   },
-  // },
+  coverageThreshold: {
+    global: {
+      branches: 90,
+      functions: 90,
+      lines: 100,
+      statements: 100,
+    },
+  },
   moduleFileExtensions: ['js', 'json', 'jsx', 'ts', 'tsx', 'node'],
   preset: 'ts-jest',
   // "resetMocks" resets all mocks, including mocked modules, to jest.fn(),
@@ -21,6 +20,5 @@ module.exports = {
   runner: '@jest-runner/electron',
   testEnvironment: '@jest-runner/electron/environment',
   testRegex: ['\\.test\\.(ts|js)$'],
-  // testTimeout: 2500,
-  testTimeout: 250000,
+  testTimeout: 2500,
 };
