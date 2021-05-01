@@ -1,0 +1,34 @@
+<!-- This is used to test WindowPostMessageStream -->
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>post-message-stream test</title>
+  </head>
+
+  <body>
+    <main>
+      <p>This is a test.</p>
+    </main>
+    <script src="WindowPostMessageStream.js"></script>
+    <script type="text/javascript">
+      // See index.test.ts for an explanation of this hack.
+      let windowPostMessageStream;
+      window.addEventListener('message', (event) => {
+        windowPostMessageStream._targetWindow = event.source;
+      })
+
+      // Instantiate the WindowPostMessageStream.
+      windowPostMessageStream = new PostMessageStream.WindowPostMessageStream({
+        name: 'child',
+        target: 'parent',
+        targetWindow: window.opener,
+      });
+
+      // When data is received, multiply it by 5 and return the result.
+      windowPostMessageStream.on(
+        'data',
+        (value) => windowPostMessageStream.write(value * 5)
+      );
+    </script>
+  </body>
+</html>
