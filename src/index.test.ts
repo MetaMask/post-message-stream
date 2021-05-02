@@ -60,6 +60,9 @@ describe('post-message-stream', () => {
         });
       });
 
+      // The worker should ignore this.
+      worker.postMessage('foo');
+
       // Send message to worker, triggering a response
       parentStream.write(111);
 
