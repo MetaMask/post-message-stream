@@ -1,4 +1,6 @@
 /* istanbul ignore file */
+// We ignore coverage for the entire file due to limits on our instrumentation,
+// but it is in fact covered by our tests.
 import {
   BasePostMessageStream,
   PostMessageEvent,

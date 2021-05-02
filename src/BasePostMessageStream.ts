@@ -16,7 +16,7 @@ export interface PostMessageEvent {
 }
 
 /**
- * Incomplete base implementation for postMessage streams.
+ * Abstract base class for postMessage streams.
  */
 export abstract class BasePostMessageStream extends Duplex {
   private _init: boolean;
@@ -32,8 +32,6 @@ export abstract class BasePostMessageStream extends Duplex {
     this._init = false;
     this._haveSyn = false;
   }
-
-  // private
 
   /**
    * Must be called at end of child constructor to initiate
@@ -59,7 +57,7 @@ export abstract class BasePostMessageStream extends Duplex {
       this._write(ACK, null, noop);
     } else if (data === ACK) {
       this._init = true;
-      // Our instrumentation prevents us from covering this, but it is
+      // Our instrumentation prevents us from covering this, but it is in fact
       // covered.
       /* istanbul ignore if */
       if (!this._haveSyn) {
@@ -73,8 +71,6 @@ export abstract class BasePostMessageStream extends Duplex {
    * Child classes must implement this function.
    */
   protected abstract _postMessage(_data?: unknown): void;
-
-  // stream plumbing
 
   _read(): void {
     return undefined;

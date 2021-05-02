@@ -41,7 +41,7 @@ describe('post-message-stream', () => {
         'utf8',
       );
 
-      // create a stream that multiplies incoming data by 5 and returns it
+      // Create a stream that multiplies incoming data by 5 and returns it
       const setupWorkerStream = `
         const stream = new self.PostMessageStream.WorkerPostMessageStream();
         stream.on('data', (value) => stream.write(value * 5));
@@ -60,7 +60,7 @@ describe('post-message-stream', () => {
         });
       });
 
-      // The worker should ignore this.
+      // The worker should ignore this
       worker.postMessage('foo');
 
       // Send message to worker, triggering a response
@@ -68,7 +68,7 @@ describe('post-message-stream', () => {
 
       expect(await responsePromise).toStrictEqual(555);
 
-      // Check that events with falsy data are ignored as expected.
+      // Check that events with falsy data are ignored as expected
       parentStream.once('data', (data) => {
         throw new Error(`Unexpected data on stream: ${data}`);
       });
@@ -158,7 +158,7 @@ describe('post-message-stream', () => {
       expect(await responsePromise).toStrictEqual(555);
 
       // Check that events without e.g. the correct source are ignored as
-      // expected.
+      // expected
       parentStream.once('data', (data) => {
         throw new Error(`Unexpected data on stream: ${data}`);
       });
@@ -175,16 +175,24 @@ describe('post-message-stream', () => {
   // For line coverage in BasePostMessageStream
   describe('Base', () => {
     it('handles errors thrown when pushing data', async () => {
-      const stream = new WindowPostMessageStream({ name: 'name', target: 'target' })
+      const stream = new WindowPostMessageStream({
+        name: 'name',
+        target: 'target',
+      });
+
       await new Promise<void>((resolve) => {
-        stream.push = () => { throw new Error('push error') }
+        stream.push = () => {
+          throw new Error('push error');
+        };
+
         stream.once('error', (error) => {
           expect(error.message).toStrictEqual('push error');
           resolve();
         });
+
         (stream as any)._init = true;
         (stream as any)._onData({});
-      })
-    })
-  })
+      });
+    });
+  });
 });
