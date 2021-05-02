@@ -13,9 +13,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - [#9](https://github.com/MetaMask/post-message-stream.git/pull/9): Add LICENSE file
 - [#6](https://github.com/MetaMask/post-message-stream.git/pull/6): Add `WorkerPostMessageStream` and `WorkerParentPostMessageStream`
+- [#18](https://github.com/MetaMask/post-message-stream.git/pull/18): Add changelog
 
 ### Changed
 
+- [#18](https://github.com/MetaMask/post-message-stream.git/pull/18): **(BREAKING)** Rename package to `@metamask/post-message-stream`
 - [#6](https://github.com/MetaMask/post-message-stream.git/pull/6): **(BREAKING)** Refactor exports
   - `PostMessageStream` default export now exported under name `WindowPostMessageStream`
 - [#13](https://github.com/MetaMask/post-message-stream.git/pull/13): Migrate to TypeScript, add typings
