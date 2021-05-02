@@ -6,6 +6,5 @@ set -u
 set -o pipefail
 
 mkdir -p dist-test
-rm dist-test/*.js
+rm -rf dist-test/*
 browserify --standalone PostMessageStream ./dist/WorkerPostMessageStream.js > ./dist-test/WorkerPostMessageStream.js
-browserify --standalone PostMessageStream ./dist/WindowPostMessageStream.js > ./dist-test/WindowPostMessageStream.js

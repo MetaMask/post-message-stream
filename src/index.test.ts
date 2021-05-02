@@ -1,12 +1,9 @@
 import { readFileSync } from 'fs';
-import pathUtils from 'path';
-import http from 'http';
-import finalHandler from 'finalhandler';
-import serveStatic from 'serve-static';
 import * as PostMessageStream from '.';
 
 const {
   WindowPostMessageStream,
+  WorkerPostMessageStream,
   WorkerParentPostMessageStream,
 } = PostMessageStream;
 
@@ -79,38 +76,14 @@ describe('post-message-stream', () => {
       parentStream.destroy();
       expect(parentStream.destroyed).toStrictEqual(true);
     });
+
+    // Just for index.ts function coverage
+    it('can initialize a WorkerPostMessageStream', () => {
+      expect(Boolean(new WorkerPostMessageStream())).toStrictEqual(true);
+    })
   });
 
   describe('Window', () => {
-    const PORT = 9031;
-
-    /**
-     * Create a server that statically serves the dist-test/ directory on port
-     * 9031.
-     *
-     * Credit: https://stackabuse.com/node-http-servers-for-static-file-serving/
-     */
-    function createServer() {
-      const root = pathUtils.join(__dirname, '../dist-test');
-      const serve = serveStatic(root, { cacheControl: false });
-
-      const server = http.createServer((req: any, res: any) => {
-        const done = finalHandler(req, res);
-        serve(req, res, done as any);
-      });
-
-      return server.listen(PORT);
-    }
-
-    let server: http.Server;
-    beforeAll(() => {
-      server = createServer();
-    });
-
-    afterAll(() => {
-      server.close();
-    });
-
     it('throws on invalid input', () => {
       expect(
         () =>
@@ -126,49 +99,47 @@ describe('post-message-stream', () => {
     });
 
     it('can communicate between windows and be destroyed', async () => {
-      // eslint-disable-next-line prefer-const
-      let parentStream: PostMessageStream.WindowPostMessageStream;
-      const childWindow = window.open(`http://localhost:${PORT}`) as Window;
-
-      // Instantiate the parent stream. Overwrite its _targetWindow property
-      // because Electron's Context Isolation proxies window objects and breaks
-      // referential equality.
-      // If _targetWindow and event.source aren't referentially equal, the
-      // message is discarded.
-      const messageListener = (event: any) => {
-        (parentStream as any)._targetWindow = event.source;
-      };
-      window.addEventListener('message', messageListener, false);
-      parentStream = new WindowPostMessageStream({
-        name: 'parent',
-        target: 'child',
-        targetWindow: childWindow as any,
+      // Sender stream
+      const streamA = new WindowPostMessageStream({
+        name: 'a',
+        target: 'b',
       });
+
+      // Receiver stream. Multiplies incoming values by 5 and returns them.
+      const streamB = new WindowPostMessageStream({
+        name: 'b',
+        target: 'a',
+        // This shouldn't make a difference, it's just for coverage purposes
+        targetWindow: window,
+      });
+      streamB.on('data', (value) => streamB.write(value * 5));
 
       // Get a deferred Promise for the result
       const responsePromise = new Promise((resolve) => {
-        parentStream.once('data', (num) => {
+        streamA.once('data', (num) => {
           resolve(Number(num));
         });
       });
 
-      // Send message to child window, triggering a response
-      parentStream.write(111);
+      // Write to stream A, triggering a response from stream B
+      streamA.write(111);
 
       expect(await responsePromise).toStrictEqual(555);
 
-      // Check that events without e.g. the correct source are ignored as
+      // Check that events without e.g. the correct event.source are ignored as
       // expected
-      parentStream.once('data', (data) => {
+      const throwingListener = (data: any) => {
         throw new Error(`Unexpected data on stream: ${data}`);
-      });
-      window.removeEventListener('message', messageListener, false);
+      };
+      streamA.once('data', throwingListener);
+      streamB.once('data', throwingListener);
       window.dispatchEvent(new Event('message'));
 
-      // Close child window, destroy parent, and check that parent was destroyed
-      childWindow.close();
-      parentStream.destroy();
-      expect(parentStream.destroyed).toStrictEqual(true);
+      // Destroy streams and confirm that they were destroyed
+      streamA.destroy();
+      streamB.destroy();
+      expect(streamA.destroyed).toStrictEqual(true);
+      expect(streamB.destroyed).toStrictEqual(true);
     });
   });
 

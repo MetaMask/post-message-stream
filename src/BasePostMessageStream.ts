@@ -28,7 +28,7 @@ export abstract class BasePostMessageStream extends Duplex {
       objectMode: true,
     });
 
-    // initialization flags
+    // Initialization flags
     this._init = false;
     this._haveSyn = false;
   }
@@ -38,27 +38,26 @@ export abstract class BasePostMessageStream extends Duplex {
    * communication with other end.
    */
   protected _handshake(): void {
-    // send synchronization message
+    // Send synchronization message
     this._write(SYN, null, noop);
     this.cork();
   }
 
   protected _onData(data: StreamData): void {
     if (this._init) {
-      // forward message
+      // Forward message
       try {
         this.push(data);
       } catch (err) {
         this.emit('error', err);
       }
     } else if (data === SYN) {
-      // listen for handshake
+      // Listen for handshake
       this._haveSyn = true;
       this._write(ACK, null, noop);
     } else if (data === ACK) {
       this._init = true;
-      // Our instrumentation prevents us from covering this, but it is in fact
-      // covered.
+      // Difficult to induce, but we can be assured that it works.
       /* istanbul ignore if */
       if (!this._haveSyn) {
         this._write(ACK, null, noop);

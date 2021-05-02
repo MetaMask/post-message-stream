@@ -1,7 +1,7 @@
 .DS_Store
-dist/
 coverage/
-dist-test/*.js
+dist/
+dist-test/
 
 # Logs
 logs
