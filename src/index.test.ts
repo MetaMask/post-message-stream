@@ -80,7 +80,7 @@ describe('post-message-stream', () => {
     // Just for index.ts function coverage
     it('can initialize a WorkerPostMessageStream', () => {
       expect(Boolean(new WorkerPostMessageStream())).toStrictEqual(true);
-    })
+    });
   });
 
   describe('Window', () => {
