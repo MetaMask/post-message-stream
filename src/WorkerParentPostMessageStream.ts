@@ -17,11 +17,10 @@ export class WorkerParentPostMessageStream extends BasePostMessageStream {
 
   private _worker: Worker;
 
-  constructor({ worker }: Partial<WorkerParentStreamArgs> = {}) {
+  constructor({ worker }: WorkerParentStreamArgs) {
     if (!worker) {
       throw new Error('Invalid input.');
     }
-
     super();
 
     this._target = DEDICATED_WORKER_NAME;

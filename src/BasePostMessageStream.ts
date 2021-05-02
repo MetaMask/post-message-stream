@@ -16,7 +16,7 @@ export interface PostMessageEvent {
 }
 
 /**
- * Incomplete base implementation for postMessage streams.
+ * Abstract base class for postMessage streams.
  */
 export abstract class BasePostMessageStream extends Duplex {
   private _init: boolean;
@@ -28,33 +28,31 @@ export abstract class BasePostMessageStream extends Duplex {
       objectMode: true,
     });
 
-    // initialization flags
+    // Initialization flags
     this._init = false;
     this._haveSyn = false;
   }
-
-  // private
 
   /**
    * Must be called at end of child constructor to initiate
    * communication with other end.
    */
   protected _handshake(): void {
-    // send synchronization message
+    // Send synchronization message
     this._write(SYN, null, noop);
     this.cork();
   }
 
   protected _onData(data: StreamData): void {
     if (this._init) {
-      // forward message
+      // Forward message
       try {
         this.push(data);
       } catch (err) {
         this.emit('error', err);
       }
     } else if (data === SYN) {
-      // listen for handshake
+      // Listen for handshake
       this._haveSyn = true;
       this._write(ACK, null, noop);
     } else if (data === ACK) {
@@ -70,8 +68,6 @@ export abstract class BasePostMessageStream extends Duplex {
    * Child classes must implement this function.
    */
   protected abstract _postMessage(_data?: unknown): void;
-
-  // stream plumbing
 
   _read(): void {
     return undefined;

@@ -39,3 +39,7 @@ const messageStream = new WindowPostMessageStream({
   window: iframe.contentWindow,
 });
 ```
+
+## Development
+
+Install using `yarn setup`, not `yarn install`.

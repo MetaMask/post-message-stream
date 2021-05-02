@@ -1,15 +1,14 @@
 module.exports = {
-  // TODO: Fix test coverage
-  // collectCoverage: true,
-  // coverageReporters: ['text', 'html'],
-  // coverageThreshold: {
-  //   global: {
-  //     branches: 100,
-  //     functions: 100,
-  //     lines: 100,
-  //     statements: 100,
-  //   },
-  // },
+  collectCoverage: true,
+  coverageReporters: ['text', 'html'],
+  coverageThreshold: {
+    global: {
+      branches: 95,
+      functions: 100,
+      lines: 100,
+      statements: 100,
+    },
+  },
   moduleFileExtensions: ['js', 'json', 'jsx', 'ts', 'tsx', 'node'],
   preset: 'ts-jest',
   // "resetMocks" resets all mocks, including mocked modules, to jest.fn(),
@@ -19,7 +18,8 @@ module.exports = {
   // original implementations, between each test. It does not affect mocked
   // modules.
   restoreMocks: true,
-  testEnvironment: 'node',
+  runner: '@jest-runner/electron',
+  testEnvironment: '@jest-runner/electron/environment',
   testRegex: ['\\.test\\.(ts|js)$'],
   testTimeout: 2500,
 };
