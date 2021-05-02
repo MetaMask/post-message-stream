@@ -37,7 +37,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Initial release.
 
-[Unreleased]: https://github.com/MetaMask/post-message-stream.git/v4.0.0...HEAD
+[unreleased]: https://github.com/MetaMask/post-message-stream.git/v4.0.0...HEAD
 [4.0.0]: https://github.com/MetaMask/post-message-stream/compare/v3.0.0...v4.0.0
 [3.0.0]: https://github.com/MetaMask/post-message-stream/compare/v2.0.0...v3.0.0
 [2.0.0]: https://github.com/MetaMask/post-message-stream/compare/v1.0.0...v2.0.0

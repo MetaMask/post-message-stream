@@ -22,6 +22,16 @@ export class WindowPostMessageStream extends BasePostMessageStream {
 
   private _targetWindow: Window;
 
+  /**
+   * Creates a stream for communicating with other streams across the same or
+   * different window objects.
+   *
+   * @param args.name - The name of the stream. Used to differentiate between
+   * multiple streams sharing the same window object.
+   * @param args.target - The name of the stream to exchange messages with.
+   * @param args.targetWindow - The window object of the target stream. Defaults
+   * to `window`.
+   */
   constructor({ name, target, targetWindow }: WindowPostMessageStreamArgs) {
     if (!name || !target) {
       throw new Error('Invalid input.');
