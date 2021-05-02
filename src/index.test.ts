@@ -99,13 +99,26 @@ describe('post-message-stream', () => {
     });
 
     it('can communicate between windows and be destroyed', async () => {
-      // Sender stream
+      // Initialize sender stream
       const streamA = new WindowPostMessageStream({
         name: 'a',
         target: 'b',
       });
 
-      // Receiver stream. Multiplies incoming values by 5 and returns them.
+      // Prevent stream A from receiving stream B's synchronization message, to
+      // force execution down a particular path for coverage purposes.
+      const originalStreamAListener = (streamA as any)._onMessage;
+      const streamAListener = (event: MessageEvent) => {
+        if (event.data.data === 'SYN') {
+          return undefined;
+        }
+        return originalStreamAListener(event);
+      };
+      window.removeEventListener('message', originalStreamAListener, false);
+      window.addEventListener('message', streamAListener, false);
+
+      // Initialize receiver stream. Multiplies incoming values by 5 and
+      // returns them.
       const streamB = new WindowPostMessageStream({
         name: 'b',
         target: 'a',
