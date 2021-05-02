@@ -16,7 +16,6 @@
     "setup:postinstall": "yarn allow-scripts",
     "pretest": "yarn build:test",
     "test": "jest",
-    "test:coverage": "yarn test --collectCoverage",
     "test:watch": "yarn test --watch",
     "prepublishOnly": "yarn build && yarn lint && yarn test",
     "lint:eslint": "eslint . --cache --ext js,ts",
