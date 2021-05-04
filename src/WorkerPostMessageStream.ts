@@ -15,7 +15,7 @@ export class WorkerPostMessageStream extends BasePostMessageStream {
   private _name: string;
 
   /**
-   * Note: Must only be used in web workers.
+   * Note: Designed for use in web workers only.
    *
    * Creates a stream for communicating with the window that created this web
    * worker.
