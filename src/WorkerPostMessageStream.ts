@@ -9,11 +9,17 @@ import {
 import { DEDICATED_WORKER_NAME } from './enums';
 
 /**
- * Worker-side Dedicated Worker postMessage stream.
+ * Worker-side dedicated web worker `postMessage` stream.
  */
 export class WorkerPostMessageStream extends BasePostMessageStream {
   private _name: string;
 
+  /**
+   * Note: Designed for use in web workers only.
+   *
+   * Creates a stream for communicating with the window that created this web
+   * worker.
+   */
   constructor() {
     super();
 

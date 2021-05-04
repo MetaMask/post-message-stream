@@ -1,5 +1,5 @@
 {
-  "name": "post-message-stream",
+  "name": "@metamask/post-message-stream",
   "version": "4.0.0",
   "description": "Sets up a duplex object stream over window.postMessage",
   "main": "dist/index.js",
