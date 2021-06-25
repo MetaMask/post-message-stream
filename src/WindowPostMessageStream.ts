@@ -7,8 +7,8 @@ import {
 interface WindowPostMessageStreamArgs {
   name: string;
   target: string;
-  targetWindow?: Window;
-  targetOrigin?: string;
+  targetWindow: Window;
+  targetOrigin: string;
 }
 
 /**
@@ -37,8 +37,8 @@ export class WindowPostMessageStream extends BasePostMessageStream {
   constructor({
     name,
     target,
-    targetWindow,
-    targetOrigin,
+    targetWindow = window,
+    targetOrigin = location.origin,
   }: WindowPostMessageStreamArgs) {
     if (!name || !target) {
       throw new Error('Invalid input.');
@@ -47,8 +47,8 @@ export class WindowPostMessageStream extends BasePostMessageStream {
 
     this._name = name;
     this._target = target;
-    this._targetOrigin = targetOrigin || location.origin;
-    this._targetWindow = targetWindow || window;
+    this._targetOrigin = targetOrigin;
+    this._targetWindow = targetWindow;
     this._onMessage = this._onMessage.bind(this);
 
     window.addEventListener('message', this._onMessage as any, false);
