@@ -7,8 +7,8 @@ import {
 interface WindowPostMessageStreamArgs {
   name: string;
   target: string;
-  targetWindow: Window;
-  targetOrigin: string;
+  targetWindow?: Window;
+  targetOrigin?: string;
 }
 
 /**
