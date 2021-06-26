@@ -8,6 +8,7 @@ interface WindowPostMessageStreamArgs {
   name: string;
   target: string;
   targetWindow?: Window;
+  targetOrigin?: string;
 }
 
 /**
@@ -31,8 +32,14 @@ export class WindowPostMessageStream extends BasePostMessageStream {
    * @param args.target - The name of the stream to exchange messages with.
    * @param args.targetWindow - The window object of the target stream. Defaults
    * to `window`.
+   * @param args.targetOrigin - The target origin for the iframe. Defaults to location.origin, allows '*' to be passed.
    */
-  constructor({ name, target, targetWindow }: WindowPostMessageStreamArgs) {
+  constructor({
+    name,
+    target,
+    targetWindow = window,
+    targetOrigin = location.origin,
+  }: WindowPostMessageStreamArgs) {
     if (!name || !target) {
       throw new Error('Invalid input.');
     }
@@ -40,8 +47,8 @@ export class WindowPostMessageStream extends BasePostMessageStream {
 
     this._name = name;
     this._target = target;
-    this._targetOrigin = targetWindow ? '*' : location.origin;
-    this._targetWindow = targetWindow || window;
+    this._targetOrigin = targetOrigin;
+    this._targetWindow = targetWindow;
     this._onMessage = this._onMessage.bind(this);
 
     window.addEventListener('message', this._onMessage as any, false);

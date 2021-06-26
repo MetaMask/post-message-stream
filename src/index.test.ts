@@ -154,6 +154,15 @@ describe('post-message-stream', () => {
       expect(streamA.destroyed).toStrictEqual(true);
       expect(streamB.destroyed).toStrictEqual(true);
     });
+
+    it('can take targetOrigin as an option', () => {
+      const stream = new (WindowPostMessageStream as any)({
+        name: 'foo',
+        target: 'target',
+        targetOrigin: '*',
+      });
+      expect(stream._targetOrigin).toStrictEqual('*');
+    });
   });
 
   // For line coverage in BasePostMessageStream
