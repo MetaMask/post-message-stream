@@ -1,8 +1,8 @@
 import { fork } from 'child_process';
 import { readFileSync, writeFileSync } from 'fs';
-import * as PostMessageStream from '.';
-import { ChildProcessMessageStream } from './ChildProcessMessageStream'
+import { ChildProcessMessageStream } from './ChildProcessMessageStream';
 import { ChildProcessParentMessageStream } from './ChildProcessParentMessageStream';
+import * as PostMessageStream from '.';
 
 const {
   WindowPostMessageStream,
@@ -16,8 +16,8 @@ describe('post-message-stream', () => {
       'WindowPostMessageStream',
       'WorkerPostMessageStream',
       'WorkerParentPostMessageStream',
-      "ChildProcessParentMessageStream", 
-      "ChildProcessMessageStream"
+      'ChildProcessParentMessageStream',
+      'ChildProcessMessageStream',
     ];
 
     it('package has expected exports', () => {
@@ -104,7 +104,7 @@ describe('post-message-stream', () => {
       `;
 
       const code = `${childProcessMessageStreamDist}\n${setupWorkerStream}`;
-      
+
       const tmpFilePath = `${__dirname}/../dist-test/childprocess-test.js`;
       writeFileSync(tmpFilePath, code);
 
