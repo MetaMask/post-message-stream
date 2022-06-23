@@ -1,7 +1,7 @@
 import { fork } from 'child_process';
 import { readFileSync, writeFileSync } from 'fs';
 import { ChildProcessMessageStream } from './ChildProcessMessageStream';
-import { ChildProcessParentMessageStream } from './ChildProcessParentMessageStream';
+import { ParentProcessMessageStream } from './ParentProcessMessageStream';
 import * as PostMessageStream from '.';
 
 const {
@@ -16,7 +16,7 @@ describe('post-message-stream', () => {
       'WindowPostMessageStream',
       'WorkerPostMessageStream',
       'WorkerParentPostMessageStream',
-      'ChildProcessParentMessageStream',
+      'ParentProcessMessageStream',
       'ChildProcessMessageStream',
     ];
 
@@ -111,7 +111,7 @@ describe('post-message-stream', () => {
       const process = fork(tmpFilePath);
 
       // Create parent stream
-      const parentStream = new ChildProcessParentMessageStream({ process });
+      const parentStream = new ParentProcessMessageStream({ process });
 
       // Get a deferred Promise for the eventual result
       const responsePromise = new Promise((resolve) => {

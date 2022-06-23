@@ -1,14 +1,15 @@
 import { ChildProcess } from 'child_process';
-import { BasePostMessageStream, StreamData } from './BasePostMessageStream';
+import { BasePostMessageStream } from './BasePostMessageStream';
+import { isValidStreamMessage, StreamData } from './utils';
 
-interface ChildProcessParentMessageStreamArgs {
+interface ParentProcessMessageStreamArgs {
   process: ChildProcess;
 }
 
-export class ChildProcessParentMessageStream extends BasePostMessageStream {
+export class ParentProcessMessageStream extends BasePostMessageStream {
   private _process: ChildProcess;
 
-  constructor({ process }: ChildProcessParentMessageStreamArgs) {
+  constructor({ process }: ParentProcessMessageStreamArgs) {
     super();
 
     this._process = process;
@@ -22,13 +23,12 @@ export class ChildProcessParentMessageStream extends BasePostMessageStream {
     this._process.send({ data });
   }
 
-  private _onMessage(message: any): void {
-    // validate message
-    if (typeof message !== 'object' || !message.data) {
+  private _onMessage(message: unknown): void {
+    if (!isValidStreamMessage(message)) {
       return;
     }
 
-    this._onData(message.data as StreamData);
+    this._onData(message.data);
   }
 
   _destroy(): void {

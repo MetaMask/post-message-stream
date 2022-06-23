@@ -1,4 +1,5 @@
-import { BasePostMessageStream, StreamData } from './BasePostMessageStream';
+import { BasePostMessageStream } from './BasePostMessageStream';
+import { isValidStreamMessage, StreamData } from './utils';
 
 export class ChildProcessMessageStream extends BasePostMessageStream {
   constructor() {
@@ -15,13 +16,12 @@ export class ChildProcessMessageStream extends BasePostMessageStream {
     globalThis.process.send!({ data });
   }
 
-  private _onMessage(message: any): void {
-    // validate message
-    if (typeof message !== 'object' || !message.data) {
+  private _onMessage(message: unknown): void {
+    if (!isValidStreamMessage(message)) {
       return;
     }
 
-    this._onData(message.data as StreamData);
+    this._onData(message.data);
   }
 
   _destroy(): void {
