@@ -1,11 +1,10 @@
 import { Duplex } from 'readable-stream';
+import { StreamData } from './utils';
 
 const noop = () => undefined;
 
 const SYN = 'SYN';
 const ACK = 'ACK';
-
-export type StreamData = string | Record<string, unknown>;
 
 export interface PostMessageEvent {
   data?: StreamData;

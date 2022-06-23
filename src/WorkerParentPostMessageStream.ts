@@ -1,9 +1,8 @@
 import {
   BasePostMessageStream,
   PostMessageEvent,
-  StreamData,
 } from './BasePostMessageStream';
-import { DEDICATED_WORKER_NAME } from './enums';
+import { DEDICATED_WORKER_NAME, isValidStreamMessage } from './utils';
 
 interface WorkerParentStreamArgs {
   worker: Worker;
@@ -47,12 +46,11 @@ export class WorkerParentPostMessageStream extends BasePostMessageStream {
   private _onMessage(event: PostMessageEvent): void {
     const message = event.data;
 
-    // validate message
-    if (typeof message !== 'object' || !message.data) {
+    if (!isValidStreamMessage(message)) {
       return;
     }
 
-    this._onData(message.data as StreamData);
+    this._onData(message.data);
   }
 
   _destroy(): void {

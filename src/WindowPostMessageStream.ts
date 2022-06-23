@@ -1,8 +1,8 @@
 import {
   BasePostMessageStream,
   PostMessageEvent,
-  StreamData,
 } from './BasePostMessageStream';
+import { isValidStreamMessage } from './utils';
 
 interface WindowPostMessageStreamArgs {
   name: string;
@@ -74,14 +74,13 @@ export class WindowPostMessageStream extends BasePostMessageStream {
     if (
       (this._targetOrigin !== '*' && event.origin !== this._targetOrigin) ||
       event.source !== this._targetWindow ||
-      typeof message !== 'object' ||
-      message.target !== this._name ||
-      !message.data
+      !isValidStreamMessage(message) ||
+      message.target !== this._name
     ) {
       return;
     }
 
-    this._onData(message.data as StreamData);
+    this._onData(message.data);
   }
 
   _destroy(): void {
