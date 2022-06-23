@@ -1,5 +1,8 @@
-import { readFileSync } from 'fs';
+import { fork } from 'child_process';
+import { readFileSync, writeFileSync } from 'fs';
 import * as PostMessageStream from '.';
+import { ChildProcessMessageStream } from './ChildProcessMessageStream'
+import { ChildProcessParentMessageStream } from './ChildProcessParentMessageStream';
 
 const {
   WindowPostMessageStream,
@@ -13,6 +16,8 @@ describe('post-message-stream', () => {
       'WindowPostMessageStream',
       'WorkerPostMessageStream',
       'WorkerParentPostMessageStream',
+      "ChildProcessParentMessageStream", 
+      "ChildProcessMessageStream"
     ];
 
     it('package has expected exports', () => {
@@ -81,6 +86,63 @@ describe('post-message-stream', () => {
     // Just for index.ts function coverage
     it('can initialize a WorkerPostMessageStream', () => {
       expect(Boolean(new WorkerPostMessageStream())).toStrictEqual(true);
+    });
+  });
+
+  describe('ChildProcess', () => {
+    it('can communicate with a worker and be destroyed', async () => {
+      const childProcessMessageStreamDist = readFileSync(
+        `${__dirname}/../dist-test/ChildProcessMessageStream.js`,
+        'utf8',
+      );
+
+      // Create a stream that multiplies incoming data by 5 and returns it
+      const setupWorkerStream = `
+        const { ChildProcessMessageStream } = require('./ChildProcessMessageStream');
+        const stream = new ChildProcessMessageStream();
+        stream.on('data', (value) => stream.write(value * 5));
+      `;
+
+      const code = `${childProcessMessageStreamDist}\n${setupWorkerStream}`;
+      
+      const tmpFilePath = `${__dirname}/../dist-test/childprocess-test.js`;
+      writeFileSync(tmpFilePath, code);
+
+      const process = fork(tmpFilePath);
+
+      // Create parent stream
+      const parentStream = new ChildProcessParentMessageStream({ process });
+
+      // Get a deferred Promise for the eventual result
+      const responsePromise = new Promise((resolve) => {
+        parentStream.once('data', (num) => {
+          resolve(Number(num));
+        });
+      });
+
+      // The worker should ignore this
+      process.send('foo');
+
+      // Send message to worker, triggering a response
+      parentStream.write(111);
+
+      expect(await responsePromise).toStrictEqual(555);
+
+      // Check that events with falsy data are ignored as expected
+      parentStream.once('data', (data) => {
+        throw new Error(`Unexpected data on stream: ${data}`);
+      });
+      process.send(new Event('message'));
+
+      // Terminate worker, destroy parent, and check that parent was destroyed
+      process.kill();
+      parentStream.destroy();
+      expect(parentStream.destroyed).toStrictEqual(true);
+    });
+
+    // Just for index.ts function coverage
+    it('can initialize a ChildProcessMessageStream', () => {
+      expect(Boolean(new ChildProcessMessageStream())).toStrictEqual(true);
     });
   });
 
