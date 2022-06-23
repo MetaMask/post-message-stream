@@ -1,10 +1,10 @@
 import { fork } from 'child_process';
 import { readFileSync, writeFileSync } from 'fs';
-import { ChildProcessMessageStream } from './node-process/ChildProcessMessageStream';
-import { ParentProcessMessageStream } from './node-process/ParentProcessMessageStream';
 import * as PostMessageStream from '.';
 
 const {
+  ChildProcessMessageStream,
+  ParentProcessMessageStream,
   WindowPostMessageStream,
   WorkerPostMessageStream,
   WorkerParentPostMessageStream,
