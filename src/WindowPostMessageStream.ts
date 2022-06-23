@@ -27,6 +27,7 @@ export class WindowPostMessageStream extends BasePostMessageStream {
    * Creates a stream for communicating with other streams across the same or
    * different window objects.
    *
+   * @param args - Options bag.
    * @param args.name - The name of the stream. Used to differentiate between
    * multiple streams sharing the same window object.
    * @param args.target - The name of the stream to exchange messages with.
