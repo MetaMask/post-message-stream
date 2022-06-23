@@ -4,9 +4,12 @@
 import {
   BasePostMessageStream,
   PostMessageEvent,
-  StreamData,
 } from './BasePostMessageStream';
-import { DEDICATED_WORKER_NAME } from './enums';
+import {
+  DEDICATED_WORKER_NAME,
+  isValidStreamMessage,
+  StreamData,
+} from './utils';
 
 /**
  * Worker-side dedicated web worker `postMessage` stream.
@@ -38,11 +41,7 @@ export class WorkerPostMessageStream extends BasePostMessageStream {
     const message = event.data;
 
     // validate message
-    if (
-      typeof message !== 'object' ||
-      message.target !== this._name ||
-      !message.data
-    ) {
+    if (!isValidStreamMessage(message) || message.target !== this._name) {
       return;
     }
 
