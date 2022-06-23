@@ -20,6 +20,7 @@ export class WorkerParentPostMessageStream extends BasePostMessageStream {
   /**
    * Creates a stream for communicating with a dedicated web worker.
    *
+   * @param args - Options bag.
    * @param args.worker - The Web Worker to exchange messages with. The worker
    * must instantiate a WorkerPostMessageStream.
    */

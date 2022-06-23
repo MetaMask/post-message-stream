@@ -1,8 +1,6 @@
 import { Duplex } from 'readable-stream';
 
-function noop(): void {
-  return undefined;
-}
+const noop = () => undefined;
 
 const SYN = 'SYN';
 const ACK = 'ACK';

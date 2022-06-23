@@ -19,6 +19,7 @@ describe('post-message-stream', () => {
       expect(Object.keys(PostMessageStream)).toHaveLength(
         expectedExports.length,
       );
+
       for (const exportName of expectedExports) {
         expect(exportName in PostMessageStream).toStrictEqual(true);
       }
@@ -92,6 +93,7 @@ describe('post-message-stream', () => {
             target: 'target',
           }),
       ).toThrow('Invalid input.');
+
       expect(
         () =>
           new (WindowPostMessageStream as any)({ name: 'name', target: null }),
