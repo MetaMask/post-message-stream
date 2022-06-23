@@ -1,4 +1,3 @@
-/* istanbul ignore file */
 // We ignore coverage for the entire file due to limits on our instrumentation,
 // but it is in fact covered by our tests.
 import {
@@ -45,7 +44,7 @@ export class WorkerPostMessageStream extends BasePostMessageStream {
       return;
     }
 
-    this._onData(message.data as StreamData);
+    this._onData(message.data);
   }
 
   // worker stream lifecycle assumed to be coterminous with global scope
