@@ -4,12 +4,12 @@
 import {
   BasePostMessageStream,
   PostMessageEvent,
-} from './BasePostMessageStream';
+} from '../BasePostMessageStream';
 import {
   DEDICATED_WORKER_NAME,
   isValidStreamMessage,
   StreamData,
-} from './utils';
+} from '../utils';
 
 /**
  * Worker-side dedicated web worker `postMessage` stream.

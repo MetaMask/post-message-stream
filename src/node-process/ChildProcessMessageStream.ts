@@ -1,5 +1,5 @@
-import { BasePostMessageStream } from './BasePostMessageStream';
-import { isValidStreamMessage, StreamData } from './utils';
+import { BasePostMessageStream } from '../BasePostMessageStream';
+import { isValidStreamMessage, StreamData } from '../utils';
 
 export class ChildProcessMessageStream extends BasePostMessageStream {
   constructor() {

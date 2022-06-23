@@ -1,6 +1,6 @@
 import { ChildProcess } from 'child_process';
-import { BasePostMessageStream } from './BasePostMessageStream';
-import { isValidStreamMessage, StreamData } from './utils';
+import { BasePostMessageStream } from '../BasePostMessageStream';
+import { isValidStreamMessage, StreamData } from '../utils';
 
 interface ParentProcessMessageStreamArgs {
   process: ChildProcess;
