@@ -1,9 +1,9 @@
 import { ChildProcess } from 'child_process';
 import { BasePostMessageStream, StreamData } from './BasePostMessageStream';
 
-type ChildProcessParentMessageStreamArgs = {
+interface ChildProcessParentMessageStreamArgs {
   process: ChildProcess;
-};
+}
 
 export class ChildProcessParentMessageStream extends BasePostMessageStream {
   private _process: ChildProcess;

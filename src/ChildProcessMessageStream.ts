@@ -1,4 +1,4 @@
-import { BasePostMessageStream, StreamData } from "./BasePostMessageStream";
+import { BasePostMessageStream, StreamData } from './BasePostMessageStream';
 
 export class ChildProcessMessageStream extends BasePostMessageStream {
   constructor() {
