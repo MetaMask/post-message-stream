@@ -1,8 +1,7 @@
 import EventEmitter from 'events';
 import { readFileSync, writeFileSync } from 'fs';
-import { ThreadMessageStream } from './ThreadMessageStream';
+import { Worker } from 'worker_threads';
 import { ParentThreadMessageStream } from './ParentThreadMessageStream';
-import { Worker } from 'worker_threads'
 
 const DIST_TEST_PATH = `${__dirname}/../../dist-test`;
 
