@@ -2,9 +2,9 @@ import { Worker } from 'worker_threads';
 import { BasePostMessageStream } from '../BasePostMessageStream';
 import { isValidStreamMessage, StreamData } from '../utils';
 
-type ParentThreadMessageStreamArgs = {
+interface ParentThreadMessageStreamArgs {
   process: Worker;
-};
+}
 
 export class ParentThreadMessageStream extends BasePostMessageStream {
   private _process: Worker;
