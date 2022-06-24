@@ -1,4 +1,4 @@
-import { ChildProcess } from 'child_process';
+import type { ChildProcess } from 'child_process';
 import { BasePostMessageStream } from '../BasePostMessageStream';
 import { isValidStreamMessage, StreamData } from '../utils';
 
