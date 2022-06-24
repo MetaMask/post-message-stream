@@ -2,6 +2,7 @@ import { EventEmitter } from 'stream';
 import { parentPort } from 'worker_threads';
 import { ThreadMessageStream } from './ThreadMessageStream';
 
+// This file is kept separate due to this module mock.
 jest.mock('worker_threads', () => ({
   parentPort: {
     on: jest.fn(),

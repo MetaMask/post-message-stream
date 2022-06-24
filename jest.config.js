@@ -20,7 +20,7 @@ module.exports = {
   restoreMocks: true,
   projects: [
     {
-      displayName: 'runner: default',
+      displayName: 'Runner: default',
       preset: 'ts-jest',
       testRegex: ['\\.test\\.(ts|js)$'],
       testPathIgnorePatterns: [
@@ -29,14 +29,13 @@ module.exports = {
       ],
     },
     {
-      displayName: 'runner: electron',
+      displayName: 'Runner: Electron',
       preset: 'ts-jest',
       runner: '@jest-runner/electron',
       testEnvironment: '@jest-runner/electron/environment',
-      testRegex: ['\\.test\\.(ts|js)$'],
-      testPathIgnorePatterns: [
-        '<rootDir>/src/node-thread/*',
-        '<rootDir>/src/node-process/*',
+      testMatch: [
+        '<rootDir>/src/WebWorker/*.test.ts',
+        '<rootDir>/src/window/*.test.ts',
       ],
     },
   ],
