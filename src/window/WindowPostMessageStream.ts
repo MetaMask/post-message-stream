@@ -1,8 +1,8 @@
 import {
   BasePostMessageStream,
   PostMessageEvent,
-} from './BasePostMessageStream';
-import { isValidStreamMessage } from './utils';
+} from '../BasePostMessageStream';
+import { isValidStreamMessage } from '../utils';
 
 interface WindowPostMessageStreamArgs {
   name: string;

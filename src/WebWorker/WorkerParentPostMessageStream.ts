@@ -1,8 +1,8 @@
 import {
   BasePostMessageStream,
   PostMessageEvent,
-} from './BasePostMessageStream';
-import { DEDICATED_WORKER_NAME, isValidStreamMessage } from './utils';
+} from '../BasePostMessageStream';
+import { DEDICATED_WORKER_NAME, isValidStreamMessage } from '../utils';
 
 interface WorkerParentStreamArgs {
   worker: Worker;
