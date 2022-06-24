@@ -15,7 +15,7 @@ export class ThreadMessageStream extends BasePostMessageStream {
 
   protected _postMessage(data: StreamData): void {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    parentPort!.postMessage(data);
+    parentPort!.postMessage({ data });
   }
 
   private _onMessage(message: unknown): void {

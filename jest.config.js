@@ -18,8 +18,27 @@ module.exports = {
   // original implementations, between each test. It does not affect mocked
   // modules.
   restoreMocks: true,
-  runner: '@jest-runner/electron',
-  testEnvironment: '@jest-runner/electron/environment',
-  testRegex: ['\\.test\\.(ts|js)$'],
+  projects: [
+    {
+      displayName: 'runner: default',
+      preset: 'ts-jest',
+      testRegex: ['\\.test\\.(ts|js)$'],
+      testPathIgnorePatterns: [
+        '<rootDir>/src/WebWorker/*',
+        '<rootDir>/src/window/*',
+      ],
+    },
+    {
+      displayName: 'runner: electron',
+      preset: 'ts-jest',
+      runner: '@jest-runner/electron',
+      testEnvironment: '@jest-runner/electron/environment',
+      testRegex: ['\\.test\\.(ts|js)$'],
+      testPathIgnorePatterns: [
+        '<rootDir>/src/node-thread/*',
+        '<rootDir>/src/node-process/*',
+      ],
+    },
+  ],
   testTimeout: 2500,
 };
