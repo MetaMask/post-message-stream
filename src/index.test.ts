@@ -8,6 +8,8 @@ describe('post-message-stream', () => {
       'WorkerParentPostMessageStream',
       'ParentProcessMessageStream',
       'ChildProcessMessageStream',
+      'ParentThreadMessageStream',
+      'ThreadMessageStream',
     ];
 
     it('package has expected exports', () => {
