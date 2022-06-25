@@ -1,8 +1,8 @@
 import { fork } from 'child_process';
 import EventEmitter from 'events';
 import { readFileSync, writeFileSync } from 'fs';
-import { ChildProcessMessageStream } from './ChildProcessMessageStream';
-import { ParentProcessMessageStream } from './ParentProcessMessageStream';
+import { ProcessMessageStream } from './ProcessMessageStream';
+import { ProcessParentMessageStream } from './ProcessParentMessageStream';
 
 const DIST_TEST_PATH = `${__dirname}/../../dist-test`;
 
@@ -15,14 +15,14 @@ class MockProcess extends EventEmitter {
 describe('Node Child Process Streams', () => {
   it('can communicate with a child process and be destroyed', async () => {
     const childProcessMessageStreamDist = readFileSync(
-      `${DIST_TEST_PATH}/ChildProcessMessageStream.js`,
+      `${DIST_TEST_PATH}/ProcessMessageStream.js`,
       'utf8',
     );
 
     // Create a stream that multiplies incoming data by 5 and returns it
     const setupProcessStream = `
-      const { ChildProcessMessageStream } = require('./ChildProcessMessageStream');
-      const stream = new ChildProcessMessageStream();
+      const { ProcessMessageStream } = require('./ProcessMessageStream');
+      const stream = new ProcessMessageStream();
       stream.on('data', (value) => stream.write(value * 5));
     `;
 
@@ -34,7 +34,7 @@ describe('Node Child Process Streams', () => {
     const childProcess = fork(tmpFilePath);
 
     // Create parent stream
-    const parentStream = new ParentProcessMessageStream({
+    const parentStream = new ProcessParentMessageStream({
       process: childProcess,
     });
 
@@ -66,10 +66,10 @@ describe('Node Child Process Streams', () => {
     expect(parentStream.destroyed).toStrictEqual(true);
   });
 
-  describe('ParentProcessMessageStream', () => {
+  describe('ProcessParentMessageStream', () => {
     it('ignores invalid messages', () => {
       const mockProcess: any = new MockProcess();
-      const stream = new ParentProcessMessageStream({ process: mockProcess });
+      const stream = new ProcessParentMessageStream({ process: mockProcess });
       const onDataSpy = jest
         .spyOn(stream, '_onData' as any)
         .mockImplementation();
@@ -84,11 +84,11 @@ describe('Node Child Process Streams', () => {
     });
   });
 
-  describe('ChildProcessMessageStream', () => {
-    let stream: ChildProcessMessageStream;
+  describe('ProcessMessageStream', () => {
+    let stream: ProcessMessageStream;
 
     beforeEach(() => {
-      stream = new ChildProcessMessageStream();
+      stream = new ProcessMessageStream();
     });
 
     afterEach(() => {
@@ -99,7 +99,7 @@ describe('Node Child Process Streams', () => {
       const originalSend = globalThis.process.send;
 
       globalThis.process.send = undefined;
-      expect(() => new ChildProcessMessageStream()).toThrow(
+      expect(() => new ProcessMessageStream()).toThrow(
         'Parent IPC channel not found. This class should only be instantiated in a Node.js child process.',
       );
 

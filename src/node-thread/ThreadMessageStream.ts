@@ -2,6 +2,9 @@ import { parentPort } from 'worker_threads';
 import { BasePostMessageStream } from '../BasePostMessageStream';
 import { isValidStreamMessage, StreamData } from '../utils';
 
+/**
+ * Child thread-side Node.js `worker_threads` stream.
+ */
 export class ThreadMessageStream extends BasePostMessageStream {
   #parentPort: Exclude<typeof parentPort, null>;
 

@@ -32,7 +32,7 @@ Under the hood, `WindowPostMessageStream` uses `window.addEventListener('message
 If `event.source` is not referentially equal to the stream's `targetWindow`, all messages will be ignored.
 This can happen in environments where `window` objects are proxied, such as Electron.
 
-### `WorkerPostMessageStream` and `WorkerParentPostMessageStream`
+### `WebWorkerPostMessageStream` and `WebWorkerParentPostMessageStream`
 
 These streams are intended for **dedicated** [Web Workers](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers) only.
 They might sort-of work with shared workers, but attempt that at your own risk.
@@ -43,20 +43,20 @@ The worker is initialized in the worker.
 In the parent context:
 
 ```javascript
-import { WorkerParentPostMessageStream } from '@metamask/post-message-stream';
+import { WebWorkerParentPostMessageStream } from '@metamask/post-message-stream';
 
 const worker = new Worker(url);
 
-const parentStream = new WorkerParentPostMessageStream({ worker });
+const parentStream = new WebWorkerParentPostMessageStream({ worker });
 parentStream.write('hello');
 ```
 
 In the worker:
 
 ```javascript
-import { WorkerPostMessageStream } from '@metamask/post-message-stream';
+import { WebWorkerPostMessageStream } from '@metamask/post-message-stream';
 
-const workerStream = new WorkerPostMessageStream();
+const workerStream = new WebWorkerPostMessageStream();
 workerStream.on('data', (data) => console.log(data + ', world'));
 // > 'hello, world'
 ```

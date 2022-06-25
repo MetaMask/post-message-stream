@@ -1,7 +1,10 @@
 import { BasePostMessageStream } from '../BasePostMessageStream';
 import { isValidStreamMessage, StreamData } from '../utils';
 
-export class ChildProcessMessageStream extends BasePostMessageStream {
+/**
+ * Child process-side Node.js `child_process` stream.
+ */
+export class ProcessMessageStream extends BasePostMessageStream {
   #send: Exclude<typeof process['send'], undefined>;
 
   constructor() {

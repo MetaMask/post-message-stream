@@ -12,7 +12,7 @@ interface WindowPostMessageStreamArgs {
 }
 
 /**
- * Window.postMessage stream.
+ * A {@link Window.postMessage} stream.
  */
 export class WindowPostMessageStream extends BasePostMessageStream {
   private _name: string;
@@ -25,7 +25,7 @@ export class WindowPostMessageStream extends BasePostMessageStream {
 
   /**
    * Creates a stream for communicating with other streams across the same or
-   * different window objects.
+   * different `window` objects.
    *
    * @param args - Options bag.
    * @param args.name - The name of the stream. Used to differentiate between

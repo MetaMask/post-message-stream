@@ -1,20 +1,20 @@
 import { readFileSync } from 'fs';
 import { DEDICATED_WORKER_NAME } from '../utils';
-import { WorkerParentPostMessageStream } from './WorkerParentPostMessageStream';
-import { WorkerPostMessageStream } from './WorkerPostMessageStream';
+import { WebWorkerParentPostMessageStream } from './WebWorkerParentPostMessageStream';
+import { WebWorkerPostMessageStream } from './WebWorkerPostMessageStream';
 
 const DIST_TEST_PATH = `${__dirname}/../../dist-test`;
 
 describe('WebWorker Streams', () => {
   it('can communicate with a worker and be destroyed', async () => {
     const workerPostMessageStreamDist = readFileSync(
-      `${DIST_TEST_PATH}/WorkerPostMessageStream.js`,
+      `${DIST_TEST_PATH}/WebWorkerPostMessageStream.js`,
       'utf8',
     );
 
     // Create a stream that multiplies incoming data by 5 and returns it
     const setupWorkerStream = `
-        const stream = new self.PostMessageStream.WorkerPostMessageStream();
+        const stream = new self.PostMessageStream.WebWorkerPostMessageStream();
         stream.on('data', (value) => stream.write(value * 5));
       `;
 
@@ -22,7 +22,7 @@ describe('WebWorker Streams', () => {
     const worker = new Worker(URL.createObjectURL(new Blob([code])));
 
     // Create parent stream
-    const parentStream = new WorkerParentPostMessageStream({ worker });
+    const parentStream = new WebWorkerParentPostMessageStream({ worker });
 
     // Get a deferred Promise for the eventual result
     const responsePromise = new Promise((resolve) => {
@@ -51,7 +51,7 @@ describe('WebWorker Streams', () => {
     expect(parentStream.destroyed).toStrictEqual(true);
   });
 
-  describe('WorkerPostMessageStream', () => {
+  describe('WebWorkerPostMessageStream', () => {
     class WorkerGlobalScope {
       postMessage = jest.fn();
 
@@ -72,32 +72,32 @@ describe('WebWorker Streams', () => {
 
     it('throws if not run in a WebWorker (self undefined)', () => {
       (globalThis as any).self = undefined;
-      expect(() => new WorkerPostMessageStream()).toThrow(
+      expect(() => new WebWorkerPostMessageStream()).toThrow(
         'WorkerGlobalScope not found. This class should only be instantiated in a WebWorker.',
       );
     });
 
     it('throws if not run in a WebWorker (WorkerGlobalScope undefined)', () => {
       (globalThis as any).WorkerGlobalScope = undefined;
-      expect(() => new WorkerPostMessageStream()).toThrow(
+      expect(() => new WebWorkerPostMessageStream()).toThrow(
         'WorkerGlobalScope not found. This class should only be instantiated in a WebWorker.',
       );
     });
 
     it('throws if not run in a WebWorker (self not an instance of WorkerGlobalScope)', () => {
       (globalThis as any).self = originalSelf;
-      expect(() => new WorkerPostMessageStream()).toThrow(
+      expect(() => new WebWorkerPostMessageStream()).toThrow(
         'WorkerGlobalScope not found. This class should only be instantiated in a WebWorker.',
       );
     });
 
     it('can be destroyed', () => {
-      const stream = new WorkerPostMessageStream();
+      const stream = new WebWorkerPostMessageStream();
       expect(stream.destroy()).toBeUndefined();
     });
 
     it('forwards valid messages', () => {
-      const stream = new WorkerPostMessageStream();
+      const stream = new WebWorkerPostMessageStream();
       const onDataSpy = jest
         .spyOn(stream, '_onData' as any)
         .mockImplementation();
@@ -114,7 +114,7 @@ describe('WebWorker Streams', () => {
     });
 
     it('ignores invalid messages', () => {
-      const stream = new WorkerPostMessageStream();
+      const stream = new WebWorkerPostMessageStream();
       const onDataSpy = jest
         .spyOn(stream, '_onData' as any)
         .mockImplementation();

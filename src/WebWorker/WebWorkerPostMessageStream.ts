@@ -11,17 +11,12 @@ import {
 } from '../utils';
 
 /**
- * Worker-side dedicated web worker `postMessage` stream.
+ * Worker-side dedicated `WebWorker.postMessage` stream. Designed for use with
+ * dedicated workers only.
  */
-export class WorkerPostMessageStream extends BasePostMessageStream {
+export class WebWorkerPostMessageStream extends BasePostMessageStream {
   private _name: string;
 
-  /**
-   * Note: Designed for use in web workers only.
-   *
-   * Creates a stream for communicating with the window that created this web
-   * worker.
-   */
   constructor() {
     // Kudos: https://stackoverflow.com/a/18002694
     if (
