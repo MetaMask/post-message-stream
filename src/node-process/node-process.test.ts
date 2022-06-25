@@ -31,10 +31,12 @@ describe('Node Child Process Streams', () => {
     const tmpFilePath = `${DIST_TEST_PATH}/childprocess-test.js`;
     writeFileSync(tmpFilePath, code);
 
-    const process = fork(tmpFilePath);
+    const childProcess = fork(tmpFilePath);
 
     // Create parent stream
-    const parentStream = new ParentProcessMessageStream({ process });
+    const parentStream = new ParentProcessMessageStream({
+      process: childProcess,
+    });
 
     // Get a deferred Promise for the eventual result
     const responsePromise = new Promise((resolve) => {
@@ -44,7 +46,7 @@ describe('Node Child Process Streams', () => {
     });
 
     // The child should ignore this
-    process.send('foo');
+    childProcess.send('foo');
 
     // Send message to child, triggering a response
     parentStream.write(111);
@@ -55,11 +57,11 @@ describe('Node Child Process Streams', () => {
     parentStream.once('data', (data) => {
       throw new Error(`Unexpected data on stream: ${data}`);
     });
-    process.send(new Event('message'));
+    childProcess.send(new Event('message'));
 
     // Terminate child process, destroy parent stream, and check that parent
     // was destroyed
-    process.kill();
+    childProcess.kill();
     parentStream.destroy();
     expect(parentStream.destroyed).toStrictEqual(true);
   });
@@ -91,6 +93,17 @@ describe('Node Child Process Streams', () => {
 
     afterEach(() => {
       stream.destroy();
+    });
+
+    it('throws if not run in a child process', () => {
+      const originalSend = globalThis.process.send;
+
+      globalThis.process.send = undefined;
+      expect(() => new ChildProcessMessageStream()).toThrow(
+        'Parent IPC channel not found. This class should only be instantiated in a Node.js child process.',
+      );
+
+      globalThis.process.send = originalSend;
     });
 
     it('forwards valid messages', () => {

@@ -2,6 +2,7 @@ import EventEmitter from 'events';
 import { readFileSync, writeFileSync } from 'fs';
 import { Worker } from 'worker_threads';
 import { ParentThreadMessageStream } from './ParentThreadMessageStream';
+import { ThreadMessageStream } from './ThreadMessageStream';
 
 const DIST_TEST_PATH = `${__dirname}/../../dist-test`;
 
@@ -77,6 +78,14 @@ describe('Node Thread Streams', () => {
 
           expect(onDataSpy).not.toHaveBeenCalled();
         },
+      );
+    });
+  });
+
+  describe('ThreadMessageStream', () => {
+    it('throws if not run in a worker thread', () => {
+      expect(() => new ThreadMessageStream()).toThrow(
+        'Parent port not found. This class should only be instantiated in a Node.js worker thread.',
       );
     });
   });

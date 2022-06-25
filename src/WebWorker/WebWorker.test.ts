@@ -51,18 +51,49 @@ describe('WebWorker Streams', () => {
     expect(parentStream.destroyed).toStrictEqual(true);
   });
 
-  describe('Worker Parent Stream', () => {
-    it('throws on invalid input', () => {
-      expect(
-        () => new WorkerParentPostMessageStream({ worker: null } as any),
-      ).toThrow('Invalid input.');
-    });
-  });
+  describe('WorkerPostMessageStream', () => {
+    class WorkerGlobalScope {
+      postMessage = jest.fn();
 
-  describe('Worker (Child) Stream', () => {
-    // This property is set in the WorkerPostMessageStream constructor
+      onmessage = undefined;
+    }
+
+    const originalSelf: any = self;
+
+    beforeEach(() => {
+      (globalThis as any).WorkerGlobalScope = WorkerGlobalScope;
+      (globalThis as any).self = new WorkerGlobalScope();
+    });
+
     afterEach(() => {
-      (self as any).onmessage = undefined;
+      delete (globalThis as any).WorkerGlobalScope;
+      (globalThis as any).self = originalSelf;
+    });
+
+    it('throws if not run in a WebWorker (self undefined)', () => {
+      (globalThis as any).self = undefined;
+      expect(() => new WorkerPostMessageStream()).toThrow(
+        'WorkerGlobalScope not found. This class should only be instantiated in a WebWorker.',
+      );
+    });
+
+    it('throws if not run in a WebWorker (WorkerGlobalScope undefined)', () => {
+      (globalThis as any).WorkerGlobalScope = undefined;
+      expect(() => new WorkerPostMessageStream()).toThrow(
+        'WorkerGlobalScope not found. This class should only be instantiated in a WebWorker.',
+      );
+    });
+
+    it('throws if not run in a WebWorker (self not an instance of WorkerGlobalScope)', () => {
+      (globalThis as any).self = originalSelf;
+      expect(() => new WorkerPostMessageStream()).toThrow(
+        'WorkerGlobalScope not found. This class should only be instantiated in a WebWorker.',
+      );
+    });
+
+    it('can be destroyed', () => {
+      const stream = new WorkerPostMessageStream();
+      expect(stream.destroy()).toBeUndefined();
     });
 
     it('forwards valid messages', () => {
@@ -98,11 +129,6 @@ describe('WebWorker Streams', () => {
 
         expect(onDataSpy).not.toHaveBeenCalled();
       });
-    });
-
-    it('can be destroyed', () => {
-      const stream = new WorkerPostMessageStream();
-      expect(stream.destroy()).toBeUndefined();
     });
   });
 });

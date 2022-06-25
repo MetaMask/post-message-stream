@@ -41,10 +41,16 @@ export class WindowPostMessageStream extends BasePostMessageStream {
     targetWindow = window,
     targetOrigin = location.origin,
   }: WindowPostMessageStreamArgs) {
-    if (!name || !target) {
-      throw new Error('Invalid input.');
-    }
     super();
+
+    if (
+      typeof window === 'undefined' ||
+      typeof window.postMessage !== 'function'
+    ) {
+      throw new Error(
+        'window.postMessage is not a function. This class should only be instantiated in a Window.',
+      );
+    }
 
     this._name = name;
     this._target = target;
@@ -70,7 +76,6 @@ export class WindowPostMessageStream extends BasePostMessageStream {
   private _onMessage(event: PostMessageEvent): void {
     const message = event.data;
 
-    // validate message
     if (
       (this._targetOrigin !== '*' && event.origin !== this._targetOrigin) ||
       event.source !== this._targetWindow ||

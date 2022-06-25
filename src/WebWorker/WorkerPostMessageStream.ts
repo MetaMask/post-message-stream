@@ -23,6 +23,19 @@ export class WorkerPostMessageStream extends BasePostMessageStream {
    * worker.
    */
   constructor() {
+    // Kudos: https://stackoverflow.com/a/18002694
+    if (
+      typeof self === 'undefined' ||
+      // @ts-expect-error: No types for WorkerGlobalScope
+      typeof WorkerGlobalScope === 'undefined' ||
+      // @ts-expect-error: No types for WorkerGlobalScope
+      !(self instanceof WorkerGlobalScope)
+    ) {
+      throw new Error(
+        'WorkerGlobalScope not found. This class should only be instantiated in a WebWorker.',
+      );
+    }
+
     super();
 
     this._name = DEDICATED_WORKER_NAME;
