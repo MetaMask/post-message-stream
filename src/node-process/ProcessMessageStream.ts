@@ -5,8 +5,6 @@ import { isValidStreamMessage, StreamData } from '../utils';
  * Child process-side Node.js `child_process` stream.
  */
 export class ProcessMessageStream extends BasePostMessageStream {
-  #send: Exclude<typeof process['send'], undefined>;
-
   constructor() {
     super();
 
@@ -16,7 +14,6 @@ export class ProcessMessageStream extends BasePostMessageStream {
       );
     }
 
-    this.#send = globalThis.process.send;
     this._onMessage = this._onMessage.bind(this);
     globalThis.process.on('message', this._onMessage);
 
@@ -24,7 +21,8 @@ export class ProcessMessageStream extends BasePostMessageStream {
   }
 
   protected _postMessage(data: StreamData): void {
-    this.#send({ data });
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    globalThis.process.send!({ data });
   }
 
   private _onMessage(message: unknown): void {

@@ -18,7 +18,7 @@
   ],
   "scripts": {
     "build": "tsc --project tsconfig.build.json",
-    "build:clean": "rimraf dist/ && yarn build",
+    "build:clean": "rimraf dist && yarn build",
     "build:test": "./scripts/build-test.sh",
     "lint": "yarn lint:eslint && yarn lint:misc --check",
     "lint:eslint": "eslint . --cache --ext js,ts",
