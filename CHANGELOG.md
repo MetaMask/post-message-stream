@@ -13,10 +13,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add `child_process` streams ([#34](https://github.com/MetaMask/post-message-stream/pull/34))
 
 ### Changed
-- **BREAKING:** Bump to Node 14 ([#38](https://github.com/MetaMask/post-message-stream/pull/38))
-- **BREAKING:** Add environment validation and rename classes ([#40](https://github.com/MetaMask/post-message-stream/pull/40))
-- **BREAKING:** Add `targetOrigin` option for `WindowPostMessageStream` ([#23](https://github.com/MetaMask/post-message-stream/pull/23))
-- Standardize repository ([#19](https://github.com/MetaMask/post-message-stream/pull/19), [#36](https://github.com/MetaMask/post-message-stream/pull/36), [#41](https://github.com/MetaMask/post-message-stream/pull/41))
+- **BREAKING:** Increase minimum Node.js version to `^14.0.0` ([#38](https://github.com/MetaMask/post-message-stream/pull/38))
+- **BREAKING:** Adopt a uniform naming scheme for all classes ([#40](https://github.com/MetaMask/post-message-stream/pull/40))
+- **BREAKING:** Throw an error when constructing a stream in the wrong environment ([#40](https://github.com/MetaMask/post-message-stream/pull/40))
+  - For example, a `WebWorkerPostMessageStream` can now only be constructed in a `WebWorker`. This change may not be breaking in practice because the streams would not work in unintended environments anyway.
+- **BREAKING:** Add `targetOrigin` parameter for `WindowPostMessageStream` ([#23](https://github.com/MetaMask/post-message-stream/pull/23))
 
 ## [4.0.0] - 2021-05-04
 ### Added
