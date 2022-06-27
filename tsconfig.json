@@ -1,18 +1,14 @@
 {
   "compilerOptions": {
-    "declaration": true,
     "esModuleInterop": true,
-    "inlineSources": true,
+    "forceConsistentCasingInFileNames": true,
     "lib": ["DOM", "ES2020"],
     "module": "CommonJS",
-    "moduleResolution": "Node",
-    "outDir": "dist",
-    "rootDir": "src",
-    "sourceMap": true,
+    "moduleResolution": "node",
+    "noEmit": true,
+    "skipLibCheck": true,
     "strict": true,
-    "target": "ES2017",
-    "skipLibCheck": true
+    "target": "es2017"
   },
-  "exclude": ["./src/**/*.test.ts"],
-  "include": ["./src/**/*.ts"]
+  "exclude": ["./dist/**/*"]
 }

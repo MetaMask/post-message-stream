@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/MetaMask/post-message-stream.git"
+    "url": "https://github.com/MetaMask/post-message-stream.git"
   },
   "license": "ISC",
   "main": "dist/index.js",
@@ -17,18 +17,17 @@
     "dist/"
   ],
   "scripts": {
-    "build": "tsc --project .",
+    "build": "tsc --project tsconfig.build.json",
     "build:clean": "rimraf dist/ && yarn build",
     "build:test": "./scripts/build-test.sh",
     "lint": "yarn lint:eslint && yarn lint:misc --check",
     "lint:eslint": "eslint . --cache --ext js,ts",
     "lint:fix": "yarn lint:eslint --fix && yarn lint:misc --write",
-    "lint:misc": "prettier '**/*.json' '**/*.md' '**/*.yml' --single-quote --ignore-path .gitignore",
-    "prepublishOnly": "yarn build && yarn lint && yarn test",
-    "setup": "yarn install && yarn setup:postinstall",
-    "setup:postinstall": "yarn allow-scripts",
+    "lint:misc": "prettier '**/*.json' '**/*.md' '!CHANGELOG.md' '**/*.yml' --ignore-path .gitignore --no-error-on-unmatched-pattern",
+    "prepublishOnly": "yarn build:clean && yarn lint && yarn test",
+    "setup": "yarn install && yarn allow-scripts",
     "pretest": "yarn build:test",
-    "test": "jest",
+    "test": "jest && jest-it-up",
     "test:watch": "yarn test --watch"
   },
   "dependencies": {
@@ -38,6 +37,7 @@
   "devDependencies": {
     "@jest-runner/electron": "^3.0.1",
     "@lavamoat/allow-scripts": "^1.0.5",
+    "@metamask/auto-changelog": "^2.6.1",
     "@metamask/eslint-config": "^9.0.0",
     "@metamask/eslint-config-jest": "^9.0.0",
     "@metamask/eslint-config-nodejs": "^9.0.0",
@@ -57,6 +57,7 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^3.3.1",
     "jest": "^26.6.3",
+    "jest-it-up": "^2.0.2",
     "prettier": "^2.2.1",
     "prettier-plugin-packagejson": "^2.2.17",
     "rimraf": "^3.0.2",
