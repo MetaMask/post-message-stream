@@ -1,9 +1,18 @@
 import { BasePostMessageStream } from '../BasePostMessageStream';
 import { isValidStreamMessage, StreamData } from '../utils';
 
-export class ChildProcessMessageStream extends BasePostMessageStream {
+/**
+ * Child process-side Node.js `child_process` stream.
+ */
+export class ProcessMessageStream extends BasePostMessageStream {
   constructor() {
     super();
+
+    if (typeof globalThis.process.send !== 'function') {
+      throw new Error(
+        'Parent IPC channel not found. This class should only be instantiated in a Node.js child process.',
+      );
+    }
 
     this._onMessage = this._onMessage.bind(this);
     globalThis.process.on('message', this._onMessage);

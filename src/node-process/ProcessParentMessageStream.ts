@@ -1,15 +1,24 @@
-import { Worker } from 'worker_threads';
+import type { ChildProcess } from 'child_process';
 import { BasePostMessageStream } from '../BasePostMessageStream';
 import { isValidStreamMessage, StreamData } from '../utils';
 
-interface ParentThreadMessageStreamArgs {
-  process: Worker;
+interface ProcessParentMessageStreamArgs {
+  process: ChildProcess;
 }
 
-export class ParentThreadMessageStream extends BasePostMessageStream {
-  private _process: Worker;
+/**
+ * Parent-side Node.js `child_process` stream.
+ */
+export class ProcessParentMessageStream extends BasePostMessageStream {
+  private _process: ChildProcess;
 
-  constructor({ process }: ParentThreadMessageStreamArgs) {
+  /**
+   * Creates a stream for communicating with a Node.js `child_process` process.
+   *
+   * @param args - Options bag.
+   * @param args.process - The process to communicate with.
+   */
+  constructor({ process }: ProcessParentMessageStreamArgs) {
     super();
 
     this._process = process;
@@ -20,7 +29,7 @@ export class ParentThreadMessageStream extends BasePostMessageStream {
   }
 
   protected _postMessage(data: StreamData): void {
-    this._process.postMessage({ data });
+    this._process.send({ data });
   }
 
   private _onMessage(message: unknown): void {

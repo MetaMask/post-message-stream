@@ -2,20 +2,31 @@ import { parentPort } from 'worker_threads';
 import { BasePostMessageStream } from '../BasePostMessageStream';
 import { isValidStreamMessage, StreamData } from '../utils';
 
+/**
+ * Child thread-side Node.js `worker_threads` stream.
+ */
 export class ThreadMessageStream extends BasePostMessageStream {
+  #parentPort: Exclude<typeof parentPort, null>;
+
   constructor() {
     super();
 
+    if (!parentPort) {
+      throw new Error(
+        'Parent port not found. This class should only be instantiated in a Node.js worker thread.',
+      );
+    }
+
+    this.#parentPort = parentPort;
+
     this._onMessage = this._onMessage.bind(this);
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    parentPort!.on('message', this._onMessage);
+    this.#parentPort.on('message', this._onMessage);
 
     this._handshake();
   }
 
   protected _postMessage(data: StreamData): void {
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    parentPort!.postMessage({ data });
+    this.#parentPort.postMessage({ data });
   }
 
   private _onMessage(message: unknown): void {
@@ -27,7 +38,6 @@ export class ThreadMessageStream extends BasePostMessageStream {
   }
 
   _destroy(): void {
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    parentPort!.removeListener('message', this._onMessage);
+    this.#parentPort.removeListener('message', this._onMessage);
   }
 }

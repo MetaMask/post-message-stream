@@ -1,18 +1,15 @@
 import { WindowPostMessageStream } from './WindowPostMessageStream';
 
 describe('WindowPostMessageStream', () => {
-  it('throws on invalid input', () => {
+  it('throws if window.postMessage is not a function', () => {
+    const originalPostMessage = window.postMessage;
+    (window as any).postMessage = undefined;
     expect(
-      () =>
-        new WindowPostMessageStream({
-          name: null as any,
-          target: 'target',
-        }),
-    ).toThrow('Invalid input.');
-
-    expect(
-      () => new WindowPostMessageStream({ name: 'name', target: null as any }),
-    ).toThrow('Invalid input.');
+      () => new WindowPostMessageStream({ name: 'foo', target: 'bar' }),
+    ).toThrow(
+      'window.postMessage is not a function. This class should only be instantiated in a Window.',
+    );
+    (window as any).postMessage = originalPostMessage;
   });
 
   it('can communicate between windows and be destroyed', async () => {

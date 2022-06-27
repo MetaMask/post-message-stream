@@ -12,7 +12,7 @@ interface WindowPostMessageStreamArgs {
 }
 
 /**
- * Window.postMessage stream.
+ * A {@link Window.postMessage} stream.
  */
 export class WindowPostMessageStream extends BasePostMessageStream {
   private _name: string;
@@ -25,7 +25,7 @@ export class WindowPostMessageStream extends BasePostMessageStream {
 
   /**
    * Creates a stream for communicating with other streams across the same or
-   * different window objects.
+   * different `window` objects.
    *
    * @param args - Options bag.
    * @param args.name - The name of the stream. Used to differentiate between
@@ -41,10 +41,16 @@ export class WindowPostMessageStream extends BasePostMessageStream {
     targetWindow = window,
     targetOrigin = location.origin,
   }: WindowPostMessageStreamArgs) {
-    if (!name || !target) {
-      throw new Error('Invalid input.');
-    }
     super();
+
+    if (
+      typeof window === 'undefined' ||
+      typeof window.postMessage !== 'function'
+    ) {
+      throw new Error(
+        'window.postMessage is not a function. This class should only be instantiated in a Window.',
+      );
+    }
 
     this._name = name;
     this._target = target;
@@ -70,7 +76,6 @@ export class WindowPostMessageStream extends BasePostMessageStream {
   private _onMessage(event: PostMessageEvent): void {
     const message = event.data;
 
-    // validate message
     if (
       (this._targetOrigin !== '*' && event.origin !== this._targetOrigin) ||
       event.source !== this._targetWindow ||

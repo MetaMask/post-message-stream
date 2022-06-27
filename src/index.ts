@@ -1,9 +1,9 @@
 export * from './window/WindowPostMessageStream';
-export * from './WebWorker/WorkerPostMessageStream';
-export * from './WebWorker/WorkerParentPostMessageStream';
-export * from './node-process/ParentProcessMessageStream';
-export * from './node-process/ChildProcessMessageStream';
-export * from './node-thread/ParentThreadMessageStream';
+export * from './WebWorker/WebWorkerPostMessageStream';
+export * from './WebWorker/WebWorkerParentPostMessageStream';
+export * from './node-process/ProcessParentMessageStream';
+export * from './node-process/ProcessMessageStream';
+export * from './node-thread/ThreadParentMessageStream';
 export * from './node-thread/ThreadMessageStream';
 export { PostMessageEvent } from './BasePostMessageStream';
 export { StreamData, StreamMessage } from './utils';

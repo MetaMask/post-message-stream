@@ -1,8 +1,8 @@
 import { fork } from 'child_process';
 import EventEmitter from 'events';
 import { readFileSync, writeFileSync } from 'fs';
-import { ChildProcessMessageStream } from './ChildProcessMessageStream';
-import { ParentProcessMessageStream } from './ParentProcessMessageStream';
+import { ProcessMessageStream } from './ProcessMessageStream';
+import { ProcessParentMessageStream } from './ProcessParentMessageStream';
 
 const DIST_TEST_PATH = `${__dirname}/../../dist-test`;
 
@@ -15,14 +15,14 @@ class MockProcess extends EventEmitter {
 describe('Node Child Process Streams', () => {
   it('can communicate with a child process and be destroyed', async () => {
     const childProcessMessageStreamDist = readFileSync(
-      `${DIST_TEST_PATH}/ChildProcessMessageStream.js`,
+      `${DIST_TEST_PATH}/ProcessMessageStream.js`,
       'utf8',
     );
 
     // Create a stream that multiplies incoming data by 5 and returns it
     const setupProcessStream = `
-      const { ChildProcessMessageStream } = require('./ChildProcessMessageStream');
-      const stream = new ChildProcessMessageStream();
+      const { ProcessMessageStream } = require('./ProcessMessageStream');
+      const stream = new ProcessMessageStream();
       stream.on('data', (value) => stream.write(value * 5));
     `;
 
@@ -31,10 +31,12 @@ describe('Node Child Process Streams', () => {
     const tmpFilePath = `${DIST_TEST_PATH}/childprocess-test.js`;
     writeFileSync(tmpFilePath, code);
 
-    const process = fork(tmpFilePath);
+    const childProcess = fork(tmpFilePath);
 
     // Create parent stream
-    const parentStream = new ParentProcessMessageStream({ process });
+    const parentStream = new ProcessParentMessageStream({
+      process: childProcess,
+    });
 
     // Get a deferred Promise for the eventual result
     const responsePromise = new Promise((resolve) => {
@@ -44,7 +46,7 @@ describe('Node Child Process Streams', () => {
     });
 
     // The child should ignore this
-    process.send('foo');
+    childProcess.send('foo');
 
     // Send message to child, triggering a response
     parentStream.write(111);
@@ -55,19 +57,19 @@ describe('Node Child Process Streams', () => {
     parentStream.once('data', (data) => {
       throw new Error(`Unexpected data on stream: ${data}`);
     });
-    process.send(new Event('message'));
+    childProcess.send(new Event('message'));
 
     // Terminate child process, destroy parent stream, and check that parent
     // was destroyed
-    process.kill();
+    childProcess.kill();
     parentStream.destroy();
     expect(parentStream.destroyed).toStrictEqual(true);
   });
 
-  describe('ParentProcessMessageStream', () => {
+  describe('ProcessParentMessageStream', () => {
     it('ignores invalid messages', () => {
       const mockProcess: any = new MockProcess();
-      const stream = new ParentProcessMessageStream({ process: mockProcess });
+      const stream = new ProcessParentMessageStream({ process: mockProcess });
       const onDataSpy = jest
         .spyOn(stream, '_onData' as any)
         .mockImplementation();
@@ -82,15 +84,26 @@ describe('Node Child Process Streams', () => {
     });
   });
 
-  describe('ChildProcessMessageStream', () => {
-    let stream: ChildProcessMessageStream;
+  describe('ProcessMessageStream', () => {
+    let stream: ProcessMessageStream;
 
     beforeEach(() => {
-      stream = new ChildProcessMessageStream();
+      stream = new ProcessMessageStream();
     });
 
     afterEach(() => {
       stream.destroy();
+    });
+
+    it('throws if not run in a child process', () => {
+      const originalSend = globalThis.process.send;
+
+      globalThis.process.send = undefined;
+      expect(() => new ProcessMessageStream()).toThrow(
+        'Parent IPC channel not found. This class should only be instantiated in a Node.js child process.',
+      );
+
+      globalThis.process.send = originalSend;
     });
 
     it('forwards valid messages', () => {

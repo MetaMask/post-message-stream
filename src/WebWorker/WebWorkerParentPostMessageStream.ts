@@ -9,24 +9,22 @@ interface WorkerParentStreamArgs {
 }
 
 /**
- * Parent-side dedicated web worker `postMessage` stream.
+ * Parent-side dedicated `WebWorker.postMessage` stream. Designed for use with
+ * dedicated workers only.
  */
-export class WorkerParentPostMessageStream extends BasePostMessageStream {
+export class WebWorkerParentPostMessageStream extends BasePostMessageStream {
   private _target: string;
 
   private _worker: Worker;
 
   /**
-   * Creates a stream for communicating with a dedicated web worker.
+   * Creates a stream for communicating with a dedicated `WebWorker`.
    *
    * @param args - Options bag.
    * @param args.worker - The Web Worker to exchange messages with. The worker
-   * must instantiate a WorkerPostMessageStream.
+   * must instantiate a `WebWorkerPostMessageStream`.
    */
   constructor({ worker }: WorkerParentStreamArgs) {
-    if (!worker) {
-      throw new Error('Invalid input.');
-    }
     super();
 
     this._target = DEDICATED_WORKER_NAME;

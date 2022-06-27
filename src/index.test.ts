@@ -4,11 +4,11 @@ describe('post-message-stream', () => {
   describe('exports', () => {
     const expectedExports = [
       'WindowPostMessageStream',
-      'WorkerPostMessageStream',
-      'WorkerParentPostMessageStream',
-      'ParentProcessMessageStream',
-      'ChildProcessMessageStream',
-      'ParentThreadMessageStream',
+      'WebWorkerPostMessageStream',
+      'WebWorkerParentPostMessageStream',
+      'ProcessParentMessageStream',
+      'ProcessMessageStream',
+      'ThreadParentMessageStream',
       'ThreadMessageStream',
     ];
 

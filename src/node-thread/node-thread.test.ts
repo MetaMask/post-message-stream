@@ -1,11 +1,12 @@
 import EventEmitter from 'events';
 import { readFileSync, writeFileSync } from 'fs';
 import { Worker } from 'worker_threads';
-import { ParentThreadMessageStream } from './ParentThreadMessageStream';
+import { ThreadParentMessageStream } from './ThreadParentMessageStream';
+import { ThreadMessageStream } from './ThreadMessageStream';
 
 const DIST_TEST_PATH = `${__dirname}/../../dist-test`;
 
-class MockProcess extends EventEmitter {
+class MockThread extends EventEmitter {
   postMessage(..._args: any[]): void {
     return undefined;
   }
@@ -19,21 +20,21 @@ describe('Node Thread Streams', () => {
     );
 
     // Create a stream that multiplies incoming data by 5 and returns it
-    const setupProcessStream = `
+    const setupThreadStream = `
       const { ThreadMessageStream } = require('./ThreadMessageStream');
       const stream = new ThreadMessageStream();
       stream.on('data', (value) => stream.write(value * 5));
     `;
 
-    const code = `${dist}\n${setupProcessStream}`;
+    const code = `${dist}\n${setupThreadStream}`;
 
     const tmpFilePath = `${DIST_TEST_PATH}/thread-test.js`;
     writeFileSync(tmpFilePath, code);
 
-    const process = new Worker(tmpFilePath);
+    const thread = new Worker(tmpFilePath);
 
     // Create parent stream
-    const parentStream = new ParentThreadMessageStream({ process });
+    const parentStream = new ThreadParentMessageStream({ thread });
 
     // Get a deferred Promise for the eventual result
     const responsePromise = new Promise((resolve) => {
@@ -43,7 +44,7 @@ describe('Node Thread Streams', () => {
     });
 
     // The child should ignore this
-    process.postMessage('foo');
+    thread.postMessage('foo');
 
     // Send message to child, triggering a response
     parentStream.write(111);
@@ -54,29 +55,37 @@ describe('Node Thread Streams', () => {
     parentStream.once('data', (data) => {
       throw new Error(`Unexpected data on stream: ${data}`);
     });
-    process.postMessage(new Event('message'));
+    thread.postMessage(new Event('message'));
 
-    // Terminate child process, destroy parent stream, and check that parent
+    // Terminate child thread, destroy parent stream, and check that parent
     // was destroyed
-    process.terminate();
+    thread.terminate();
     parentStream.destroy();
     expect(parentStream.destroyed).toStrictEqual(true);
   });
 
-  describe('ParentThreadMessageStream', () => {
+  describe('ThreadParentMessageStream', () => {
     it('ignores invalid messages', () => {
-      const mockProcess: any = new MockProcess();
-      const stream = new ParentThreadMessageStream({ process: mockProcess });
+      const mockThread: any = new MockThread();
+      const stream = new ThreadParentMessageStream({ thread: mockThread });
       const onDataSpy = jest
         .spyOn(stream, '_onData' as any)
         .mockImplementation();
 
       [null, undefined, 'foo', 42, {}, { data: null }].forEach(
         (invalidMessage) => {
-          mockProcess.emit('message', invalidMessage);
+          mockThread.emit('message', invalidMessage);
 
           expect(onDataSpy).not.toHaveBeenCalled();
         },
+      );
+    });
+  });
+
+  describe('ThreadMessageStream', () => {
+    it('throws if not run in a worker thread', () => {
+      expect(() => new ThreadMessageStream()).toThrow(
+        'Parent port not found. This class should only be instantiated in a Node.js worker thread.',
       );
     });
   });
