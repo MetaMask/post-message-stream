@@ -7,24 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ## [5.0.0]
-### Uncategorized
-- BREAKING: Add environment validation and rename classes ([#40](https://github.com/MetaMask/post-message-stream/pull/40))
-- Standardize repository (Q2 2022) ([#41](https://github.com/MetaMask/post-message-stream/pull/41))
+### Added
+- Add `StreamData` and `StreamMessage` types ([#37](https://github.com/MetaMask/post-message-stream/pull/37))
 - Add `worker_threads` streams ([#39](https://github.com/MetaMask/post-message-stream/pull/39))
 - Add `child_process` streams ([#34](https://github.com/MetaMask/post-message-stream/pull/34))
-- Add `StreamData` and `StreamMessage` type guard ([#37](https://github.com/MetaMask/post-message-stream/pull/37))
-- @metamask/eslint-config*@^9 ([#36](https://github.com/MetaMask/post-message-stream/pull/36))
-- Bump to Node 14 ([#38](https://github.com/MetaMask/post-message-stream/pull/38))
-- Bump shell-quote from 1.7.2 to 1.7.3 ([#33](https://github.com/MetaMask/post-message-stream/pull/33))
-- Bump cached-path-relative from 1.0.2 to 1.1.0 ([#29](https://github.com/MetaMask/post-message-stream/pull/29))
-- Bump tmpl from 1.0.4 to 1.0.5 ([#27](https://github.com/MetaMask/post-message-stream/pull/27))
-- Bump tar from 6.1.0 to 6.1.11 ([#26](https://github.com/MetaMask/post-message-stream/pull/26))
-- Bump path-parse from 1.0.6 to 1.0.7 ([#25](https://github.com/MetaMask/post-message-stream/pull/25))
-- Bump minimist from 1.2.5 to 1.2.6 ([#31](https://github.com/MetaMask/post-message-stream/pull/31))
-- add targetOrigin option ([#23](https://github.com/MetaMask/post-message-stream/pull/23))
-- Bump normalize-url from 4.5.0 to 4.5.1 ([#21](https://github.com/MetaMask/post-message-stream/pull/21))
-- Bump ws from 7.4.5 to 7.4.6 ([#20](https://github.com/MetaMask/post-message-stream/pull/20))
-- Repo standardization ([#19](https://github.com/MetaMask/post-message-stream/pull/19))
+
+### Changed
+- **BREAKING:** Bump to Node 14 ([#38](https://github.com/MetaMask/post-message-stream/pull/38))
+- **BREAKING:** Add environment validation and rename classes ([#40](https://github.com/MetaMask/post-message-stream/pull/40))
+- **BREAKING:** Add `targetOrigin` option for `WindowPostMessageStream` ([#23](https://github.com/MetaMask/post-message-stream/pull/23))
+- Standardize repository ([#19](https://github.com/MetaMask/post-message-stream/pull/19), [#36](https://github.com/MetaMask/post-message-stream/pull/36), [#41](https://github.com/MetaMask/post-message-stream/pull/41))
 
 ## [4.0.0] - 2021-05-04
 ### Added
