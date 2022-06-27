@@ -6,6 +6,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [5.0.0]
+### Added
+- Add `StreamData` and `StreamMessage` types ([#37](https://github.com/MetaMask/post-message-stream/pull/37))
+- Add `worker_threads` streams ([#39](https://github.com/MetaMask/post-message-stream/pull/39))
+- Add `child_process` streams ([#34](https://github.com/MetaMask/post-message-stream/pull/34))
+
+### Changed
+- **BREAKING:** Increase minimum Node.js version to `^14.0.0` ([#38](https://github.com/MetaMask/post-message-stream/pull/38))
+- **BREAKING:** Adopt a uniform naming scheme for all classes ([#40](https://github.com/MetaMask/post-message-stream/pull/40))
+- **BREAKING:** Throw an error when constructing a stream in the wrong environment ([#40](https://github.com/MetaMask/post-message-stream/pull/40))
+  - For example, a `WebWorkerPostMessageStream` can now only be constructed in a `WebWorker`. This change may not be breaking in practice because the streams would not work in unintended environments anyway.
+- **BREAKING:** Add `targetOrigin` parameter for `WindowPostMessageStream` ([#23](https://github.com/MetaMask/post-message-stream/pull/23))
+
 ## [4.0.0] - 2021-05-04
 ### Added
 - [#9](https://github.com/MetaMask/post-message-stream.git/pull/9): Add LICENSE file
@@ -31,7 +44,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Initial release.
 
-[Unreleased]: https://github.com/MetaMask/post-message-stream/compare/v4.0.0...HEAD
+[Unreleased]: https://github.com/MetaMask/post-message-stream/compare/v5.0.0...HEAD
+[5.0.0]: https://github.com/MetaMask/post-message-stream/compare/v4.0.0...v5.0.0
 [4.0.0]: https://github.com/MetaMask/post-message-stream/compare/v3.0.0...v4.0.0
 [3.0.0]: https://github.com/MetaMask/post-message-stream/compare/v2.0.0...v3.0.0
 [2.0.0]: https://github.com/MetaMask/post-message-stream/compare/v1.0.0...v2.0.0
