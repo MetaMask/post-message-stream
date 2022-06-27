@@ -97,24 +97,48 @@ workerStream.on('data', (data) => console.log(data + ', world'));
 
 ### `WindowPostMessageStream`
 
+If you have two windows, A and B, that can communicate over `postMessage`, set up a stream in each.
+Be sure to make use of the `targetOrigin` and `targetWindow` parameters to ensure that you are communicating with your intended subject.
+
+In window A, with URL `https://foo.com`, trying to communicate with an iframe, `iframeB`:
+
 ```javascript
 import { WindowPostMessageStream } from '@metamask/post-message-stream';
 
 const streamA = new WindowPostMessageStream({
-  name: 'streamA',
-  target: 'streamB',
+  name: 'streamA', // We give this stream a name that the other side can target.
+
+  target: 'streamB', // This must match the `name` of the other side.
+
+  // Adding `targetWindow` below already ensures that we will only be
+  // communicating with `iframeB`, but this illustrates the principle.
+  targetOrigin: new URL(iframeB.src).origin,
+
+  // We have to specify the content window of `iframeB` as the target.
+  targetWindow: iframeB.contentWindow,
 });
 
+streamA.write('hello');
+```
+
+In window B, running in an iframe accessible in window A:
+
+```javascript
 const streamB = new WindowPostMessageStream({
+  // Notice that these values are reversed relative to window A.
   name: 'streamB',
   target: 'streamA',
-  // We use an imaginary iframe as an example, but any window object will do.
-  // Omitting targetWindow defaults to the global window.
-  targetWindow: iframe.contentWindow,
+
+  // The origin of window A. If we don't specify this, it would default to
+  // `location.origin`, which won't work if our origin is different. We could
+  // pass `*`, but that's potentially unsafe.
+  targetOrigin: 'https://foo.com',
+
+  // We omit `targetWindow` here because it defaults to `window`.
 });
 
-streamB.on('data', (data) => console.log(data));
-streamA.write(chunk);
+streamB.on('data', (data) => console.log(data + ', world'));
+// > 'hello, world'
 ```
 
 #### Gotchas
