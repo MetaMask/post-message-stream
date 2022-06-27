@@ -10,7 +10,7 @@ interface ThreadParentMessageStreamArgs {
  * Parent-side Node.js `worker_threads` stream.
  */
 export class ThreadParentMessageStream extends BasePostMessageStream {
-  private _process: Worker;
+  private _thread: Worker;
 
   /**
    * Creates a stream for communicating with a Node.js `worker_threads` thread.
@@ -21,15 +21,15 @@ export class ThreadParentMessageStream extends BasePostMessageStream {
   constructor({ thread }: ThreadParentMessageStreamArgs) {
     super();
 
-    this._process = thread;
+    this._thread = thread;
     this._onMessage = this._onMessage.bind(this);
-    this._process.on('message', this._onMessage);
+    this._thread.on('message', this._onMessage);
 
     this._handshake();
   }
 
   protected _postMessage(data: StreamData): void {
-    this._process.postMessage({ data });
+    this._thread.postMessage({ data });
   }
 
   private _onMessage(message: unknown): void {
@@ -41,6 +41,6 @@ export class ThreadParentMessageStream extends BasePostMessageStream {
   }
 
   _destroy(): void {
-    this._process.removeListener('message', this._onMessage);
+    this._thread.removeListener('message', this._onMessage);
   }
 }
