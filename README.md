@@ -110,11 +110,13 @@ const streamA = new WindowPostMessageStream({
 
   target: 'streamB', // This must match the `name` of the other side.
 
-  // Adding `targetWindow` below already ensures that we will only be
-  // communicating with `iframeB`, but this illustrates the principle.
+  // Adding `targetWindow` below already ensures that we will only _send_
+  // messages to `iframeB`, but we need to specify its origin as well to ensure
+  // that we only _receive_ messages from `iframeB`.
   targetOrigin: new URL(iframeB.src).origin,
 
-  // We have to specify the content window of `iframeB` as the target.
+  // We have to specify the content window of `iframeB` as the target, or it
+  // won't receive our messages.
   targetWindow: iframeB.contentWindow,
 });
 
@@ -130,8 +132,8 @@ const streamB = new WindowPostMessageStream({
   target: 'streamA',
 
   // The origin of window A. If we don't specify this, it would default to
-  // `location.origin`, which won't work if our origin is different. We could
-  // pass `*`, but that's potentially unsafe.
+  // `location.origin`, which won't work if the local origin is different. We
+  // could pass `*`, but that's potentially unsafe.
   targetOrigin: 'https://foo.com',
 
   // We omit `targetWindow` here because it defaults to `window`.
