@@ -7,8 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ## [5.0.1]
-### Uncategorized
+
+### Security
 - Fix `WindowPostMessageStream` parameter documentation ([#43](https://github.com/MetaMask/post-message-stream/pull/43))
+  - The security implications of the `targetOrigin` and `targetWindow` parameters were mischaracterized in the [5.0.0] documentation.
 
 ## [5.0.0]
 ### Added
