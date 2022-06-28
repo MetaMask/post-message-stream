@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [5.0.1]
+### Uncategorized
+- Fix `WindowPostMessageStream` parameter documentation ([#43](https://github.com/MetaMask/post-message-stream/pull/43))
+
 ## [5.0.0]
 ### Added
 - Add `StreamData` and `StreamMessage` types ([#37](https://github.com/MetaMask/post-message-stream/pull/37))
@@ -44,7 +48,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Initial release.
 
-[Unreleased]: https://github.com/MetaMask/post-message-stream/compare/v5.0.0...HEAD
+[Unreleased]: https://github.com/MetaMask/post-message-stream/compare/v5.0.1...HEAD
+[5.0.1]: https://github.com/MetaMask/post-message-stream/compare/v5.0.0...v5.0.1
 [5.0.0]: https://github.com/MetaMask/post-message-stream/compare/v4.0.0...v5.0.0
 [4.0.0]: https://github.com/MetaMask/post-message-stream/compare/v3.0.0...v4.0.0
 [3.0.0]: https://github.com/MetaMask/post-message-stream/compare/v2.0.0...v3.0.0
