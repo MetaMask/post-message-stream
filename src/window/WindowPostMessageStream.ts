@@ -7,8 +7,8 @@ import { isValidStreamMessage } from '../utils';
 interface WindowPostMessageStreamArgs {
   name: string;
   target: string;
-  targetWindow?: Window;
   targetOrigin?: string;
+  targetWindow?: Window;
 }
 
 /**
@@ -31,15 +31,16 @@ export class WindowPostMessageStream extends BasePostMessageStream {
    * @param args.name - The name of the stream. Used to differentiate between
    * multiple streams sharing the same window object.
    * @param args.target - The name of the stream to exchange messages with.
+   * @param args.targetOrigin - The origin of the target. Defaults to
+   * `location.origin`, '*' is permitted.
    * @param args.targetWindow - The window object of the target stream. Defaults
    * to `window`.
-   * @param args.targetOrigin - The target origin for the iframe. Defaults to location.origin, allows '*' to be passed.
    */
   constructor({
     name,
     target,
-    targetWindow = window,
     targetOrigin = location.origin,
+    targetWindow = window,
   }: WindowPostMessageStreamArgs) {
     super();
 
