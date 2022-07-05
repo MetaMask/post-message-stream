@@ -3,6 +3,7 @@ import * as PostMessageStream from '.';
 describe('post-message-stream', () => {
   describe('exports', () => {
     const expectedExports = [
+      'BasePostMessageStream',
       'WindowPostMessageStream',
       'WebWorkerPostMessageStream',
       'WebWorkerParentPostMessageStream',
