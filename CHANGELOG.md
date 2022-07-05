@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ## [5.1.0]
-### Uncategorized
+### Added
 - Export `BasePostMessageStream` ([#45](https://github.com/MetaMask/post-message-stream/pull/45))
 
 ## [5.0.1]
