@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [6.0.0]
+### Uncategorized
+- BREAKING: Add browser entrypoint ([#49](https://github.com/MetaMask/post-message-stream/pull/49))
+
 ## [5.1.0]
 ### Added
 - Export `BasePostMessageStream` ([#45](https://github.com/MetaMask/post-message-stream/pull/45))
@@ -53,7 +57,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Initial release.
 
-[Unreleased]: https://github.com/MetaMask/post-message-stream/compare/v5.1.0...HEAD
+[Unreleased]: https://github.com/MetaMask/post-message-stream/compare/v6.0.0...HEAD
+[6.0.0]: https://github.com/MetaMask/post-message-stream/compare/v5.1.0...v6.0.0
 [5.1.0]: https://github.com/MetaMask/post-message-stream/compare/v5.0.1...v5.1.0
 [5.0.1]: https://github.com/MetaMask/post-message-stream/compare/v5.0.0...v5.0.1
 [5.0.0]: https://github.com/MetaMask/post-message-stream/compare/v4.0.0...v5.0.0
