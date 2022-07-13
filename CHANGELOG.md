@@ -7,8 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ## [6.0.0]
-### Uncategorized
-- BREAKING: Add browser entrypoint ([#49](https://github.com/MetaMask/post-message-stream/pull/49))
+### Changed
+- **BREAKING:** Use separate entrypoint for browser environments ([#49](https://github.com/MetaMask/post-message-stream/pull/49))
+  - This means `worker_threads` and `child_process` streams are no longer exposed in the browser.
 
 ## [5.1.0]
 ### Added
