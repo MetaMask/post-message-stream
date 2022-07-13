@@ -12,6 +12,7 @@
   },
   "license": "ISC",
   "main": "dist/index.js",
+  "browser": "dist/browser.js",
   "types": "dist/index.d.ts",
   "files": [
     "dist/"
