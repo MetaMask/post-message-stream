@@ -119,11 +119,13 @@ describe('WebWorker Streams', () => {
         .spyOn(stream, '_onData' as any)
         .mockImplementation();
 
-      ([
-        { data: 'bar' },
-        { data: { data: 'bar', target: 'foo' } },
-        { data: { data: null, target: 'foo' } },
-      ] as const).forEach((invalidMessage) => {
+      (
+        [
+          { data: 'bar' },
+          { data: { data: 'bar', target: 'foo' } },
+          { data: { data: null, target: 'foo' } },
+        ] as const
+      ).forEach((invalidMessage) => {
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         self.onmessage!(new MessageEvent<unknown>('foo', invalidMessage));
 
