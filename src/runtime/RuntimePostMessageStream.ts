@@ -2,9 +2,7 @@ import {
   BasePostMessageStream,
   PostMessageEvent,
 } from '../BasePostMessageStream';
-import { isValidStreamMessage } from '../utils';
-
-const noop = () => undefined;
+import { isValidStreamMessage, noop } from '../utils';
 
 interface RuntimePostMessageStreamArgs {
   name: string;
@@ -33,7 +31,7 @@ export class RuntimePostMessageStream extends BasePostMessageStream {
 
     if (
       typeof chrome === 'undefined' ||
-      typeof chrome?.runtime?.sendMessage !== 'function'
+      typeof chrome.runtime?.sendMessage !== 'function'
     ) {
       throw new Error(
         'chrome.runtime.sendMessage is not a function. This class should only be instantiated in a web extension.',

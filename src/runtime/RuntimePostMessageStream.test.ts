@@ -32,6 +32,33 @@ describe('RuntimePostMessageStream', () => {
     ).toThrow(
       'chrome.runtime.sendMessage is not a function. This class should only be instantiated in a web extension.',
     );
+
+    // @ts-expect-error - Invalid function type.
+    chrome.runtime.sendMessage = 'foo';
+
+    expect(
+      () => new RuntimePostMessageStream({ name: 'foo', target: 'bar' }),
+    ).toThrow(
+      'chrome.runtime.sendMessage is not a function. This class should only be instantiated in a web extension.',
+    );
+
+    // @ts-expect-error - Invalid function type.
+    chrome.runtime = undefined;
+
+    expect(
+      () => new RuntimePostMessageStream({ name: 'foo', target: 'bar' }),
+    ).toThrow(
+      'chrome.runtime.sendMessage is not a function. This class should only be instantiated in a web extension.',
+    );
+
+    // @ts-expect-error - Invalid function type.
+    chrome = undefined;
+
+    expect(
+      () => new RuntimePostMessageStream({ name: 'foo', target: 'bar' }),
+    ).toThrow(
+      'chrome.runtime.sendMessage is not a function. This class should only be instantiated in a web extension.',
+    );
   });
 
   it('can communicate between streams and be destroyed', async () => {
