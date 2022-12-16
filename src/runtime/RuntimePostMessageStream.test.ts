@@ -6,7 +6,7 @@ describe('RuntimePostMessageStream', () => {
     const sendMessage = jest.fn().mockImplementation((message) => {
       // Propagate message to all listeners.
       addListener.mock.calls.forEach(([listener]) => {
-        listener(message);
+        setTimeout(() => listener(message));
       });
     });
 
@@ -69,8 +69,7 @@ describe('RuntimePostMessageStream', () => {
     streamA.once('data', throwingListener);
     streamB.once('data', throwingListener);
 
-    // TODO.
-    // window.dispatchEvent(new Event('message'));
+    chrome.runtime.sendMessage(new Event('message'), {}, () => undefined);
 
     // Destroy streams and confirm that they were destroyed
     streamA.destroy();
