@@ -1,10 +1,5 @@
 import * as PostMessageStream from '.';
 
-// `BrowserRuntimePostMessageStream` imports `webextension-polyfill` which
-// throws an error if it's not in a browser environment. We need to mock it
-// here to prevent that error.
-jest.mock('webextension-polyfill', () => undefined);
-
 describe('post-message-stream', () => {
   describe('exports', () => {
     const expectedExports = [

@@ -1,27 +1,94 @@
-import browser from 'webextension-polyfill';
 import { BrowserRuntimePostMessageStream } from './BrowserRuntimePostMessageStream';
 
-jest.mock('webextension-polyfill', () => {
-  const addListener = jest.fn();
-  const sendMessage = jest.fn().mockImplementation((message) => {
-    // Propagate message to all listeners.
-    addListener.mock.calls.forEach(([listener]) => {
-      setTimeout(() => listener(message));
+describe('RuntimePostMessageStream', () => {
+  beforeEach(() => {
+    const addListener = jest.fn();
+    const sendMessage = jest.fn().mockImplementation((message) => {
+      // Propagate message to all listeners.
+      addListener.mock.calls.forEach(([listener]) => {
+        setTimeout(() => listener(message));
+      });
+    });
+
+    Object.assign(global, {
+      chrome: undefined,
+      browser: {
+        runtime: {
+          sendMessage,
+          onMessage: {
+            addListener,
+            removeListener: jest.fn(),
+          },
+        },
+      },
     });
   });
 
-  return {
-    runtime: {
-      onMessage: {
-        addListener,
-        removeListener: jest.fn(),
-      },
-      sendMessage,
-    },
-  };
-});
+  it('throws if browser.runtime.sendMessage is not a function', () => {
+    // @ts-expect-error - Invalid function type.
+    browser.runtime.sendMessage = undefined;
 
-describe('RuntimePostMessageStream', () => {
+    expect(
+      () => new BrowserRuntimePostMessageStream({ name: 'foo', target: 'bar' }),
+    ).toThrow(
+      'browser.runtime.sendMessage is not a function. This class should only be instantiated in a web extension.',
+    );
+
+    // @ts-expect-error - Invalid function type.
+    browser.runtime.sendMessage = 'foo';
+
+    expect(
+      () => new BrowserRuntimePostMessageStream({ name: 'foo', target: 'bar' }),
+    ).toThrow(
+      'browser.runtime.sendMessage is not a function. This class should only be instantiated in a web extension.',
+    );
+
+    // @ts-expect-error - Invalid function type.
+    browser.runtime = undefined;
+
+    expect(
+      () => new BrowserRuntimePostMessageStream({ name: 'foo', target: 'bar' }),
+    ).toThrow(
+      'browser.runtime.sendMessage is not a function. This class should only be instantiated in a web extension.',
+    );
+
+    // @ts-expect-error - Invalid function type.
+    browser = undefined;
+
+    expect(
+      () => new BrowserRuntimePostMessageStream({ name: 'foo', target: 'bar' }),
+    ).toThrow(
+      'browser.runtime.sendMessage is not a function. This class should only be instantiated in a web extension.',
+    );
+  });
+
+  it('supports chrome.runtime', () => {
+    const addListener = jest.fn();
+    const sendMessage = jest.fn().mockImplementation((message) => {
+      // Propagate message to all listeners.
+      addListener.mock.calls.forEach(([listener]) => {
+        setTimeout(() => listener(message));
+      });
+    });
+
+    Object.assign(global, {
+      browser: undefined,
+      chrome: {
+        runtime: {
+          sendMessage,
+          onMessage: {
+            addListener,
+            removeListener: jest.fn(),
+          },
+        },
+      },
+    });
+
+    expect(
+      () => new BrowserRuntimePostMessageStream({ name: 'foo', target: 'bar' }),
+    ).not.toThrow();
+  });
+
   it('can communicate between streams and be destroyed', async () => {
     // Initialize sender stream
     const streamA = new BrowserRuntimePostMessageStream({
@@ -64,46 +131,5 @@ describe('RuntimePostMessageStream', () => {
     streamB.destroy();
     expect(streamA.destroyed).toStrictEqual(true);
     expect(streamB.destroyed).toStrictEqual(true);
-  });
-
-  // This tests needs to be run second, because it changes the `browser` global,
-  // and the other tests depend on it.
-  // TODO: Find a better way to test this.
-  it('throws if chrome.runtime.sendMessage is not a function', () => {
-    // @ts-expect-error - Invalid function type.
-    browser.runtime.sendMessage = undefined;
-
-    expect(
-      () => new BrowserRuntimePostMessageStream({ name: 'foo', target: 'bar' }),
-    ).toThrow(
-      'browser.runtime.sendMessage is not a function. This class should only be instantiated in a web extension.',
-    );
-
-    // @ts-expect-error - Invalid function type.
-    browser.runtime.sendMessage = 'foo';
-
-    expect(
-      () => new BrowserRuntimePostMessageStream({ name: 'foo', target: 'bar' }),
-    ).toThrow(
-      'browser.runtime.sendMessage is not a function. This class should only be instantiated in a web extension.',
-    );
-
-    // @ts-expect-error - Invalid function type.
-    browser.runtime = undefined;
-
-    expect(
-      () => new BrowserRuntimePostMessageStream({ name: 'foo', target: 'bar' }),
-    ).toThrow(
-      'browser.runtime.sendMessage is not a function. This class should only be instantiated in a web extension.',
-    );
-
-    // @ts-expect-error - Invalid function type.
-    browser = undefined;
-
-    expect(
-      () => new BrowserRuntimePostMessageStream({ name: 'foo', target: 'bar' }),
-    ).toThrow(
-      'browser.runtime.sendMessage is not a function. This class should only be instantiated in a web extension.',
-    );
   });
 });

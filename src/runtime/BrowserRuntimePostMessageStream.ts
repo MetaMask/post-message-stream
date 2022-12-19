@@ -1,4 +1,3 @@
-import browser from 'webextension-polyfill';
 import {
   BasePostMessageStream,
   PostMessageEvent,
@@ -30,20 +29,11 @@ export class BrowserRuntimePostMessageStream extends BasePostMessageStream {
   constructor({ name, target }: BrowserRuntimePostMessageStreamArgs) {
     super();
 
-    if (
-      typeof browser === 'undefined' ||
-      typeof browser.runtime?.sendMessage !== 'function'
-    ) {
-      throw new Error(
-        'browser.runtime.sendMessage is not a function. This class should only be instantiated in a web extension.',
-      );
-    }
-
     this.#name = name;
     this.#target = target;
     this._onMessage = this._onMessage.bind(this);
 
-    browser.runtime.onMessage.addListener(this._onMessage);
+    this._getRuntime().onMessage.addListener(this._onMessage);
 
     this._handshake();
   }
@@ -53,7 +43,7 @@ export class BrowserRuntimePostMessageStream extends BasePostMessageStream {
     // message. Rather than responding to specific messages, we send new
     // messages in response to incoming messages, so we don't care about the
     // Promise.
-    browser.runtime.sendMessage({
+    this._getRuntime().sendMessage({
       target: this.#target,
       data,
     });
@@ -67,7 +57,27 @@ export class BrowserRuntimePostMessageStream extends BasePostMessageStream {
     this._onData(message.data);
   }
 
+  private _getRuntime(): typeof browser.runtime {
+    if (
+      'chrome' in globalThis &&
+      typeof chrome?.runtime?.sendMessage === 'function'
+    ) {
+      return chrome.runtime;
+    }
+
+    if (
+      'browser' in globalThis &&
+      typeof browser?.runtime?.sendMessage === 'function'
+    ) {
+      return browser.runtime;
+    }
+
+    throw new Error(
+      'browser.runtime.sendMessage is not a function. This class should only be instantiated in a web extension.',
+    );
+  }
+
   _destroy(): void {
-    browser.runtime.onMessage.removeListener(this._onMessage);
+    this._getRuntime().onMessage.removeListener(this._onMessage);
   }
 }
