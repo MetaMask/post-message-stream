@@ -27,10 +27,3 @@ export function isValidStreamMessage(
       typeof message.data === 'string')
   );
 }
-
-/**
- * A function that does nothing.
- *
- * @returns `undefined`.
- */
-export const noop = () => undefined;

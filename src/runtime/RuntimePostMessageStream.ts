@@ -2,7 +2,7 @@ import {
   BasePostMessageStream,
   PostMessageEvent,
 } from '../BasePostMessageStream';
-import { isValidStreamMessage, noop } from '../utils';
+import { isValidStreamMessage } from '../utils';
 
 interface RuntimePostMessageStreamArgs {
   name: string;
@@ -48,17 +48,14 @@ export class RuntimePostMessageStream extends BasePostMessageStream {
   }
 
   protected _postMessage(data: unknown): void {
-    chrome.runtime.sendMessage(
-      {
-        target: this.#target,
-        data,
-      },
-      {},
-      // `runtime.sendMessage` assumes a response is sent directly from the
-      // target, but we don't need a response here. Not providing a callback
-      // would cause the function to return a promise, which we don't want.
-      noop,
-    );
+    // This returns a Promise, which resolves if the receiver responds to the
+    // message. Rather than responding to specific messages, we send new
+    // messages in response to incoming messages, so we don't care about the
+    // Promise.
+    chrome.runtime.sendMessage({
+      target: this.#target,
+      data,
+    });
   }
 
   private _onMessage(message: PostMessageEvent): void {

@@ -1,5 +1,7 @@
 import { Duplex } from 'readable-stream';
-import { noop, StreamData } from './utils';
+import { StreamData } from './utils';
+
+const noop = () => undefined;
 
 const SYN = 'SYN';
 const ACK = 'ACK';
