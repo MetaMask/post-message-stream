@@ -1,18 +1,19 @@
+import browser from 'webextension-polyfill';
 import {
   BasePostMessageStream,
   PostMessageEvent,
 } from '../BasePostMessageStream';
 import { isValidStreamMessage } from '../utils';
 
-interface RuntimePostMessageStreamArgs {
+interface BrowserRuntimePostMessageStreamArgs {
   name: string;
   target: string;
 }
 
 /**
- * A {@link chrome.runtime} stream.
+ * A {@link browser.runtime} stream.
  */
-export class RuntimePostMessageStream extends BasePostMessageStream {
+export class BrowserRuntimePostMessageStream extends BasePostMessageStream {
   #name: string;
 
   #target: string;
@@ -26,15 +27,15 @@ export class RuntimePostMessageStream extends BasePostMessageStream {
    * multiple streams sharing the same runtime.
    * @param args.target - The name of the stream to exchange messages with.
    */
-  constructor({ name, target }: RuntimePostMessageStreamArgs) {
+  constructor({ name, target }: BrowserRuntimePostMessageStreamArgs) {
     super();
 
     if (
-      typeof chrome === 'undefined' ||
-      typeof chrome.runtime?.sendMessage !== 'function'
+      typeof browser === 'undefined' ||
+      typeof browser.runtime?.sendMessage !== 'function'
     ) {
       throw new Error(
-        'chrome.runtime.sendMessage is not a function. This class should only be instantiated in a web extension.',
+        'browser.runtime.sendMessage is not a function. This class should only be instantiated in a web extension.',
       );
     }
 
@@ -42,7 +43,7 @@ export class RuntimePostMessageStream extends BasePostMessageStream {
     this.#target = target;
     this._onMessage = this._onMessage.bind(this);
 
-    chrome.runtime.onMessage.addListener(this._onMessage);
+    browser.runtime.onMessage.addListener(this._onMessage);
 
     this._handshake();
   }
@@ -52,7 +53,7 @@ export class RuntimePostMessageStream extends BasePostMessageStream {
     // message. Rather than responding to specific messages, we send new
     // messages in response to incoming messages, so we don't care about the
     // Promise.
-    chrome.runtime.sendMessage({
+    browser.runtime.sendMessage({
       target: this.#target,
       data,
     });
@@ -67,6 +68,6 @@ export class RuntimePostMessageStream extends BasePostMessageStream {
   }
 
   _destroy(): void {
-    chrome.runtime.onMessage.removeListener(this._onMessage);
+    browser.runtime.onMessage.removeListener(this._onMessage);
   }
 }

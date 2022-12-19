@@ -1,4 +1,4 @@
-import { WindowPostMessageStream } from '.';
+import { WindowPostMessageStream } from './window/WindowPostMessageStream';
 
 describe('BasePostMessageStream', () => {
   let stream: WindowPostMessageStream;
