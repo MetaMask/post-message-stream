@@ -7,6 +7,7 @@ describe('post-message-stream', () => {
       'WindowPostMessageStream',
       'WebWorkerPostMessageStream',
       'WebWorkerParentPostMessageStream',
+      'BrowserRuntimePostMessageStream',
     ];
 
     it('package has expected exports', () => {

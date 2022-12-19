@@ -11,6 +11,7 @@ describe('post-message-stream', () => {
       'ProcessMessageStream',
       'ThreadParentMessageStream',
       'ThreadMessageStream',
+      'BrowserRuntimePostMessageStream',
     ];
 
     it('package has expected exports', () => {

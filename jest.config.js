@@ -1,6 +1,10 @@
 module.exports = {
   collectCoverage: true,
-  collectCoverageFrom: ['<rootDir>/src/**/*.ts', '!<rootDir>/src/**/*.test.ts'],
+  collectCoverageFrom: [
+    '<rootDir>/src/**/*.ts',
+    '!<rootDir>/src/**/*.test.ts',
+    '!<rootDir>/src/vendor/**/*',
+  ],
   coverageDirectory: 'coverage',
   coverageReporters: ['html', 'json-summary', 'text'],
   coverageThreshold: {
