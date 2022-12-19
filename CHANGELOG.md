@@ -7,19 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ## [6.1.0]
-### Uncategorized
-- Bump decode-uri-component from 0.2.0 to 0.2.2 ([#66](https://github.com/MetaMask/post-message-stream/pull/66))
-- Bump minimatch from 3.0.4 to 3.1.2 ([#68](https://github.com/MetaMask/post-message-stream/pull/68))
+### Added
 - Add browser runtime post message stream ([#69](https://github.com/MetaMask/post-message-stream/pull/69))
-- Bump qs from 6.5.2 to 6.5.3 ([#67](https://github.com/MetaMask/post-message-stream/pull/67))
-- Bump electron from 12.0.5 to 18.3.7 ([#64](https://github.com/MetaMask/post-message-stream/pull/64))
-- Bump @metamask/auto-changelog from 3.0.0 to 3.1.0 ([#65](https://github.com/MetaMask/post-message-stream/pull/65))
-- Bump @metamask/auto-changelog from 2.6.1 to 3.0.0 ([#62](https://github.com/MetaMask/post-message-stream/pull/62))
-- Bump @metamask/utils from 3.3.0 to 3.3.1 ([#63](https://github.com/MetaMask/post-message-stream/pull/63))
-- Bump @metamask/utils from 3.0.1 to 3.3.0 ([#61](https://github.com/MetaMask/post-message-stream/pull/61))
-- Bump @metamask/utils from 2.1.0 to 3.0.1 ([#56](https://github.com/MetaMask/post-message-stream/pull/56))
-- Update `prettier` to latest version ([#52](https://github.com/MetaMask/post-message-stream/pull/52))
-- Bump @metamask/utils from 2.0.0 to 2.1.0 ([#53](https://github.com/MetaMask/post-message-stream/pull/53))
 
 ## [6.0.0]
 ### Changed
