@@ -4,7 +4,7 @@ import {
 } from '../BasePostMessageStream';
 import { isValidStreamMessage } from '../utils';
 
-interface BrowserRuntimePostMessageStreamArgs {
+export interface BrowserRuntimePostMessageStreamArgs {
   name: string;
   target: string;
 }

@@ -1,6 +1,6 @@
 import { BrowserRuntimePostMessageStream } from './BrowserRuntimePostMessageStream';
 
-describe('RuntimePostMessageStream', () => {
+describe('BrowserRuntimePostMessageStream', () => {
   beforeEach(() => {
     const addListener = jest.fn();
     const sendMessage = jest.fn().mockImplementation((message) => {
