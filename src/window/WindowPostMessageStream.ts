@@ -11,6 +11,17 @@ interface WindowPostMessageStreamArgs {
   targetWindow?: Window;
 }
 
+// @ts-expect-error Object should be defined.
+const getSource = Object.getOwnPropertyDescriptor(
+  MessageEvent.prototype,
+  'source',
+).get;
+// @ts-expect-error Object should be defined.
+const getOrigin = Object.getOwnPropertyDescriptor(
+  MessageEvent.prototype,
+  'origin',
+).get;
+
 /**
  * A {@link Window.postMessage} stream.
  */
@@ -78,8 +89,11 @@ export class WindowPostMessageStream extends BasePostMessageStream {
     const message = event.data;
 
     if (
-      (this._targetOrigin !== '*' && event.origin !== this._targetOrigin) ||
-      event.source !== this._targetWindow ||
+      (this._targetOrigin !== '*' &&
+        // @ts-expect-error getOrigin should be defined.
+        getOrigin.call(event) !== this._targetOrigin) ||
+      // @ts-expect-error getSource should be defined.
+      getSource.call(event) !== this._targetWindow ||
       !isValidStreamMessage(message) ||
       message.target !== this._name
     ) {
