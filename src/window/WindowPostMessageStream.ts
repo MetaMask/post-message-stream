@@ -1,3 +1,4 @@
+import { assert } from '@metamask/utils';
 import {
   BasePostMessageStream,
   PostMessageEvent,
@@ -11,16 +12,25 @@ interface WindowPostMessageStreamArgs {
   targetWindow?: Window;
 }
 
-// @ts-expect-error Object should be defined.
-const getSource = Object.getOwnPropertyDescriptor(
+const getSourceDescriptor = Object.getOwnPropertyDescriptor(
   MessageEvent.prototype,
   'source',
-).get;
-// @ts-expect-error Object should be defined.
-const getOrigin = Object.getOwnPropertyDescriptor(
+);
+assert(
+  getSourceDescriptor,
+  'MessageEvent.prototype.source getter is not defined.',
+);
+const getSource = getSourceDescriptor.get;
+
+const getOriginDescriptor = Object.getOwnPropertyDescriptor(
   MessageEvent.prototype,
   'origin',
-).get;
+);
+assert(
+  getOriginDescriptor,
+  'MessageEvent.prototype.origin getter is not defined.',
+);
+const getOrigin = getOriginDescriptor.get;
 
 /**
  * A {@link Window.postMessage} stream.
@@ -88,11 +98,19 @@ export class WindowPostMessageStream extends BasePostMessageStream {
   private _onMessage(event: PostMessageEvent): void {
     const message = event.data;
 
+    assert(
+      getOrigin,
+      `Function was expected for 'getOrigin', but ${typeof getOrigin} was provided instead.`,
+    );
+
+    assert(
+      getSource,
+      `Function was expected for 'getSource', but ${typeof getSource} was provided instead.`,
+    );
+
     if (
       (this._targetOrigin !== '*' &&
-        // @ts-expect-error getOrigin should be defined.
         getOrigin.call(event) !== this._targetOrigin) ||
-      // @ts-expect-error getSource should be defined.
       getSource.call(event) !== this._targetWindow ||
       !isValidStreamMessage(message) ||
       message.target !== this._name
