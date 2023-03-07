@@ -1,3 +1,4 @@
+import { assert } from '@metamask/utils';
 import {
   BasePostMessageStream,
   PostMessageEvent,
@@ -10,6 +11,20 @@ interface WindowPostMessageStreamArgs {
   targetOrigin?: string;
   targetWindow?: Window;
 }
+
+/* istanbul ignore next */
+const getSource = Object.getOwnPropertyDescriptor(
+  MessageEvent.prototype,
+  'source',
+)?.get;
+assert(getSource, 'MessageEvent.prototype.source getter is not defined.');
+
+/* istanbul ignore next */
+const getOrigin = Object.getOwnPropertyDescriptor(
+  MessageEvent.prototype,
+  'origin',
+)?.get;
+assert(getOrigin, 'MessageEvent.prototype.origin getter is not defined.');
 
 /**
  * A {@link Window.postMessage} stream.
@@ -77,14 +92,17 @@ export class WindowPostMessageStream extends BasePostMessageStream {
   private _onMessage(event: PostMessageEvent): void {
     const message = event.data;
 
+    /* eslint-disable @typescript-eslint/no-non-null-assertion */
     if (
-      (this._targetOrigin !== '*' && event.origin !== this._targetOrigin) ||
-      event.source !== this._targetWindow ||
+      (this._targetOrigin !== '*' &&
+        getOrigin!.call(event) !== this._targetOrigin) ||
+      getSource!.call(event) !== this._targetWindow ||
       !isValidStreamMessage(message) ||
       message.target !== this._name
     ) {
       return;
     }
+    /* eslint-enable @typescript-eslint/no-non-null-assertion */
 
     this._onData(message.data);
   }
