@@ -7,11 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ## [6.1.1]
-### Uncategorized
-- Add fix for event security (MessageEvent source issue) ([#79](https://github.com/MetaMask/post-message-stream/pull/79))
-- Bump @metamask/utils from 3.4.1 to 4.0.0 ([#76](https://github.com/MetaMask/post-message-stream/pull/76))
-- Bump json5 from 1.0.1 to 1.0.2 ([#72](https://github.com/MetaMask/post-message-stream/pull/72))
-- Bump @metamask/utils from 3.3.1 to 3.4.1 ([#73](https://github.com/MetaMask/post-message-stream/pull/73))
+### Fixed
+- Add fix accessing MessageEvent prototype after event lockdown ([#79](https://github.com/MetaMask/post-message-stream/pull/79))
 
 ## [6.1.0]
 ### Added
