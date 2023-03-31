@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [6.1.2]
+### Uncategorized
+- Bump @metamask/utils from 4.0.0 to 5.0.0 ([#80](https://github.com/MetaMask/post-message-stream/pull/80))
+- Bump http-cache-semantics from 4.1.0 to 4.1.1 ([#74](https://github.com/MetaMask/post-message-stream/pull/74))
+- Use `addEventListener` instead of `onmessage` in WebWorkerPostMessageStream ([#83](https://github.com/MetaMask/post-message-stream/pull/83))
+
 ## [6.1.1]
 ### Fixed
 - Fixed accessing MessageEvent prototype after event lockdown ([#79](https://github.com/MetaMask/post-message-stream/pull/79))
@@ -66,7 +72,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Initial release.
 
-[Unreleased]: https://github.com/MetaMask/post-message-stream/compare/v6.1.1...HEAD
+[Unreleased]: https://github.com/MetaMask/post-message-stream/compare/v6.1.2...HEAD
+[6.1.2]: https://github.com/MetaMask/post-message-stream/compare/v6.1.1...v6.1.2
 [6.1.1]: https://github.com/MetaMask/post-message-stream/compare/v6.1.0...v6.1.1
 [6.1.0]: https://github.com/MetaMask/post-message-stream/compare/v6.0.0...v6.1.0
 [6.0.0]: https://github.com/MetaMask/post-message-stream/compare/v5.1.0...v6.0.0
