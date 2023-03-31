@@ -7,10 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ## [6.1.2]
-### Uncategorized
-- Bump @metamask/utils from 4.0.0 to 5.0.0 ([#80](https://github.com/MetaMask/post-message-stream/pull/80))
-- Bump http-cache-semantics from 4.1.0 to 4.1.1 ([#74](https://github.com/MetaMask/post-message-stream/pull/74))
+### Changed
 - Use `addEventListener` instead of `onmessage` in WebWorkerPostMessageStream ([#83](https://github.com/MetaMask/post-message-stream/pull/83))
+  - This fixes compatibility with LavaMoat.
 
 ## [6.1.1]
 ### Fixed
