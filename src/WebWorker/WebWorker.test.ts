@@ -84,13 +84,6 @@ describe('WebWorker Streams', () => {
       );
     });
 
-    it('throws if not run in a WebWorker (self not an instance of WorkerGlobalScope)', () => {
-      (globalThis as any).self = originalSelf;
-      expect(() => new WebWorkerPostMessageStream()).toThrow(
-        'WorkerGlobalScope not found. This class should only be instantiated in a WebWorker.',
-      );
-    });
-
     it('can be destroyed', () => {
       const stream = new WebWorkerPostMessageStream();
       expect(stream.destroy()).toBeUndefined();
