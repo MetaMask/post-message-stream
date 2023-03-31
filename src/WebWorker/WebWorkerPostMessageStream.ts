@@ -22,9 +22,7 @@ export class WebWorkerPostMessageStream extends BasePostMessageStream {
     if (
       typeof self === 'undefined' ||
       // @ts-expect-error: No types for WorkerGlobalScope
-      typeof WorkerGlobalScope === 'undefined' ||
-      // @ts-expect-error: No types for WorkerGlobalScope
-      !(self instanceof WorkerGlobalScope)
+      typeof WorkerGlobalScope === 'undefined'
     ) {
       throw new Error(
         'WorkerGlobalScope not found. This class should only be instantiated in a WebWorker.',
@@ -34,7 +32,7 @@ export class WebWorkerPostMessageStream extends BasePostMessageStream {
     super();
 
     this._name = DEDICATED_WORKER_NAME;
-    self.onmessage = this._onMessage.bind(this) as any;
+    self.addEventListener('message', this._onMessage.bind(this) as any);
 
     this._handshake();
   }

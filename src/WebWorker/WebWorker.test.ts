@@ -84,26 +84,26 @@ describe('WebWorker Streams', () => {
       );
     });
 
-    it('throws if not run in a WebWorker (self not an instance of WorkerGlobalScope)', () => {
-      (globalThis as any).self = originalSelf;
-      expect(() => new WebWorkerPostMessageStream()).toThrow(
-        'WorkerGlobalScope not found. This class should only be instantiated in a WebWorker.',
-      );
-    });
-
     it('can be destroyed', () => {
+      (globalThis as any).self = originalSelf;
       const stream = new WebWorkerPostMessageStream();
       expect(stream.destroy()).toBeUndefined();
     });
 
     it('forwards valid messages', () => {
+      (globalThis as any).self = originalSelf;
+      const addEventListenerSpy = jest.spyOn(globalThis, 'addEventListener');
       const stream = new WebWorkerPostMessageStream();
+
       const onDataSpy = jest
         .spyOn(stream, '_onData' as any)
         .mockImplementation();
 
+      expect(addEventListenerSpy).toHaveBeenCalledTimes(1);
+      const listener = addEventListenerSpy.mock.calls[0][1] as EventListener;
+
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      self.onmessage!(
+      listener(
         new MessageEvent('foo', {
           data: { data: 'bar', target: DEDICATED_WORKER_NAME },
         }),
@@ -114,10 +114,16 @@ describe('WebWorker Streams', () => {
     });
 
     it('ignores invalid messages', () => {
+      (globalThis as any).self = originalSelf;
+      const addEventListenerSpy = jest.spyOn(globalThis, 'addEventListener');
       const stream = new WebWorkerPostMessageStream();
+
       const onDataSpy = jest
         .spyOn(stream, '_onData' as any)
         .mockImplementation();
+
+      expect(addEventListenerSpy).toHaveBeenCalledTimes(2);
+      const listener = addEventListenerSpy.mock.calls[0][1] as EventListener;
 
       (
         [
@@ -127,7 +133,7 @@ describe('WebWorker Streams', () => {
         ] as const
       ).forEach((invalidMessage) => {
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        self.onmessage!(new MessageEvent<unknown>('foo', invalidMessage));
+        listener(new MessageEvent<unknown>('foo', invalidMessage));
 
         expect(onDataSpy).not.toHaveBeenCalled();
       });
