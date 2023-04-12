@@ -1687,9 +1687,9 @@
   integrity sha512-mWlLGQKjXXFOj9EtDClKSoTLeQuPW2kM1w3EpUMf4goYAQ+kLXCCa8pEff6h8ApWAnjhYmXydA1znQ2J4XvD+A==
 
 "@metamask/utils@^5.0.0":
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/@metamask/utils/-/utils-5.0.0.tgz#592dea36bb83d8cbf8f12ee236dd9fa49827e5e9"
-  integrity sha512-bsy7YiGxMo3rvyYbZc33yfMIfX4vVENFcxKctvNjLwCMx9d0xbLPT1T8yiqobb4NkZbwlacYEGxnv3GkTePGig==
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/@metamask/utils/-/utils-5.0.1.tgz#8a60adcfeaa33f046dc66c0b9b02f2b172872d1b"
+  integrity sha512-8XCCYlLYoW4rZD2+QjEZ0UjOuvvS/EBmn89QwWW8A9+KVEO2B9HxXJFGZF/Rl+E4IoCxVczrjjIjXLg2kvkNPg==
   dependencies:
     "@ethereumjs/tx" "^4.1.1"
     "@types/debug" "^4.1.7"
