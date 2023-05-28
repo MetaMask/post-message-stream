@@ -1,7 +1,7 @@
 import { Duplex } from 'readable-stream';
 import { StreamData } from './utils';
 
-const noop = () => undefined; 
+const noop = () => undefined;
 
 const SYN = 'SYN';
 const ACK = 'ACK';
