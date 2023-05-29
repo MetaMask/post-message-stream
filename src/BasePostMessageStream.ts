@@ -48,6 +48,15 @@ export abstract class BasePostMessageStream extends Duplex {
     };
   }
 
+  private _log(data: StreamData, out: boolean) {
+    this._logger.logger(
+      this._logger.source,
+      this._logger.destination,
+      out,
+      data,
+    );
+  }
+
   /**
    * Must be called at end of child constructor to initiate
    * communication with other end.
@@ -63,12 +72,7 @@ export abstract class BasePostMessageStream extends Duplex {
       // Forward message
       try {
         this.push(data);
-        this._logger.logger(
-          this._logger.source,
-          this._logger.destination,
-          false,
-          data,
-        );
+        this._log(data, false);
       } catch (err) {
         this.emit('error', err);
       }
@@ -96,12 +100,7 @@ export abstract class BasePostMessageStream extends Duplex {
 
   _write(data: StreamData, _encoding: string | null, cb: () => void): void {
     if (data !== ACK && data !== SYN) {
-      this._logger.logger(
-        this._logger.source,
-        this._logger.destination,
-        true,
-        data,
-      );
+      this._log(data, true);
     }
     this._postMessage(data);
     cb();
