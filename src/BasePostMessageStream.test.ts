@@ -14,6 +14,36 @@ describe('BasePostMessageStream', () => {
     stream.destroy();
   });
 
+  it('checks logger receiving messages', async () => {
+    await new Promise<void>((resolve) => {
+      stream._setLogger('name', 'target', (source, destination, out, data) => {
+        expect(source).toStrictEqual('name');
+        expect(destination).toStrictEqual('target');
+        expect(out).toStrictEqual(false);
+        expect(data).toStrictEqual({ data: 123 });
+        resolve();
+      });
+
+      (stream as any)._init = true;
+      (stream as any)._onData({ data: 123 });
+    });
+  });
+
+  it('checks logger sending messages', async () => {
+    await new Promise<void>((resolve) => {
+      stream._setLogger('name', 'target', (source, destination, out, data) => {
+        expect(source).toStrictEqual('name');
+        expect(destination).toStrictEqual('target');
+        expect(out).toStrictEqual(true);
+        expect(data).toStrictEqual({ data: 123 });
+        resolve();
+      });
+
+      (stream as any)._init = true;
+      (stream as any)._write({ data: 123 });
+    });
+  });
+
   it('handles errors thrown when pushing data', async () => {
     await new Promise<void>((resolve) => {
       stream.push = () => {

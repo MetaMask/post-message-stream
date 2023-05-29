@@ -6,6 +6,17 @@ const noop = () => undefined;
 const SYN = 'SYN';
 const ACK = 'ACK';
 
+interface Logger {
+  source: string;
+  destination: string;
+  logger: (
+    source: string,
+    destination: string,
+    out: boolean,
+    data: StreamData,
+  ) => void;
+}
+
 export interface PostMessageEvent {
   data?: StreamData;
   origin: string;
@@ -20,6 +31,8 @@ export abstract class BasePostMessageStream extends Duplex {
 
   private _haveSyn: boolean;
 
+  private _logger: Logger;
+
   constructor() {
     super({
       objectMode: true,
@@ -28,6 +41,11 @@ export abstract class BasePostMessageStream extends Duplex {
     // Initialization flags
     this._init = false;
     this._haveSyn = false;
+    this._logger = {
+      source: '',
+      destination: '',
+      logger: () => null,
+    };
   }
 
   /**
@@ -45,6 +63,12 @@ export abstract class BasePostMessageStream extends Duplex {
       // Forward message
       try {
         this.push(data);
+        this._logger.logger(
+          this._logger.source,
+          this._logger.destination,
+          false,
+          data,
+        );
       } catch (err) {
         this.emit('error', err);
       }
@@ -71,7 +95,23 @@ export abstract class BasePostMessageStream extends Duplex {
   }
 
   _write(data: StreamData, _encoding: string | null, cb: () => void): void {
+    if (data !== ACK && data !== SYN) {
+      this._logger.logger(
+        this._logger.source,
+        this._logger.destination,
+        true,
+        data,
+      );
+    }
     this._postMessage(data);
     cb();
+  }
+
+  _setLogger(source: string, destination: string, logger: Logger['logger']) {
+    this._logger = {
+      source,
+      destination,
+      logger,
+    };
   }
 }
