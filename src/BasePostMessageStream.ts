@@ -6,16 +6,7 @@ const noop = () => undefined;
 const SYN = 'SYN';
 const ACK = 'ACK';
 
-interface Logger {
-  source: string;
-  destination: string;
-  logger: (
-    source: string,
-    destination: string,
-    out: boolean,
-    data: StreamData,
-  ) => void;
-}
+type Log = (data: unknown, out: boolean) => void;
 
 export interface PostMessageEvent {
   data?: StreamData;
@@ -31,7 +22,7 @@ export abstract class BasePostMessageStream extends Duplex {
 
   private _haveSyn: boolean;
 
-  private _logger: Logger;
+  private _log: Log;
 
   constructor() {
     super({
@@ -41,20 +32,7 @@ export abstract class BasePostMessageStream extends Duplex {
     // Initialization flags
     this._init = false;
     this._haveSyn = false;
-    this._logger = {
-      source: '',
-      destination: '',
-      logger: () => null,
-    };
-  }
-
-  private _log(data: StreamData, out: boolean) {
-    this._logger.logger(
-      this._logger.source,
-      this._logger.destination,
-      out,
-      data,
-    );
+    this._log = () => null;
   }
 
   /**
@@ -106,11 +84,7 @@ export abstract class BasePostMessageStream extends Duplex {
     cb();
   }
 
-  _setLogger(source: string, destination: string, logger: Logger['logger']) {
-    this._logger = {
-      source,
-      destination,
-      logger,
-    };
+  _setLogger(log: Log) {
+    this._log = log;
   }
 }

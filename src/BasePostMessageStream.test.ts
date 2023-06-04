@@ -16,9 +16,7 @@ describe('BasePostMessageStream', () => {
 
   it('checks logger receiving messages', async () => {
     await new Promise<void>((resolve) => {
-      stream._setLogger('name', 'target', (source, destination, out, data) => {
-        expect(source).toStrictEqual('name');
-        expect(destination).toStrictEqual('target');
+      stream._setLogger((data, out) => {
         expect(out).toStrictEqual(false);
         expect(data).toStrictEqual({ data: 123 });
         resolve();
@@ -31,9 +29,7 @@ describe('BasePostMessageStream', () => {
 
   it('checks logger sending messages', async () => {
     await new Promise<void>((resolve) => {
-      stream._setLogger('name', 'target', (source, destination, out, data) => {
-        expect(source).toStrictEqual('name');
-        expect(destination).toStrictEqual('target');
+      stream._setLogger((data, out) => {
         expect(out).toStrictEqual(true);
         expect(data).toStrictEqual({ data: 123 });
         resolve();
