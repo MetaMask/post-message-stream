@@ -14,30 +14,20 @@ describe('BasePostMessageStream', () => {
     stream.destroy();
   });
 
-  it('checks logger receiving messages', async () => {
-    await new Promise<void>((resolve) => {
-      stream._setLogger((data, out) => {
-        expect(out).toStrictEqual(false);
-        expect(data).toStrictEqual({ data: 123 });
-        resolve();
-      });
-
-      (stream as any)._init = true;
-      (stream as any)._onData({ data: 123 });
-    });
+  it('checks logger receiving messages', () => {
+    const log = jest.fn();
+    stream._setLogger(log);
+    (stream as any)._init = true;
+    (stream as any)._onData({ data: 123 });
+    expect(log).toHaveBeenCalledWith({ data: 123 }, false);
   });
 
-  it('checks logger sending messages', async () => {
-    await new Promise<void>((resolve) => {
-      stream._setLogger((data, out) => {
-        expect(out).toStrictEqual(true);
-        expect(data).toStrictEqual({ data: 123 });
-        resolve();
-      });
-
-      (stream as any)._init = true;
-      (stream as any)._write({ data: 123 });
-    });
+  it('checks logger sending messages', () => {
+    const log = jest.fn();
+    stream._setLogger(log);
+    (stream as any)._init = true;
+    (stream as any)._write({ data: 123 }, null, () => undefined);
+    expect(log).toHaveBeenCalledWith({ data: 123 }, true);
   });
 
   it('handles errors thrown when pushing data', async () => {
