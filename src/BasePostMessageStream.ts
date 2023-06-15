@@ -6,6 +6,8 @@ const noop = () => undefined;
 const SYN = 'SYN';
 const ACK = 'ACK';
 
+type Log = (data: unknown, out: boolean) => void;
+
 export interface PostMessageEvent {
   data?: StreamData;
   origin: string;
@@ -20,6 +22,8 @@ export abstract class BasePostMessageStream extends Duplex {
 
   private _haveSyn: boolean;
 
+  private _log: Log;
+
   constructor() {
     super({
       objectMode: true,
@@ -28,6 +32,7 @@ export abstract class BasePostMessageStream extends Duplex {
     // Initialization flags
     this._init = false;
     this._haveSyn = false;
+    this._log = () => null;
   }
 
   /**
@@ -45,6 +50,7 @@ export abstract class BasePostMessageStream extends Duplex {
       // Forward message
       try {
         this.push(data);
+        this._log(data, false);
       } catch (err) {
         this.emit('error', err);
       }
@@ -71,7 +77,14 @@ export abstract class BasePostMessageStream extends Duplex {
   }
 
   _write(data: StreamData, _encoding: string | null, cb: () => void): void {
+    if (data !== ACK && data !== SYN) {
+      this._log(data, true);
+    }
     this._postMessage(data);
     cb();
+  }
+
+  _setLogger(log: Log) {
+    this._log = log;
   }
 }

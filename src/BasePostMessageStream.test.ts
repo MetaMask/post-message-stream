@@ -14,6 +14,22 @@ describe('BasePostMessageStream', () => {
     stream.destroy();
   });
 
+  it('checks logger receiving messages', () => {
+    const log = jest.fn();
+    stream._setLogger(log);
+    (stream as any)._init = true;
+    (stream as any)._onData({ data: 123 });
+    expect(log).toHaveBeenCalledWith({ data: 123 }, false);
+  });
+
+  it('checks logger sending messages', () => {
+    const log = jest.fn();
+    stream._setLogger(log);
+    (stream as any)._init = true;
+    (stream as any)._write({ data: 123 }, null, () => undefined);
+    expect(log).toHaveBeenCalledWith({ data: 123 }, true);
+  });
+
   it('handles errors thrown when pushing data', async () => {
     await new Promise<void>((resolve) => {
       stream.push = () => {
