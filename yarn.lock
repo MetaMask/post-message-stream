@@ -1473,10 +1473,10 @@
   resolved "https://registry.yarnpkg.com/@metamask/eslint-config/-/eslint-config-9.0.0.tgz#22d4911b705f7e4e566efbdda0e37912da33e30f"
   integrity sha512-mWlLGQKjXXFOj9EtDClKSoTLeQuPW2kM1w3EpUMf4goYAQ+kLXCCa8pEff6h8ApWAnjhYmXydA1znQ2J4XvD+A==
 
-"@metamask/utils@^5.0.0":
-  version "5.0.2"
-  resolved "https://registry.yarnpkg.com/@metamask/utils/-/utils-5.0.2.tgz#140ba5061d90d9dac0280c19cab101bc18c8857c"
-  integrity sha512-yfmE79bRQtnMzarnKfX7AEJBwFTxvTyw3nBQlu/5rmGXrjAeAMltoGxO62TFurxrQAFMNa/fEjIHNvungZp0+g==
+"@metamask/utils@^6.1.0":
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/@metamask/utils/-/utils-6.1.0.tgz#29948c12588e9faae835d203dd80a42800048b6c"
+  integrity sha512-sWUiV0/7fnR3iMea9gBffPGp6p6tewNSngE1EUYGhvo0XMcHPFsLOK269TZUMD+/h+I+vGdsjL/ZA+nlXIZeeQ==
   dependencies:
     "@ethereumjs/tx" "^4.1.2"
     "@types/debug" "^4.1.7"
