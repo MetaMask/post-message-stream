@@ -50,7 +50,7 @@
     "@typescript-eslint/eslint-plugin": "^4.33.0",
     "@typescript-eslint/parser": "^4.33.0",
     "browserify": "^17.0.0",
-    "electron": "^18.3.7",
+    "electron": "^18.3.15",
     "eslint": "^7.30.0",
     "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-import": "^2.22.1",
