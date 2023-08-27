@@ -6,6 +6,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [6.2.0]
+### Uncategorized
+- ci: remove require-additional-reviewer workflow ([#91](https://github.com/MetaMask/post-message-stream/pull/91))
+- Bump @metamask/auto-changelog from 3.1.0 to 3.2.0 ([#99](https://github.com/MetaMask/post-message-stream/pull/99))
+- Bump semver from 5.7.1 to 5.7.2 ([#97](https://github.com/MetaMask/post-message-stream/pull/97))
+- Bump word-wrap from 1.2.3 to 1.2.4 ([#100](https://github.com/MetaMask/post-message-stream/pull/100))
+- Support for customizable logger for incoming/outgoing messages ([#93](https://github.com/MetaMask/post-message-stream/pull/93))
+- Bump @metamask/utils from 5.0.0 to 5.0.2 ([#87](https://github.com/MetaMask/post-message-stream/pull/87))
+
 ## [6.1.2]
 ### Changed
 - Use `addEventListener` instead of `onmessage` in WebWorkerPostMessageStream ([#83](https://github.com/MetaMask/post-message-stream/pull/83))
@@ -71,7 +80,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Initial release.
 
-[Unreleased]: https://github.com/MetaMask/post-message-stream/compare/v6.1.2...HEAD
+[Unreleased]: https://github.com/MetaMask/post-message-stream/compare/v6.2.0...HEAD
+[6.2.0]: https://github.com/MetaMask/post-message-stream/compare/v6.1.2...v6.2.0
 [6.1.2]: https://github.com/MetaMask/post-message-stream/compare/v6.1.1...v6.1.2
 [6.1.1]: https://github.com/MetaMask/post-message-stream/compare/v6.1.0...v6.1.1
 [6.1.0]: https://github.com/MetaMask/post-message-stream/compare/v6.0.0...v6.1.0
