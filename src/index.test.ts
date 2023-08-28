@@ -20,7 +20,7 @@ describe('post-message-stream', () => {
       );
 
       for (const exportName of expectedExports) {
-        expect(exportName in PostMessageStream).toStrictEqual(true);
+        expect(exportName in PostMessageStream).toBe(true);
       }
     });
   });

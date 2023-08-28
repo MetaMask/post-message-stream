@@ -49,7 +49,7 @@ describe('Node Thread Streams', () => {
     // Send message to child, triggering a response
     parentStream.write(111);
 
-    expect(await responsePromise).toStrictEqual(555);
+    expect(await responsePromise).toBe(555);
 
     // Check that events with falsy data are ignored as expected
     parentStream.once('data', (data) => {
@@ -61,7 +61,7 @@ describe('Node Thread Streams', () => {
     // was destroyed
     thread.terminate();
     parentStream.destroy();
-    expect(parentStream.destroyed).toStrictEqual(true);
+    expect(parentStream.destroyed).toBe(true);
   });
 
   describe('ThreadParentMessageStream', () => {
