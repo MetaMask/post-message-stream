@@ -87,7 +87,7 @@ describe('WebWorker Streams', () => {
     it('can be destroyed', () => {
       (globalThis as any).self = originalSelf;
       const stream = new WebWorkerPostMessageStream();
-      expect(stream.destroy().destroyed).toStrictEqual(true);
+      expect(stream.destroy().destroyed).toBe(true);
     });
 
     it('forwards valid messages', () => {
