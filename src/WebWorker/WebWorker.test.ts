@@ -37,7 +37,7 @@ describe('WebWorker Streams', () => {
     // Send message to worker, triggering a response
     parentStream.write(111);
 
-    expect(await responsePromise).toStrictEqual(555);
+    expect(await responsePromise).toBe(555);
 
     // Check that events with falsy data are ignored as expected
     parentStream.once('data', (data) => {
@@ -48,7 +48,7 @@ describe('WebWorker Streams', () => {
     // Terminate worker, destroy parent, and check that parent was destroyed
     worker.terminate();
     parentStream.destroy();
-    expect(parentStream.destroyed).toStrictEqual(true);
+    expect(parentStream.destroyed).toBe(true);
   });
 
   describe('WebWorkerPostMessageStream', () => {

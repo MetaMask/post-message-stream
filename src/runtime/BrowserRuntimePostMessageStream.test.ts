@@ -115,7 +115,7 @@ describe('BrowserRuntimePostMessageStream', () => {
     // Write to stream A, triggering a response from stream B
     streamA.write(111);
 
-    expect(await responsePromise).toStrictEqual(555);
+    expect(await responsePromise).toBe(555);
 
     const throwingListener = (data: any) => {
       throw new Error(`Unexpected data on stream: ${data}`);
@@ -129,7 +129,7 @@ describe('BrowserRuntimePostMessageStream', () => {
     // Destroy streams and confirm that they were destroyed
     streamA.destroy();
     streamB.destroy();
-    expect(streamA.destroyed).toStrictEqual(true);
-    expect(streamB.destroyed).toStrictEqual(true);
+    expect(streamA.destroyed).toBe(true);
+    expect(streamB.destroyed).toBe(true);
   });
 });

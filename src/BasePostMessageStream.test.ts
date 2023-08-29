@@ -37,7 +37,7 @@ describe('BasePostMessageStream', () => {
       };
 
       stream.once('error', (error) => {
-        expect(error.message).toStrictEqual('push error');
+        expect(error.message).toBe('push error');
         resolve();
       });
 
