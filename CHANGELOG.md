@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ## [7.0.0]
+### Changed
+- **BREAKING:** Update `readable-stream` from `2.3.3` to `3.6.2` ([#88](https://github.com/MetaMask/post-message-stream/pull/88))
 
 ## [6.2.0]
 ### Added
