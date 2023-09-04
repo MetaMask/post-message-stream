@@ -33,7 +33,7 @@
   },
   "dependencies": {
     "@metamask/utils": "^5.0.0",
-    "readable-stream": "2.3.3"
+    "readable-stream": "3.6.2"
   },
   "devDependencies": {
     "@jest-runner/electron": "^3.0.1",
