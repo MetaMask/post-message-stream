@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [7.0.0]
+
 ## [6.2.0]
 ### Added
 - Add `setLogger` function for logging incoming/outgoing messages ([#93](https://github.com/MetaMask/post-message-stream/pull/93))
@@ -75,7 +77,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Initial release.
 
-[Unreleased]: https://github.com/MetaMask/post-message-stream/compare/v6.2.0...HEAD
+[Unreleased]: https://github.com/MetaMask/post-message-stream/compare/v7.0.0...HEAD
+[7.0.0]: https://github.com/MetaMask/post-message-stream/compare/v6.2.0...v7.0.0
 [6.2.0]: https://github.com/MetaMask/post-message-stream/compare/v6.1.2...v6.2.0
 [6.1.2]: https://github.com/MetaMask/post-message-stream/compare/v6.1.1...v6.1.2
 [6.1.1]: https://github.com/MetaMask/post-message-stream/compare/v6.1.0...v6.1.1
