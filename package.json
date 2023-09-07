@@ -45,7 +45,7 @@
     "@metamask/eslint-config-typescript": "^10.0.0",
     "@types/chrome": "^0.0.204",
     "@types/jest": "^26.0.13",
-    "@types/node": "^18.0.0",
+    "@types/node": "^16.11.48",
     "@types/readable-stream": "^2.3.9",
     "@typescript-eslint/eslint-plugin": "^5.33.0",
     "@typescript-eslint/parser": "^5.33.0",
@@ -67,7 +67,7 @@
     "typescript": "~4.4.0"
   },
   "engines": {
-    "node": ">=14.0.0"
+    "node": "^16.20 || ^18.16 || >=20"
   },
   "publishConfig": {
     "access": "public",
