@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ## [8.0.0]
+### Changed
+- **BREAKING:** Increase minimum Node.js version to `^16.20.0` ([#110](https://github.com/MetaMask/post-message-stream/pull/110))
+- Update `@metamask/utils` from `^5.0.2` to `^8.0.1` ([#108](https://github.com/MetaMask/post-message-stream/pull/108))
 
 ## [7.0.0]
 ### Changed
