@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-20.04
     strategy:
       matrix:
-        node-version: [16.x, 18.x]
+        node-version: [16.x, 18.x, 20.x, 22.x]
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js ${{ matrix.node-version }}
@@ -29,7 +29,11 @@ jobs:
         with:
           path: ${{ steps.yarn-cache-dir.outputs.YARN_CACHE_DIR }}
           key: yarn-cache-${{ runner.os }}-${{ steps.yarn-version.outputs.YARN_VERSION }}-${{ hashFiles('yarn.lock') }}
+      # TODO: Remove --ignore-engines once devdeps compatible with node v20
+      - run: yarn --frozen-lockfile --ignore-engines
+        if: "startsWith(matrix.node-version, '2')"
       - run: yarn --frozen-lockfile
+        if: "!startsWith(matrix.node-version, '2')"
       - run: yarn allow-scripts
       - run: yarn build
       - run: yarn lint
