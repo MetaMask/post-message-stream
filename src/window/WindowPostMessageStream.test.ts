@@ -8,7 +8,16 @@ describe('WindowPostMessageStream', () => {
       encoding: 'ucs2',
       objectMode: false,
     });
-    expect((pms as any).encoding).toBe('ucs2');
+    expect(pms._readableState.encoding).toBe('ucs2');
+    expect(pms._readableState.objectMode).toBe(false);
+    expect(pms._writableState.objectMode).toBe(false);
+  });
+
+  it('can be instantiated without options', () => {
+    const pms = new WindowPostMessageStream(undefined as any);
+    expect(pms._readableState.encoding).toBe('utf8');
+    expect(pms._readableState.objectMode).toBe(true);
+    expect(pms._writableState.objectMode).toBe(true);
   });
 
   it('throws if window.postMessage is not a function', () => {
