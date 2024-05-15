@@ -25,7 +25,7 @@ export abstract class BasePostMessageStream extends Duplex {
 
   private _log: Log;
 
-  constructor(streamOptions: DuplexOptions = {}) {
+  constructor(streamOptions: DuplexOptions) {
     super({
       objectMode: true,
       ...streamOptions,
