@@ -1,11 +1,12 @@
 import { assert } from '@metamask/utils';
+import type { DuplexOptions } from 'readable-stream';
 import {
   BasePostMessageStream,
   PostMessageEvent,
 } from '../BasePostMessageStream';
 import { isValidStreamMessage } from '../utils';
 
-interface WindowPostMessageStreamArgs {
+interface WindowPostMessageStreamArgs extends DuplexOptions {
   name: string;
   target: string;
   targetOrigin?: string;
@@ -56,8 +57,9 @@ export class WindowPostMessageStream extends BasePostMessageStream {
     target,
     targetOrigin = location.origin,
     targetWindow = window,
+    ...streamOptions
   }: WindowPostMessageStreamArgs) {
-    super();
+    super(streamOptions);
 
     if (
       typeof window === 'undefined' ||

@@ -1,3 +1,4 @@
+import type { DuplexOptions } from 'readable-stream';
 import { BasePostMessageStream } from '../BasePostMessageStream';
 import { isValidStreamMessage, StreamData } from '../utils';
 
@@ -5,8 +6,8 @@ import { isValidStreamMessage, StreamData } from '../utils';
  * Child process-side Node.js `child_process` stream.
  */
 export class ProcessMessageStream extends BasePostMessageStream {
-  constructor() {
-    super();
+  constructor(streamOptions: DuplexOptions = {}) {
+    super(streamOptions);
 
     if (typeof globalThis.process.send !== 'function') {
       throw new Error(

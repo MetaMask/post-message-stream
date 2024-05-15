@@ -1,4 +1,5 @@
 import { Duplex } from 'readable-stream';
+import type { DuplexOptions } from 'readable-stream';
 import { StreamData } from './utils';
 
 const noop = () => undefined;
@@ -24,9 +25,10 @@ export abstract class BasePostMessageStream extends Duplex {
 
   private _log: Log;
 
-  constructor() {
+  constructor(streamOptions?: DuplexOptions) {
     super({
       objectMode: true,
+      ...streamOptions,
     });
 
     // Initialization flags

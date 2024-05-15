@@ -1,5 +1,6 @@
 // We ignore coverage for the entire file due to limits on our instrumentation,
 // but it is in fact covered by our tests.
+import type { DuplexOptions } from 'readable-stream';
 import {
   BasePostMessageStream,
   PostMessageEvent,
@@ -17,7 +18,7 @@ import {
 export class WebWorkerPostMessageStream extends BasePostMessageStream {
   private _name: string;
 
-  constructor() {
+  constructor(streamOptions: DuplexOptions = {}) {
     // Kudos: https://stackoverflow.com/a/18002694
     if (
       typeof self === 'undefined' ||
@@ -29,7 +30,7 @@ export class WebWorkerPostMessageStream extends BasePostMessageStream {
       );
     }
 
-    super();
+    super(streamOptions);
 
     this._name = DEDICATED_WORKER_NAME;
     self.addEventListener('message', this._onMessage.bind(this) as any);

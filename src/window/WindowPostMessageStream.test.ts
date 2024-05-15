@@ -1,6 +1,24 @@
 import { WindowPostMessageStream } from './WindowPostMessageStream';
 
 describe('WindowPostMessageStream', () => {
+  it('can override base stream options', () => {
+    const pms = new WindowPostMessageStream({
+      name: 'foo',
+      target: 'bar',
+      encoding: 'ucs2',
+      objectMode: false,
+    });
+    expect(pms._readableState.encoding).toBe('ucs2');
+    expect(pms._readableState.objectMode).toBe(false);
+    expect(pms._writableState.objectMode).toBe(false);
+  });
+
+  it('can be instantiated with default options', () => {
+    const pms = new WindowPostMessageStream({ name: 'foo', target: 'bar' });
+    expect(pms._readableState.objectMode).toBe(true);
+    expect(pms._writableState.objectMode).toBe(true);
+  });
+
   it('throws if window.postMessage is not a function', () => {
     const originalPostMessage = window.postMessage;
     (window as any).postMessage = undefined;
