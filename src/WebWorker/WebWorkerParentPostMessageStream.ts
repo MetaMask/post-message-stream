@@ -1,10 +1,11 @@
+import type { DuplexOptions } from 'readable-stream';
 import {
   BasePostMessageStream,
   PostMessageEvent,
 } from '../BasePostMessageStream';
 import { DEDICATED_WORKER_NAME, isValidStreamMessage } from '../utils';
 
-interface WorkerParentStreamArgs {
+interface WorkerParentStreamArgs extends DuplexOptions {
   worker: Worker;
 }
 
@@ -24,8 +25,8 @@ export class WebWorkerParentPostMessageStream extends BasePostMessageStream {
    * @param args.worker - The Web Worker to exchange messages with. The worker
    * must instantiate a `WebWorkerPostMessageStream`.
    */
-  constructor({ worker }: WorkerParentStreamArgs) {
-    super();
+  constructor({ worker, ...streamOptions }: WorkerParentStreamArgs) {
+    super(streamOptions);
 
     this._target = DEDICATED_WORKER_NAME;
     this._worker = worker;

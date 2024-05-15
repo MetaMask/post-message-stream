@@ -1,8 +1,9 @@
 import type { ChildProcess } from 'child_process';
+import type { DuplexOptions } from 'readable-stream';
 import { BasePostMessageStream } from '../BasePostMessageStream';
 import { isValidStreamMessage, StreamData } from '../utils';
 
-interface ProcessParentMessageStreamArgs {
+interface ProcessParentMessageStreamArgs extends DuplexOptions {
   process: ChildProcess;
 }
 
@@ -18,8 +19,8 @@ export class ProcessParentMessageStream extends BasePostMessageStream {
    * @param args - Options bag.
    * @param args.process - The process to communicate with.
    */
-  constructor({ process }: ProcessParentMessageStreamArgs) {
-    super();
+  constructor({ process, ...streamOptions }: ProcessParentMessageStreamArgs) {
+    super(streamOptions);
 
     this._process = process;
     this._onMessage = this._onMessage.bind(this);

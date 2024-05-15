@@ -1,4 +1,5 @@
 import { parentPort } from 'worker_threads';
+import type { DuplexOptions } from 'readable-stream';
 import { BasePostMessageStream } from '../BasePostMessageStream';
 import { isValidStreamMessage, StreamData } from '../utils';
 
@@ -8,8 +9,8 @@ import { isValidStreamMessage, StreamData } from '../utils';
 export class ThreadMessageStream extends BasePostMessageStream {
   #parentPort: Exclude<typeof parentPort, null>;
 
-  constructor() {
-    super();
+  constructor(streamOptions: DuplexOptions = {}) {
+    super(streamOptions);
 
     if (!parentPort) {
       throw new Error(

@@ -1,8 +1,9 @@
 import { Worker } from 'worker_threads';
+import type { DuplexOptions } from 'readable-stream';
 import { BasePostMessageStream } from '../BasePostMessageStream';
 import { isValidStreamMessage, StreamData } from '../utils';
 
-interface ThreadParentMessageStreamArgs {
+interface ThreadParentMessageStreamArgs extends DuplexOptions {
   thread: Worker;
 }
 
@@ -18,8 +19,8 @@ export class ThreadParentMessageStream extends BasePostMessageStream {
    * @param args - Options bag.
    * @param args.thread - The thread to communicate with.
    */
-  constructor({ thread }: ThreadParentMessageStreamArgs) {
-    super();
+  constructor({ thread, ...streamOptions }: ThreadParentMessageStreamArgs) {
+    super(streamOptions);
 
     this._thread = thread;
     this._onMessage = this._onMessage.bind(this);

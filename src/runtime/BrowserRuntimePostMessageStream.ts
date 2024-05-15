@@ -1,10 +1,11 @@
+import type { DuplexOptions } from 'readable-stream';
 import {
   BasePostMessageStream,
   PostMessageEvent,
 } from '../BasePostMessageStream';
 import { isValidStreamMessage } from '../utils';
 
-export interface BrowserRuntimePostMessageStreamArgs {
+export interface BrowserRuntimePostMessageStreamArgs extends DuplexOptions {
   name: string;
   target: string;
 }
@@ -26,8 +27,12 @@ export class BrowserRuntimePostMessageStream extends BasePostMessageStream {
    * multiple streams sharing the same runtime.
    * @param args.target - The name of the stream to exchange messages with.
    */
-  constructor({ name, target }: BrowserRuntimePostMessageStreamArgs) {
-    super();
+  constructor({
+    name,
+    target,
+    ...streamOptions
+  }: BrowserRuntimePostMessageStreamArgs) {
+    super(streamOptions);
 
     this.#name = name;
     this.#target = target;
