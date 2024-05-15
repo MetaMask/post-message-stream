@@ -7,20 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ## [8.1.0]
-### Uncategorized
-- ci: run on nodejs versions 20.x, 22.x ([#132](https://github.com/MetaMask/post-message-stream/pull/132))
-- feat: Support overriding Duplex stream options as constructor options ([#131](https://github.com/MetaMask/post-message-stream/pull/131))
-- Bump ip from 2.0.0 to 2.0.1 ([#126](https://github.com/MetaMask/post-message-stream/pull/126))
-- Bump @metamask/utils from 8.3.0 to 8.4.0 ([#129](https://github.com/MetaMask/post-message-stream/pull/129))
-- Bump tar from 6.1.14 to 6.2.1 ([#130](https://github.com/MetaMask/post-message-stream/pull/130))
-- Update security code scanner file ([#128](https://github.com/MetaMask/post-message-stream/pull/128))
-- Enabling security code scanner ([#127](https://github.com/MetaMask/post-message-stream/pull/127))
-- Bump @metamask/auto-changelog from 3.4.3 to 3.4.4 ([#124](https://github.com/MetaMask/post-message-stream/pull/124))
-- Bump @metamask/utils from 8.2.1 to 8.3.0 ([#125](https://github.com/MetaMask/post-message-stream/pull/125))
-- Bump @metamask/auto-changelog from 3.3.0 to 3.4.3 ([#122](https://github.com/MetaMask/post-message-stream/pull/122))
-- Bump @metamask/utils from 8.1.0 to 8.2.1 ([#123](https://github.com/MetaMask/post-message-stream/pull/123))
-- Bump browserify-sign from 4.2.1 to 4.2.2 ([#121](https://github.com/MetaMask/post-message-stream/pull/121))
-- Bump @babel/traverse from 7.13.17 to 7.23.2 ([#116](https://github.com/MetaMask/post-message-stream/pull/116))
+### Changed
+- Support overriding default Duplex Stream options as constructor options. ([#131](https://github.com/MetaMask/post-message-stream/pull/131))
 
 ## [8.0.0]
 ### Changed
