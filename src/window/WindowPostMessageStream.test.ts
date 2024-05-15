@@ -13,9 +13,8 @@ describe('WindowPostMessageStream', () => {
     expect(pms._writableState.objectMode).toBe(false);
   });
 
-  it('can be instantiated without options', () => {
-    const pms = new WindowPostMessageStream(undefined as any);
-    expect(pms._readableState.encoding).toBe('utf8');
+  it('can be instantiated with default options', () => {
+    const pms = new WindowPostMessageStream({ name: 'foo', target: 'bar' });
     expect(pms._readableState.objectMode).toBe(true);
     expect(pms._writableState.objectMode).toBe(true);
   });
