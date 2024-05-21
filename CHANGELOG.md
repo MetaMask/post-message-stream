@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [8.1.0]
+### Changed
+- Support overriding default Duplex Stream options as constructor options. ([#131](https://github.com/MetaMask/post-message-stream/pull/131))
+
 ## [8.0.0]
 ### Changed
 - **BREAKING:** Increase minimum Node.js version to `^16.20.0` ([#110](https://github.com/MetaMask/post-message-stream/pull/110))
@@ -84,7 +88,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Initial release.
 
-[Unreleased]: https://github.com/MetaMask/post-message-stream/compare/v8.0.0...HEAD
+[Unreleased]: https://github.com/MetaMask/post-message-stream/compare/v8.1.0...HEAD
+[8.1.0]: https://github.com/MetaMask/post-message-stream/compare/v8.0.0...v8.1.0
 [8.0.0]: https://github.com/MetaMask/post-message-stream/compare/v7.0.0...v8.0.0
 [7.0.0]: https://github.com/MetaMask/post-message-stream/compare/v6.2.0...v7.0.0
 [6.2.0]: https://github.com/MetaMask/post-message-stream/compare/v6.1.2...v6.2.0
