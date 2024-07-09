@@ -7,9 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ## [8.1.1]
-### Uncategorized
-- Bump `@metamask/utils` from `^8.1.0` to `^9.0.0`, devDep `typescript` from `~4.4.0` to `~4.9.5` ([#140](https://github.com/MetaMask/post-message-stream/pull/140))
-- chore: declare yarn version 1.22.22 in package.json ([#136](https://github.com/MetaMask/post-message-stream/pull/136))
+### Changed
+- Bump `@metamask/utils` from `^8.1.0` to `^9.0.0` ([#140](https://github.com/MetaMask/post-message-stream/pull/140))
 
 ## [8.1.0]
 ### Changed
