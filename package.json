@@ -68,7 +68,7 @@
   },
   "packageManager": "yarn@1.22.22",
   "engines": {
-    "node": "^16.20 || ^18.16 || >=20",
+    "node": "^18.18 || ^20.14 || >=22",
     "yarn": "^1.22.22"
   },
   "publishConfig": {
