@@ -1518,10 +1518,10 @@
   resolved "https://registry.yarnpkg.com/@metamask/superstruct/-/superstruct-3.1.0.tgz#148f786a674fba3ac885c1093ab718515bf7f648"
   integrity sha512-N08M56HdOgBfRKkrgCMZvQppkZGcArEop3kixNEtVbJKm6P9Cfg0YkI6X0s1g78sNrj2fWUwvJADdZuzJgFttA==
 
-"@metamask/utils@^10.0.0":
-  version "10.0.0"
-  resolved "https://registry.yarnpkg.com/@metamask/utils/-/utils-10.0.0.tgz#9285e6e195810e8b7c875147ac64981b4be51733"
-  integrity sha512-EoNZJijLqBbir8ikuiHBHfhCqE1s8Odae3bhtRAd8itJB109xmfFF84djY/iaQI+EAp59Sy7iwengfRohaTK8A==
+"@metamask/utils@^11.0.0":
+  version "11.0.0"
+  resolved "https://registry.yarnpkg.com/@metamask/utils/-/utils-11.0.0.tgz#775ed9483e8c4746c91a226a6e412130303d8cf9"
+  integrity sha512-CB+5gNI3Ibiq4X9Bu78Y4SGHDWBuDpYaaU/Qe0LkN1zPb8inHR7T0a/PHEhvsOyXbNEfZzGwnnzAGh+UCavOQg==
   dependencies:
     "@ethereumjs/tx" "^4.2.0"
     "@metamask/superstruct" "^3.1.0"
