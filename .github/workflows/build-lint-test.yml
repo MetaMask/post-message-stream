@@ -60,7 +60,7 @@ jobs:
         if: "!startsWith(matrix.node-version, '2')"
       - run: yarn build
       - name: Cache build files
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           key: build
           path: |
@@ -145,7 +145,7 @@ jobs:
         run: yarn --frozen-lockfile
         if: "!startsWith(matrix.node-version, '2')"
       - name: Restore build files
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           key: build
           fail-on-cache-miss: true
@@ -192,7 +192,7 @@ jobs:
         run: yarn
         if: "!startsWith(matrix.node-version, '2')"
       - name: Restore build files
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           key: build
           fail-on-cache-miss: true
