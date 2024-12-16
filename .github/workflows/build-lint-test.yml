@@ -154,7 +154,10 @@ jobs:
           fail-on-cache-miss: true
           path: |
             ./dist
-      - run: yarn test
+      # We have to use xvfb due to electron
+      # Ref: https://github.com/facebook-atom/jest-electron-runner/issues/47#issuecomment-508556407
+      - name: Test
+        run: xvfb-run -e /dev/stdout yarn test
       - name: Require clean working directory
         shell: bash
         run: |
@@ -202,7 +205,10 @@ jobs:
           fail-on-cache-miss: true
           path: |
             ./dist
-      - run: yarn test
+      # We have to use xvfb due to electron
+      # Ref: https://github.com/facebook-atom/jest-electron-runner/issues/47#issuecomment-508556407
+      - name: Test
+        run: xvfb-run -e /dev/stdout yarn test
       - name: Restore lockfile
         run: git restore yarn.lock
       - name: Require clean working directory
