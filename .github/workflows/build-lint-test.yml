@@ -31,7 +31,6 @@ jobs:
         run: yarn --frozen-lockfile
         if: "!startsWith(matrix.node-version, '2')"
 
-
   build:
     name: Build
     needs: prepare
