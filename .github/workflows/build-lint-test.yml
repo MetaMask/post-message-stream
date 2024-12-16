@@ -23,8 +23,14 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'yarn'
+      # TODO: Remove --ignore-engines once devdeps compatible with node v20
+      - name: Install dependencies via Yarn (ignoring engines)
+        run: yarn --frozen-lockfile --ignore-engines
+        if: "startsWith(matrix.node-version, '2')"
       - name: Install dependencies via Yarn
-        run: yarn --immutable
+        run: yarn --frozen-lockfile
+        if: "!startsWith(matrix.node-version, '2')"
+
 
   build:
     name: Build
@@ -46,8 +52,13 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'yarn'
+      # TODO: Remove --ignore-engines once devdeps compatible with node v20
+      - name: Install dependencies via Yarn (ignoring engines)
+        run: yarn --frozen-lockfile --ignore-engines
+        if: "startsWith(matrix.node-version, '2')"
       - name: Install dependencies via Yarn
-        run: yarn --immutable --immutable-cache
+        run: yarn --frozen-lockfile
+        if: "!startsWith(matrix.node-version, '2')"
       - run: yarn build
       - name: Require clean working directory
         shell: bash
@@ -77,8 +88,13 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'yarn'
+      # TODO: Remove --ignore-engines once devdeps compatible with node v20
+      - name: Install dependencies via Yarn (ignoring engines)
+        run: yarn --frozen-lockfile --ignore-engines
+        if: "startsWith(matrix.node-version, '2')"
       - name: Install dependencies via Yarn
-        run: yarn --immutable --immutable-cache
+        run: yarn --frozen-lockfile
+        if: "!startsWith(matrix.node-version, '2')"
       - run: yarn lint
       - name: Validate RC changelog
         if: ${{ startsWith(github.head_ref, 'release/') }}
@@ -114,8 +130,13 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'yarn'
+      # TODO: Remove --ignore-engines once devdeps compatible with node v20
+      - name: Install dependencies via Yarn (ignoring engines)
+        run: yarn --frozen-lockfile --ignore-engines
+        if: "startsWith(matrix.node-version, '2')"
       - name: Install dependencies via Yarn
-        run: yarn --immutable --immutable-cache
+        run: yarn --frozen-lockfile
+        if: "!startsWith(matrix.node-version, '2')"
       - run: yarn test
       - name: Require clean working directory
         shell: bash
@@ -145,8 +166,15 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'yarn'
+      - name: Remove yarn.lock
+        run: rm yarn.lock
+      # TODO: Remove --ignore-engines once devdeps compatible with node v20
+      - name: Install dependencies via Yarn (ignoring engines)
+        run: yarn --ignore-engines
+        if: "startsWith(matrix.node-version, '2')"
       - name: Install dependencies via Yarn
-        run: rm yarn.lock && YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn
+        run: yarn
+        if: "!startsWith(matrix.node-version, '2')"
       - run: yarn test
       - name: Restore lockfile
         run: git restore yarn.lock

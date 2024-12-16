@@ -39,7 +39,8 @@ jobs:
             ./dist
             ./node_modules/.yarn-state.yml
           key: ${{ github.sha }}
-      - run: yarn --immutable
+      # TODO: Remove --ignore-engines once devdeps compatible with node v20
+      - run: yarn --frozen-lockfile --ignore-engines
       - run: yarn build
 
   publish-npm-dry-run:

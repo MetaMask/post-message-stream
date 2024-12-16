@@ -33,8 +33,9 @@ jobs:
         with:
           node-version-file: '.nvmrc'
           cache: 'yarn'
+      # TODO: Remove --ignore-engines once devdeps compatible with node v20
       - name: Install dependencies via Yarn
-        run: yarn --immutable
+        run: yarn --frozen-lockfile --ignore-engines
       - name: Run build script
         run: yarn build:docs
       - name: Deploy to `${{ inputs.destination_dir }}` directory of `gh-pages` branch
