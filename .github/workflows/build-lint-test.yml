@@ -59,6 +59,12 @@ jobs:
         run: yarn --frozen-lockfile
         if: "!startsWith(matrix.node-version, '2')"
       - run: yarn build
+      - name: Cache build files
+        uses: actions/cache@v3
+        with:
+          key: build
+          path: |
+            ./dist
       - name: Require clean working directory
         shell: bash
         run: |
@@ -111,7 +117,9 @@ jobs:
 
   test:
     name: Test
-    needs: prepare
+    needs:
+      - prepare
+      - build
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -136,6 +144,13 @@ jobs:
       - name: Install dependencies via Yarn
         run: yarn --frozen-lockfile
         if: "!startsWith(matrix.node-version, '2')"
+      - name: Restore build files
+        uses: actions/cache@v3
+        with:
+          key: build
+          fail-on-cache-miss: true
+          path: |
+            ./dist
       - run: yarn test
       - name: Require clean working directory
         shell: bash
@@ -147,7 +162,9 @@ jobs:
 
   compatibility-test:
     name: Compatibility test
-    needs: prepare
+    needs:
+      - prepare
+      - build
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -174,6 +191,13 @@ jobs:
       - name: Install dependencies via Yarn
         run: yarn
         if: "!startsWith(matrix.node-version, '2')"
+      - name: Restore build files
+        uses: actions/cache@v3
+        with:
+          key: build
+          fail-on-cache-miss: true
+          path: |
+            ./dist
       - run: yarn test
       - name: Restore lockfile
         run: git restore yarn.lock
