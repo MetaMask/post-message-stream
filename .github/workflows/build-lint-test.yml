@@ -58,6 +58,7 @@ jobs:
       - name: Install dependencies via Yarn
         run: yarn --frozen-lockfile
         if: "!startsWith(matrix.node-version, '2')"
+      - run: yarn allow-scripts
       - run: yarn build
       - name: Cache build files
         uses: actions/cache@v4
@@ -100,6 +101,7 @@ jobs:
       - name: Install dependencies via Yarn
         run: yarn --frozen-lockfile
         if: "!startsWith(matrix.node-version, '2')"
+      - run: yarn allow-scripts
       - run: yarn lint
       - name: Validate RC changelog
         if: ${{ startsWith(github.head_ref, 'release/') }}
@@ -144,6 +146,7 @@ jobs:
       - name: Install dependencies via Yarn
         run: yarn --frozen-lockfile
         if: "!startsWith(matrix.node-version, '2')"
+      - run: yarn allow-scripts
       - name: Restore build files
         uses: actions/cache@v4
         with:
@@ -191,6 +194,7 @@ jobs:
       - name: Install dependencies via Yarn
         run: yarn
         if: "!startsWith(matrix.node-version, '2')"
+      - run: yarn allow-scripts
       - name: Restore build files
         uses: actions/cache@v4
         with:
