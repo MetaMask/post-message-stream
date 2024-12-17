@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [9.0.0]
+### Changed
+- **BREAKING:** Increase minimum Node.js version to `^18.18` ([#145](https://github.com/MetaMask/post-message-stream/pull/145))
+- Bump `@metamask/utils` from `^9.0.0` to `^11.0.1` ([#144](https://github.com/MetaMask/post-message-stream/pull/144), [#148](https://github.com/MetaMask/post-message-stream/pull/148), [#153](https://github.com/MetaMask/post-message-stream/pull/153))
+
 ## [8.1.1]
 ### Changed
 - Bump `@metamask/utils` from `^8.1.0` to `^9.0.0` ([#140](https://github.com/MetaMask/post-message-stream/pull/140))
@@ -92,7 +97,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Initial release.
 
-[Unreleased]: https://github.com/MetaMask/post-message-stream/compare/v8.1.1...HEAD
+[Unreleased]: https://github.com/MetaMask/post-message-stream/compare/v9.0.0...HEAD
+[9.0.0]: https://github.com/MetaMask/post-message-stream/compare/v8.1.1...v9.0.0
 [8.1.1]: https://github.com/MetaMask/post-message-stream/compare/v8.1.0...v8.1.1
 [8.1.0]: https://github.com/MetaMask/post-message-stream/compare/v8.0.0...v8.1.0
 [8.0.0]: https://github.com/MetaMask/post-message-stream/compare/v7.0.0...v8.0.0
