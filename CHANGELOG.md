@@ -7,18 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [9.0.0]
+## [8.1.2]
 
-### Uncategorized
+### Changed
 
-- Fix create release PR workflow ([#155](https://github.com/MetaMask/post-message-stream/pull/155))
-- Bump `@metamask/utils` from `^10.0.0` to `^11.0.1` ([#153](https://github.com/MetaMask/post-message-stream/pull/153))
-- Bump elliptic from 6.5.7 to 6.6.0 in the npm_and_yarn group ([#149](https://github.com/MetaMask/post-message-stream/pull/149))
-- Bump @metamask/utils from 9.2.1 to 10.0.0 ([#148](https://github.com/MetaMask/post-message-stream/pull/148))
-- drop support for legacy Node.js versions 16, 21 ([#145](https://github.com/MetaMask/post-message-stream/pull/145))
-- Bump elliptic from 6.5.4 to 6.5.7 in the npm_and_yarn group ([#146](https://github.com/MetaMask/post-message-stream/pull/146))
-- Bump ws in the npm_and_yarn group across 1 directory ([#138](https://github.com/MetaMask/post-message-stream/pull/138))
-- Bump @metamask/utils from 9.0.0 to 9.2.1 ([#144](https://github.com/MetaMask/post-message-stream/pull/144))
+- **BREAKING:** Increase minimum Node.js version to `^18.18` ([#145](https://github.com/MetaMask/post-message-stream/pull/145))
+- Bump `@metamask/utils` from `^9.0.0` to `^11.0.1` ([#144](https://github.com/MetaMask/post-message-stream/pull/144), [#148](https://github.com/MetaMask/post-message-stream/pull/148), [#153](https://github.com/MetaMask/post-message-stream/pull/153))
 
 ## [8.1.1]
 
@@ -140,8 +134,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial release.
 
-[Unreleased]: https://github.com/MetaMask/post-message-stream/compare/v9.0.0...HEAD
-[9.0.0]: https://github.com/MetaMask/post-message-stream/compare/v8.1.1...v9.0.0
+[Unreleased]: https://github.com/MetaMask/post-message-stream/compare/v8.1.2...HEAD
+[8.1.2]: https://github.com/MetaMask/post-message-stream/compare/v8.1.1...v8.1.2
 [8.1.1]: https://github.com/MetaMask/post-message-stream/compare/v8.1.0...v8.1.1
 [8.1.0]: https://github.com/MetaMask/post-message-stream/compare/v8.0.0...v8.1.0
 [8.0.0]: https://github.com/MetaMask/post-message-stream/compare/v7.0.0...v8.0.0
