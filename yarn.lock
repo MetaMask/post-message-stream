@@ -1514,9 +1514,9 @@
   integrity sha512-JeoCyFVNOByDHb5RfYVcelYplODKVmp0WR7IL6/7HRFHj90HL9xozWspVJzE+UI8oLHmzh4P4NyYNtEkjEyryg==
 
 "@metamask/superstruct@^3.1.0":
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/@metamask/superstruct/-/superstruct-3.1.0.tgz#148f786a674fba3ac885c1093ab718515bf7f648"
-  integrity sha512-N08M56HdOgBfRKkrgCMZvQppkZGcArEop3kixNEtVbJKm6P9Cfg0YkI6X0s1g78sNrj2fWUwvJADdZuzJgFttA==
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/@metamask/superstruct/-/superstruct-3.2.0.tgz#3045c8648fa663fc7c15ffcca5067fa32a94b906"
+  integrity sha512-mnNxXsl4Xuqc/yODZ4lX53ulsVZ2h3DqocrgGHhPA2nQ03uN+N2AOJJoUsNifZMZ+n1FTVBRIBzfbGy/K2f4Zw==
 
 "@metamask/utils@^11.0.1":
   version "11.0.1"
