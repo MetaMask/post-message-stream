@@ -14,6 +14,7 @@ describe('post-message-stream/node', () => {
           "WebWorkerParentPostMessageStream",
           "WebWorkerPostMessageStream",
           "WindowPostMessageStream",
+          "isValidStreamMessage",
         ]
       `);
     });

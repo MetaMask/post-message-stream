@@ -10,8 +10,14 @@ describe('post-message-stream', () => {
           "WebWorkerParentPostMessageStream",
           "WebWorkerPostMessageStream",
           "WindowPostMessageStream",
+          "isValidStreamMessage",
         ]
       `);
+    });
+
+    it('exports `isValidStreamMessage`', () => {
+      // Tested for coverage purposes.
+      expect(PostMessageStream.isValidStreamMessage).toBeInstanceOf(Function);
     });
   });
 });
