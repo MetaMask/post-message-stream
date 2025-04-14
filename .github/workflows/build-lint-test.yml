@@ -32,6 +32,12 @@ jobs:
           is-high-risk-environment: false
           node-version: ${{ matrix.node-version }}
       - run: yarn build
+      - name: Cache build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-${{ github.sha }}
+          path: dist
+          retention-days: 3
       - name: Require clean working directory
         shell: bash
         run: |
@@ -70,7 +76,9 @@ jobs:
 
   test:
     name: Test
-    needs: prepare
+    needs:
+      - prepare
+      - build
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -81,6 +89,12 @@ jobs:
         with:
           is-high-risk-environment: false
           node-version: ${{ matrix.node-version }}
+      - name: Restore build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: build-${{ github.sha }}
+      - name: Build test dependencies
+        run: yarn build:test
       # We have to use xvfb due to electron
       # Ref: https://github.com/facebook-atom/jest-electron-runner/issues/47#issuecomment-508556407
       - name: Run tests
@@ -95,7 +109,9 @@ jobs:
 
   compatibility-test:
     name: Compatibility test
-    needs: prepare
+    needs:
+      - prepare
+      - build
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -108,6 +124,12 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: Install dependencies via Yarn
         run: rm yarn.lock && YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn
+      - name: Restore build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: build-${{ github.sha }}
+      - name: Build test dependencies
+        run: yarn build:test
       # We have to use xvfb due to electron
       # Ref: https://github.com/facebook-atom/jest-electron-runner/issues/47#issuecomment-508556407
       - name: Run tests
