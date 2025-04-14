@@ -97,6 +97,8 @@ jobs:
           name: build-${{ github.sha }}
       - name: Build test dependencies
         run: yarn build:test
+      - name: Fix Electron permissions
+        run: sudo chown root ./node_modules/electron/dist/chrome-sandbox && sudo chmod 4755 ./node_modules/electron/dist/chrome-sandbox
       # We have to use xvfb due to electron
       # Ref: https://github.com/facebook-atom/jest-electron-runner/issues/47#issuecomment-508556407
       - name: Run tests
@@ -132,6 +134,8 @@ jobs:
           name: build-${{ github.sha }}
       - name: Build test dependencies
         run: yarn build:test
+      - name: Fix Electron permissions
+        run: sudo chown root ./node_modules/electron/dist/chrome-sandbox && sudo chmod 4755 ./node_modules/electron/dist/chrome-sandbox
       # We have to use xvfb due to electron
       # Ref: https://github.com/facebook-atom/jest-electron-runner/issues/47#issuecomment-508556407
       - name: Run tests
