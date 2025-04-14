@@ -1,0 +1,7 @@
+{
+  "ignores": [
+    "@lavamoat/allow-scripts",
+    "@types/*",
+    "prettier-plugin-packagejson"
+  ]
+}

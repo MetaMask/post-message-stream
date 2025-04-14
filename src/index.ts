@@ -1,10 +1,6 @@
 export * from './window/WindowPostMessageStream';
 export * from './WebWorker/WebWorkerPostMessageStream';
 export * from './WebWorker/WebWorkerParentPostMessageStream';
-export * from './node-process/ProcessParentMessageStream';
-export * from './node-process/ProcessMessageStream';
-export * from './node-thread/ThreadParentMessageStream';
-export * from './node-thread/ThreadMessageStream';
 export * from './runtime/BrowserRuntimePostMessageStream';
 export * from './BasePostMessageStream';
 export { StreamData, StreamMessage } from './utils';
