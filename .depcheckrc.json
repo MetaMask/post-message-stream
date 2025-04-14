@@ -3,5 +3,6 @@
     "@lavamoat/allow-scripts",
     "@types/*",
     "prettier-plugin-packagejson"
-  ]
+  ],
+  "ignore-patterns": ["dist-test/**"]
 }
