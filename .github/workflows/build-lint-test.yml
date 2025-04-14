@@ -81,7 +81,10 @@ jobs:
         with:
           is-high-risk-environment: false
           node-version: ${{ matrix.node-version }}
-      - run: yarn test
+      # We have to use xvfb due to electron
+      # Ref: https://github.com/facebook-atom/jest-electron-runner/issues/47#issuecomment-508556407
+      - name: Run tests
+        run: xvfb-run -e /dev/stdout yarn test
       - name: Require clean working directory
         shell: bash
         run: |
@@ -105,7 +108,10 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: Install dependencies via Yarn
         run: rm yarn.lock && YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn
-      - run: yarn test
+      # We have to use xvfb due to electron
+      # Ref: https://github.com/facebook-atom/jest-electron-runner/issues/47#issuecomment-508556407
+      - name: Run tests
+        run: xvfb-run -e /dev/stdout yarn test
       - name: Restore lockfile
         run: git restore yarn.lock
       - name: Require clean working directory
