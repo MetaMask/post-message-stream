@@ -89,10 +89,9 @@
     "typedoc": "^0.28.2",
     "typescript": "~4.9.5"
   },
-  "packageManager": "yarn@1.22.22",
+  "packageManager": "yarn@4.9.1",
   "engines": {
-    "node": "^18.18 || ^20.14 || >=22",
-    "yarn": "^1.22.22"
+    "node": "^18.18 || ^20.14 || >=22"
   },
   "publishConfig": {
     "access": "public",
