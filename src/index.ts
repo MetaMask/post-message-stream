@@ -1,6 +1,6 @@
 export * from './window/WindowPostMessageStream';
-export * from './WebWorker/WebWorkerPostMessageStream';
-export * from './WebWorker/WebWorkerParentPostMessageStream';
+export * from './web-worker/WebWorkerPostMessageStream';
+export * from './web-worker/WebWorkerParentPostMessageStream';
 export * from './runtime/BrowserRuntimePostMessageStream';
 export * from './BasePostMessageStream';
 export { StreamData, StreamMessage } from './utils';
