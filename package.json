@@ -42,8 +42,8 @@
   ],
   "scripts": {
     "build": "ts-bridge --project tsconfig.build.json --clean",
-    "build:test": "./scripts/build-test.sh",
     "build:docs": "typedoc",
+    "build:test": "./scripts/build-test.sh",
     "lint": "yarn lint:eslint && yarn lint:misc --check && yarn lint:dependencies --check && yarn lint:changelog",
     "lint:changelog": "auto-changelog validate --prettier",
     "lint:dependencies": "depcheck",
@@ -73,6 +73,7 @@
     "@types/readable-stream": "^2.3.9",
     "@typescript-eslint/eslint-plugin": "^5.33.0",
     "@typescript-eslint/parser": "^5.33.0",
+    "browserify": "^17.0.1",
     "depcheck": "^1.4.7",
     "electron": "^22.3.21",
     "eslint": "^8.21.0",

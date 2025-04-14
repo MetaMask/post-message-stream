@@ -2,6 +2,7 @@
   "ignores": [
     "@lavamoat/allow-scripts",
     "@types/*",
+    "browserify",
     "prettier-plugin-packagejson"
   ],
   "ignore-patterns": ["dist-test/**"]
