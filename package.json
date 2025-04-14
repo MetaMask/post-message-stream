@@ -75,7 +75,7 @@
     "@typescript-eslint/parser": "^5.33.0",
     "browserify": "^17.0.1",
     "depcheck": "^1.4.7",
-    "electron": "^22.3.21",
+    "electron": "^35.1.5",
     "eslint": "^8.21.0",
     "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-import": "^2.26.0",
