@@ -14,6 +14,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **BREAKING:** Build the package as both CJS and ESM ([#168](https://github.com/MetaMask/post-message-stream/pull/168))
   - The package now uses the `exports` field in `package.json` to define the entry points for CJS and ESM.
   - It's no longer possible to import from the `dist` directory directly.
+- **BREAKING:** Move Node.js-specific functionality to `@metamask/post-message-stream/node` entry point ([#168](https://github.com/MetaMask/post-message-stream/pull/168))
+  - The main entry point is now compatible with Node.js and browsers.
 - Bump `@metamask/utils` from `^11.0.1` to `^11.4.0` ([#169](https://github.com/MetaMask/post-message-stream/pull/169))
 - Bump `elliptic` from `6.6.0` to `6.6.1` ([#160](https://github.com/MetaMask/post-message-stream/pull/160))
 
