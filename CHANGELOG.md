@@ -9,13 +9,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [10.0.0]
 
-### Uncategorized
+### Changed
 
+- **BREAKING:** Build the package as both CJS and ESM ([#168](https://github.com/MetaMask/post-message-stream/pull/168))
+  - The package now uses the `exports` field in `package.json` to define the entry points for CJS and ESM.
+  - It's no longer possible to import from the `dist` directory directly.
 - Bump `@metamask/utils` from `^11.0.1` to `^11.4.0` ([#169](https://github.com/MetaMask/post-message-stream/pull/169))
-- BREAKING: Synchronise package with module template (April 2025) ([#168](https://github.com/MetaMask/post-message-stream/pull/168))
-- Bump elliptic from 6.6.0 to 6.6.1 in the npm_and_yarn group ([#160](https://github.com/MetaMask/post-message-stream/pull/160))
-- Update actions versions used in build-test workflow ([#162](https://github.com/MetaMask/post-message-stream/pull/162))
-- chore: add workflow_dispatch to security-code-scanner ([#161](https://github.com/MetaMask/post-message-stream/pull/161))
+- Bump `elliptic` from `6.6.0` to `6.6.1` ([#160](https://github.com/MetaMask/post-message-stream/pull/160))
 
 ## [9.0.0]
 
