@@ -1,6 +1,6 @@
 {
   "name": "@metamask/post-message-stream",
-  "version": "9.0.0",
+  "version": "10.0.0",
   "description": "Sets up a duplex object stream over window.postMessage",
   "homepage": "https://github.com/MetaMask/post-message-stream#readme",
   "bugs": {

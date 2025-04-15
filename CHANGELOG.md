@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [10.0.0]
+
+### Uncategorized
+
+- Bump `@metamask/utils` from `^11.0.1` to `^11.4.0` ([#169](https://github.com/MetaMask/post-message-stream/pull/169))
+- BREAKING: Synchronise package with module template (April 2025) ([#168](https://github.com/MetaMask/post-message-stream/pull/168))
+- Bump elliptic from 6.6.0 to 6.6.1 in the npm_and_yarn group ([#160](https://github.com/MetaMask/post-message-stream/pull/160))
+- Update actions versions used in build-test workflow ([#162](https://github.com/MetaMask/post-message-stream/pull/162))
+- chore: add workflow_dispatch to security-code-scanner ([#161](https://github.com/MetaMask/post-message-stream/pull/161))
+
 ## [9.0.0]
 
 ### Changed
@@ -134,7 +144,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial release.
 
-[Unreleased]: https://github.com/MetaMask/post-message-stream/compare/v9.0.0...HEAD
+[Unreleased]: https://github.com/MetaMask/post-message-stream/compare/v10.0.0...HEAD
+[10.0.0]: https://github.com/MetaMask/post-message-stream/compare/v9.0.0...v10.0.0
 [9.0.0]: https://github.com/MetaMask/post-message-stream/compare/v8.1.1...v9.0.0
 [8.1.1]: https://github.com/MetaMask/post-message-stream/compare/v8.1.0...v8.1.1
 [8.1.0]: https://github.com/MetaMask/post-message-stream/compare/v8.0.0...v8.1.0
