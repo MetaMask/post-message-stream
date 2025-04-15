@@ -55,7 +55,7 @@
     "test:watch": "yarn test --watch"
   },
   "dependencies": {
-    "@metamask/utils": "^11.0.1",
+    "@metamask/utils": "^11.4.0",
     "readable-stream": "3.6.2"
   },
   "devDependencies": {
