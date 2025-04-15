@@ -6,7 +6,7 @@ import {
 } from '../BasePostMessageStream';
 import { isValidStreamMessage } from '../utils';
 
-interface WindowPostMessageStreamArgs extends DuplexOptions {
+export interface WindowPostMessageStreamArgs extends DuplexOptions {
   name: string;
   target: string;
   targetOrigin?: string;

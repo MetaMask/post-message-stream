@@ -3,6 +3,17 @@ module.exports = {
 
   extends: ['@metamask/eslint-config'],
 
+  rules: {
+    'jsdoc/newline-after-description': 'off',
+    'jsdoc/tag-lines': [
+      'error',
+      'any',
+      {
+        startLines: 1,
+      },
+    ],
+  },
+
   overrides: [
     {
       files: ['*.ts'],
@@ -26,5 +37,5 @@ module.exports = {
     },
   ],
 
-  ignorePatterns: ['!.eslintrc.js', 'dist/', 'dist-test/'],
+  ignorePatterns: ['!.eslintrc.js', 'dist/', 'dist-test/', 'docs/'],
 };

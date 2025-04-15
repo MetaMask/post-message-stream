@@ -30,7 +30,7 @@ module.exports = {
       preset: 'ts-jest',
       testRegex: ['\\.test\\.(ts|js)$'],
       testPathIgnorePatterns: [
-        '<rootDir>/src/WebWorker/*',
+        '<rootDir>/src/web-worker/*',
         '<rootDir>/src/window/*',
       ],
     },
@@ -40,7 +40,7 @@ module.exports = {
       runner: '@jest-runner/electron',
       testEnvironment: '@jest-runner/electron/environment',
       testMatch: [
-        '<rootDir>/src/WebWorker/*.test.ts',
+        '<rootDir>/src/web-worker/*.test.ts',
         '<rootDir>/src/window/*.test.ts',
       ],
     },

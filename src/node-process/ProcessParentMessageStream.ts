@@ -3,7 +3,7 @@ import type { DuplexOptions } from 'readable-stream';
 import { BasePostMessageStream } from '../BasePostMessageStream';
 import { isValidStreamMessage, StreamData } from '../utils';
 
-interface ProcessParentMessageStreamArgs extends DuplexOptions {
+export interface ProcessParentMessageStreamArgs extends DuplexOptions {
   process: ChildProcess;
 }
 

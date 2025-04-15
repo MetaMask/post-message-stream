@@ -1,7 +1,7 @@
 .DS_Store
-.idea/
-coverage/
 dist/
+coverage/
+docs/
 dist-test/
 
 # Logs
@@ -28,6 +28,9 @@ coverage
 # nyc test coverage
 .nyc_output
 
+# node-waf configuration
+.lock-wscript
+
 # Compiled binary addons (https://nodejs.org/api/addons.html)
 build/Release
 
@@ -42,6 +45,12 @@ node_modules/
 
 # Optional eslint cache
 .eslintcache
+
+# Microbundle cache
+.rpt2_cache/
+.rts2_cache_cjs/
+.rts2_cache_es/
+.rts2_cache_umd/
 
 # Optional REPL history
 .node_repl_history
@@ -59,9 +68,12 @@ node_modules/
 # Stores VSCode versions used for testing VSCode extensions
 .vscode-test
 
-# yarn v2
-.yarn/cache
-.yarn/unplugged
-.yarn/build-state.yml
-.yarn/install-state.gz
+# yarn v3 (w/o zero-install)
+# See: https://yarnpkg.com/getting-started/qa#which-files-should-be-gitignored
 .pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions

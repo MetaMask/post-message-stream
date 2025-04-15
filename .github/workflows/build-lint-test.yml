@@ -1,0 +1,151 @@
+name: Build, Lint, and Test
+
+on:
+  workflow_call:
+
+jobs:
+  prepare:
+    name: Prepare
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x, 22.x]
+    steps:
+      - name: Checkout and setup environment
+        uses: MetaMask/action-checkout-and-setup@v1
+        with:
+          is-high-risk-environment: false
+          node-version: ${{ matrix.node-version }}
+          cache-node-modules: ${{ matrix.node-version == '22.x' }}
+
+  build:
+    name: Build
+    needs: prepare
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [22.x]
+    steps:
+      - name: Checkout and setup environment
+        uses: MetaMask/action-checkout-and-setup@v1
+        with:
+          is-high-risk-environment: false
+          node-version: ${{ matrix.node-version }}
+      - run: yarn build
+      - name: Cache build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-${{ github.sha }}
+          path: |
+            ./dist
+            ./.nvmrc
+          retention-days: 3
+      - name: Require clean working directory
+        shell: bash
+        run: |
+          if ! git diff --exit-code; then
+            echo "Working tree dirty at end of job"
+            exit 1
+          fi
+
+  lint:
+    name: Lint
+    needs: prepare
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [22.x]
+    steps:
+      - name: Checkout and setup environment
+        uses: MetaMask/action-checkout-and-setup@v1
+        with:
+          is-high-risk-environment: false
+          node-version: ${{ matrix.node-version }}
+      - run: yarn lint
+      - name: Validate RC changelog
+        if: ${{ startsWith(github.head_ref, 'release/') }}
+        run: yarn lint:changelog --rc
+      - name: Validate changelog
+        if: ${{ !startsWith(github.head_ref, 'release/') }}
+        run: yarn lint:changelog
+      - name: Require clean working directory
+        shell: bash
+        run: |
+          if ! git diff --exit-code; then
+            echo "Working tree dirty at end of job"
+            exit 1
+          fi
+
+  test:
+    name: Test
+    needs:
+      - prepare
+      - build
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x, 22.x]
+    steps:
+      - name: Checkout and setup environment
+        uses: MetaMask/action-checkout-and-setup@v1
+        with:
+          is-high-risk-environment: false
+          node-version: ${{ matrix.node-version }}
+      - name: Restore build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: build-${{ github.sha }}
+      - name: Build test dependencies
+        run: yarn build:test
+      - name: Fix Electron permissions
+        run: sudo chown root ./node_modules/electron/dist/chrome-sandbox && sudo chmod 4755 ./node_modules/electron/dist/chrome-sandbox
+      # We have to use xvfb due to electron
+      # Ref: https://github.com/facebook-atom/jest-electron-runner/issues/47#issuecomment-508556407
+      - name: Run tests
+        run: xvfb-run -e /dev/stdout yarn test
+      - name: Require clean working directory
+        shell: bash
+        run: |
+          if ! git diff --exit-code; then
+            echo "Working tree dirty at end of job"
+            exit 1
+          fi
+
+  compatibility-test:
+    name: Compatibility test
+    needs:
+      - prepare
+      - build
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x, 22.x]
+    steps:
+      - name: Checkout and setup environment
+        uses: MetaMask/action-checkout-and-setup@v1
+        with:
+          is-high-risk-environment: false
+          node-version: ${{ matrix.node-version }}
+      - name: Install dependencies via Yarn
+        run: rm yarn.lock && YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn
+      - name: Restore build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: build-${{ github.sha }}
+      - name: Build test dependencies
+        run: yarn build:test
+      - name: Fix Electron permissions
+        run: sudo chown root ./node_modules/electron/dist/chrome-sandbox && sudo chmod 4755 ./node_modules/electron/dist/chrome-sandbox
+      # We have to use xvfb due to electron
+      # Ref: https://github.com/facebook-atom/jest-electron-runner/issues/47#issuecomment-508556407
+      - name: Run tests
+        run: xvfb-run -e /dev/stdout yarn test
+      - name: Restore lockfile
+        run: git restore yarn.lock
+      - name: Require clean working directory
+        shell: bash
+        run: |
+          if ! git diff --exit-code; then
+            echo "Working tree dirty at end of job"
+            exit 1
+          fi

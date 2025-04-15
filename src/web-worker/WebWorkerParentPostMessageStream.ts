@@ -5,7 +5,7 @@ import {
 } from '../BasePostMessageStream';
 import { DEDICATED_WORKER_NAME, isValidStreamMessage } from '../utils';
 
-interface WorkerParentStreamArgs extends DuplexOptions {
+export interface WorkerParentStreamArgs extends DuplexOptions {
   worker: Worker;
 }
 

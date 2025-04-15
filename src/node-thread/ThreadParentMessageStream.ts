@@ -3,7 +3,7 @@ import type { DuplexOptions } from 'readable-stream';
 import { BasePostMessageStream } from '../BasePostMessageStream';
 import { isValidStreamMessage, StreamData } from '../utils';
 
-interface ThreadParentMessageStreamArgs extends DuplexOptions {
+export interface ThreadParentMessageStreamArgs extends DuplexOptions {
   thread: Worker;
 }
 
