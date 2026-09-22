@@ -12,7 +12,7 @@ jobs:
         node-version: [18.x, 20.x, 22.x]
     steps:
       - name: Checkout and setup environment
-        uses: MetaMask/action-checkout-and-setup@v1
+        uses: MetaMask/action-checkout-and-setup@392abd40aa6a0600a3c0ef4af75851662587e6ec # v1.4.0
         with:
           is-high-risk-environment: false
           node-version: ${{ matrix.node-version }}
@@ -27,13 +27,13 @@ jobs:
         node-version: [22.x]
     steps:
       - name: Checkout and setup environment
-        uses: MetaMask/action-checkout-and-setup@v1
+        uses: MetaMask/action-checkout-and-setup@392abd40aa6a0600a3c0ef4af75851662587e6ec # v1.4.0
         with:
           is-high-risk-environment: false
           node-version: ${{ matrix.node-version }}
       - run: yarn build
       - name: Cache build artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: build-${{ github.sha }}
           path: |
@@ -57,7 +57,7 @@ jobs:
         node-version: [22.x]
     steps:
       - name: Checkout and setup environment
-        uses: MetaMask/action-checkout-and-setup@v1
+        uses: MetaMask/action-checkout-and-setup@392abd40aa6a0600a3c0ef4af75851662587e6ec # v1.4.0
         with:
           is-high-risk-environment: false
           node-version: ${{ matrix.node-version }}
@@ -87,12 +87,12 @@ jobs:
         node-version: [18.x, 20.x, 22.x]
     steps:
       - name: Checkout and setup environment
-        uses: MetaMask/action-checkout-and-setup@v1
+        uses: MetaMask/action-checkout-and-setup@392abd40aa6a0600a3c0ef4af75851662587e6ec # v1.4.0
         with:
           is-high-risk-environment: false
           node-version: ${{ matrix.node-version }}
       - name: Restore build artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
         with:
           name: build-${{ github.sha }}
       - name: Build test dependencies
@@ -122,14 +122,14 @@ jobs:
         node-version: [18.x, 20.x, 22.x]
     steps:
       - name: Checkout and setup environment
-        uses: MetaMask/action-checkout-and-setup@v1
+        uses: MetaMask/action-checkout-and-setup@392abd40aa6a0600a3c0ef4af75851662587e6ec # v1.4.0
         with:
           is-high-risk-environment: false
           node-version: ${{ matrix.node-version }}
       - name: Install dependencies via Yarn
         run: rm yarn.lock && YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn
       - name: Restore build artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
         with:
           name: build-${{ github.sha }}
       - name: Build test dependencies
