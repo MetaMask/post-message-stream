@@ -1482,6 +1482,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@eslint/js@npm:^9.11.0":
+  version: 9.39.5
+  resolution: "@eslint/js@npm:9.39.5"
+  checksum: 10/042d522f28da10ab205f368a94b620334418eb13a5226e50f7edd03dbe26809eb477d0b7a4dc3968b43a98f6ce594f6c03731214c3e0386fd5bcb74fdb9df64c
+  languageName: node
+  linkType: hard
+
 "@ethereumjs/common@npm:^3.2.0":
   version: 3.2.0
   resolution: "@ethereumjs/common@npm:3.2.0"
@@ -2159,16 +2166,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@metamask/eslint-config-typescript@npm:^10.0.0":
-  version: 10.0.0
-  resolution: "@metamask/eslint-config-typescript@npm:10.0.0"
+"@metamask/eslint-config-typescript@npm:^15.0.1":
+  version: 15.0.1
+  resolution: "@metamask/eslint-config-typescript@npm:15.0.1"
+  dependencies:
+    "@eslint/js": "npm:^9.11.0"
   peerDependencies:
-    "@metamask/eslint-config": ^10.0.0
-    "@typescript-eslint/eslint-plugin": ^5.33.0
-    "@typescript-eslint/parser": ^5.33.0
-    eslint: ^8.21.0
-    typescript: ^4.0.7
-  checksum: 10/08c052d3fe034c9712a69fda395975438ea18c10ee73bb573a6758e068d7020e62d9a7347eb2d67e5e7a38275fcd96b8f33e975d4f37363a8631c253d30f7dd9
+    "@metamask/eslint-config": "workspace:^"
+    eslint: ^9.11.0
+    eslint-import-resolver-typescript: ^3.6.3
+    eslint-plugin-import-x: ^4.3.0
+    eslint-plugin-jsdoc: ^50.2.4
+    typescript: ">=4.8.4 <6"
+    typescript-eslint: ^8.39.0
+  checksum: 10/4238914d705e0acf88d1b8ac81c9cfee68993d3290971bfd48f0537ab06d975504ff470e691f1112015a894158076f399a9663f65cc31314b9a7949a473e9b8e
   languageName: node
   linkType: hard
 
@@ -2196,7 +2207,7 @@ __metadata:
     "@metamask/eslint-config": "npm:^10.0.0"
     "@metamask/eslint-config-jest": "npm:^10.0.0"
     "@metamask/eslint-config-nodejs": "npm:^10.0.0"
-    "@metamask/eslint-config-typescript": "npm:^10.0.0"
+    "@metamask/eslint-config-typescript": "npm:^15.0.1"
     "@metamask/utils": "npm:^11.4.0"
     "@ts-bridge/cli": "npm:^0.6.3"
     "@types/chrome": "npm:^0.0.204"
