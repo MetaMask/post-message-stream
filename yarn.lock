@@ -1482,6 +1482,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@eslint/js@npm:^9.11.0":
+  version: 9.39.5
+  resolution: "@eslint/js@npm:9.39.5"
+  checksum: 10/042d522f28da10ab205f368a94b620334418eb13a5226e50f7edd03dbe26809eb477d0b7a4dc3968b43a98f6ce594f6c03731214c3e0386fd5bcb74fdb9df64c
+  languageName: node
+  linkType: hard
+
 "@ethereumjs/common@npm:^3.2.0":
   version: 3.2.0
   resolution: "@ethereumjs/common@npm:3.2.0"
@@ -2172,17 +2179,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@metamask/eslint-config@npm:^10.0.0":
-  version: 10.0.0
-  resolution: "@metamask/eslint-config@npm:10.0.0"
+"@metamask/eslint-config@npm:^15.0.1":
+  version: 15.0.1
+  resolution: "@metamask/eslint-config@npm:15.0.1"
+  dependencies:
+    "@eslint/js": "npm:^9.11.0"
+    globals: "npm:^15.9.0"
   peerDependencies:
-    eslint: ^8.21.0
-    eslint-config-prettier: ^8.1.0
-    eslint-plugin-import: ^2.26.0
-    eslint-plugin-jsdoc: ^39.2.9
-    eslint-plugin-prettier: ^4.2.1
-    prettier: ^2.2.1
-  checksum: 10/f04e74731a5aa70a7178e9307aaa8f95a82678947c98736500061c0ec129d2b0c2777f510686bc86d97a23801a084476632b4153cdc861684ec2a7ec7e4c25db
+    eslint: ^9.11.0
+    eslint-config-prettier: ^9.1.0
+    eslint-plugin-import-x: ^4.3.0
+    eslint-plugin-jsdoc: ^50.2.4
+    eslint-plugin-prettier: ^5.2.1
+    eslint-plugin-promise: ^7.1.0
+    prettier: ^3.3.3
+  checksum: 10/b6d9c0a1573c46d62b41cf83f0eff226dd291f604441be7ed7a3f78aa4c173c2e805548626392452b572655e17261ce7da3227e2681b34a0e28dc9e8856c56ec
   languageName: node
   linkType: hard
 
@@ -2193,7 +2204,7 @@ __metadata:
     "@jest-runner/electron": "npm:^3.0.1"
     "@lavamoat/allow-scripts": "npm:^2.3.1"
     "@metamask/auto-changelog": "npm:^3.0.0"
-    "@metamask/eslint-config": "npm:^10.0.0"
+    "@metamask/eslint-config": "npm:^15.0.1"
     "@metamask/eslint-config-jest": "npm:^10.0.0"
     "@metamask/eslint-config-nodejs": "npm:^10.0.0"
     "@metamask/eslint-config-typescript": "npm:^10.0.0"
@@ -6612,6 +6623,13 @@ __metadata:
   dependencies:
     type-fest: "npm:^0.20.2"
   checksum: 10/98ce947dc413e6c8feed236f980dee4bc8d9f4b29790e27bccb277d385fac5d77146e1f9c244c6609aca1d109101642e663caf88c0ba6bff0b069ea82d571441
+  languageName: node
+  linkType: hard
+
+"globals@npm:^15.9.0":
+  version: 15.15.0
+  resolution: "globals@npm:15.15.0"
+  checksum: 10/7f561c87b2fd381b27fc2db7df8a4ea7a9bb378667b8a7193e61fd2ca3a876479174e2a303a74345fbea6e1242e16db48915c1fd3bf35adcf4060a795b425e18
   languageName: node
   linkType: hard
 
